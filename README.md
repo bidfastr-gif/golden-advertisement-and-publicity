@@ -13,22 +13,15 @@ This project is a modern, premium website redesign for **Golden Advertising & Pu
     *   Animated counters
 *   **Responsive**: Fully responsive layout for all devices.
 
-## Setup & Run
+## Setup & Run (Static)
 
-1.  **Install Dependencies**:
-    ```bash
-    npm install
-    ```
-
-2.  **Start Development Server**:
-    ```bash
-    npm run dev
-    ```
-
-3.  **Build for Production**:
-    ```bash
-    npm run build
-    ```
+1. **Open the site**:
+    - Double-click `index.html`, or
+    - Serve the folder with any static HTTP server
+2. **Edit files**:
+    - HTML: [index.html](file:///c:/Users/Dell/Desktop/golden-advertising/index.html)
+    - CSS: [style.css](file:///c:/Users/Dell/Desktop/golden-advertising/style.css)
+    - JS: [main.js](file:///c:/Users/Dell/Desktop/golden-advertising/main.js)
 
 ## Customization
 

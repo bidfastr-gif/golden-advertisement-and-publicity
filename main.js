@@ -1,8 +1,4 @@
-import './style.css'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from 'lenis'
-import * as THREE from 'three'
+// Imports removed in favor of CDN links in index.html for vanilla usage
 
 gsap.registerPlugin(ScrollTrigger)
 
