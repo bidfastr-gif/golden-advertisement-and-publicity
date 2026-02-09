@@ -1,138 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Newspaper Advertising | Golden Advertising & Publicity</title>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet">
-
-  <!-- CDN Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="loader-text">GOLDEN</div>
-  </div>
-
-  <!-- Navigation -->
   <nav>
     <div class="container nav-wrapper">
-      <a href="index.html" class="logo-brand">
+      <a href="./index.html" class="logo-brand">
         <div class="logo-symbol">G</div>
         <div class="logo-details">
           <span class="logo-name">GAP</span>
           <span class="logo-tagline">Golden Advertising & Publicity</span>
         </div>
       </a>
-      <div style="display: flex; align-items: center;">
-        <div class="nav-links">
-          <a href="./index.html" class="nav-link">Home</a>
-          <a href="./about.html" class="nav-link">About Us</a>
-          <a href="./services.html" class="nav-link">Services</a>
-          <a href="./training.html" class="nav-link">Training</a>
-          <a href="./contact.html" class="nav-link">Contact Us</a>
-        </div>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="moon-icon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </button>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./about.html" class="nav-link">About Us</a>
+        <a href="./services.html" class="nav-link active">Services</a>
+        <a href="./training.html" class="nav-link">Training</a>
+        <a href="./contact.html" class="nav-link">Contact Us</a>
       </div>
     </div>
   </nav>
 
-  <!-- Service Detail Section -->
-  <section class="service-detail" style="padding-top: 150px; padding-bottom: 100px; min-height: 100vh; background-color: var(--color-white); color: var(--color-black-rich);">
-    <div class="container">
-      <div style="margin-bottom: 3rem;">
-        <h1 style="font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1rem; color: var(--color-black-rich);">Newspaper Advertising</h1>
-        <div style="width: 100px; height: 4px; background: var(--color-gold-primary);"></div>
+  <section class="page-hero newspaper-hero">
+    <div id="newspaper-hero-canvas" class="hero-background"></div>
+    <div class="page-hero-content">
+      <h1>Newspaper Advertising</h1>
+      <p class="hero-subtitle">Golden Advertising & Publicity</p>
+      <div class="hero-contacts">
+        <a href="./contact.html" class="cta-button cta-button--clean"><i class="fa-solid fa-paper-plane"></i><span class="btn-text">Quick Enquiry</span></a>
+        <a href="mailto:contact@goldenadvertising.in" class="cta-button cta-button--clean"><i class="fa-solid fa-envelope"></i><span class="btn-text">contact@goldenadvertising.in</span></a>
+        <a href="tel:+918220672333" class="cta-button cta-button--clean"><i class="fa-solid fa-phone"></i><span class="btn-text">82206 72333</span></a>
       </div>
+    </div>
+  </section>
 
-      <div class="service-layout">
-        <!-- Sidebar Navigation -->
-        <aside class="service-sidebar">
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--color-black-rich);">Our Services</h3>
-          <ul class="service-menu">
-            <li><a href="digital-marketing.html" class="service-menu-link">Digital Marketing</a></li>
-            <li><a href="web-development.html" class="service-menu-link">Web Development</a></li>
-            <li><a href="brand-creation.html" class="service-menu-link">Brand Creation</a></li>
-            <li><a href="newspaper-advertising.html" class="service-menu-link active">Newspaper Advertising</a></li>
-            <li><a href="fm-advertising.html" class="service-menu-link">FM Advertising</a></li>
-            <li><a href="content-production.html" class="service-menu-link">Content Production</a></li>
-          </ul>
-        </aside>
-
-        <div class="service-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-          <div class="service-text">
-            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #333;">
-              Traditional yet effective. We help you place your ads in leading newspapers to reach a wide demographic and build trust with local communities.
-            </p>
-            
-            <ul style="list-style: none; padding: 0; margin-bottom: 3rem;">
-              <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
-                Wide Reach
-              </li>
-              <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
-                Local Targeting
-              </li>
-              <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
-                Credibility & Trust
-              </li>
-            </ul>
-
-            <a href="index.html#contact" class="cta-button" style="border-color: var(--color-black-rich); color: var(--color-black-rich);">
-              <span class="btn-text">Get Started</span>
-            </a>
-          </div>
-
-          <div class="service-image" style="background: #f8f8f8; padding: 3rem; border-radius: 20px; text-align: center;">
-            <!-- SVG Illustration -->
-            <svg width="100%" height="auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="50" y="50" width="300" height="200" rx="10" fill="#FFE55C" fill-opacity="0.2" stroke="#D4AF37" stroke-width="2"/>
-              <!-- Newspaper -->
-              <rect x="100" y="80" width="200" height="140" fill="#fff" stroke="#333" stroke-width="2"/>
-              <rect x="110" y="90" width="180" height="10" fill="#333" opacity="0.8"/>
-              <rect x="110" y="110" width="80" height="60" fill="#ccc"/>
-              <line x1="200" y1="110" x2="280" y2="110" stroke="#333" stroke-width="2"/>
-              <line x1="200" y1="120" x2="280" y2="120" stroke="#333" stroke-width="2"/>
-              <line x1="200" y1="130" x2="280" y2="130" stroke="#333" stroke-width="2"/>
-              <line x1="110" y1="180" x2="280" y2="180" stroke="#333" stroke-width="2"/>
-              <line x1="110" y1="190" x2="280" y2="190" stroke="#333" stroke-width="2"/>
-            </svg>
-          </div>
+  <section class="features-section bg-black" style="padding-top: 2rem;">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
+        <div style="font-size: 1.05rem; line-height: 1.9;">
+          <h3 style="font-size: 2rem; margin-bottom: 10px;">Paper Advertisement Agency</h3>
+          <p style="margin-bottom: 1rem;">
+            We as one of the newspaper advertising agencies in Chennai feel immensely satisfied to provide our customers with superb quality paper‑characterized Advertisement Services. These services are given by our accomplished experts in consistency with universal quality benchmarks. A team of experts fathoms the differed necessities of our clients to give the most extreme fulfilment. Our experts inspect every single stage to give ideal fulfilment to the customers.
+          </p>
+          <p>
+            We are the main association in the field of giving Newspaper Advertisement to our clients as one of the newspaper advertising agencies in Chennai. Paper ads are a basic piece of the corporate world and are utilized by them for the determination of the correct talent.
+          </p>
+        </div>
+        <div class="image-card tilt anim-card newspaper-illustration" style="display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 420 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="max-height: 340px;">
+            <rect x="30" y="30" width="360" height="240" rx="12" fill="rgba(255,255,255,0.05)" stroke="#D4AF37" stroke-width="2"/>
+            <g class="paper-layout">
+              <rect x="60" y="60" width="140" height="180" rx="6" fill="rgba(255,255,255,0.06)" stroke="#666"/>
+              <rect x="220" y="60" width="140" height="180" rx="6" fill="rgba(255,255,255,0.06)" stroke="#666"/>
+            </g>
+            <g class="ads">
+              <rect x="75" y="80" width="110" height="60" rx="6" fill="rgba(212,175,55,0.15)" stroke="#D4AF37"/>
+              <line x1="75" y1="150" x2="185" y2="150" stroke="#D4AF37" stroke-width="2"/>
+              <line x1="75" y1="165" x2="185" y2="165" stroke="#D4AF37" stroke-width="2"/>
+              <circle cx="270" cy="100" r="24" fill="none" stroke="#D4AF37" stroke-width="2"/>
+              <line x1="240" y1="150" x2="340" y2="150" stroke="#D4AF37" stroke-width="2"/>
+              <line x1="240" y1="165" x2="340" y2="165" stroke="#D4AF37" stroke-width="2"/>
+            </g>
+            <rect class="progress-bg" x="60" y="240" width="300" height="10" rx="5" fill="#333"/>
+            <rect class="progress-fill" x="60" y="240" width="0" height="10" rx="5" fill="#D4AF37"/>
+          </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <section class="features-section bg-black" style="padding: 4rem 0;">
+    <div class="container">
+      <span class="section-label">Best Newspaper Advertising</span>
+      <h2 style="text-align:center; margin-bottom: 1rem; font-size: 2.4rem;">Advantages of Newspaper Advertising</h2>
+      <div class="package-grid">
+        <div class="package-card">
+          <div class="service-icon-badge"><i class="fa-solid fa-bullseye"></i></div>
+          <div class="package-name">Better Audience Targeting</div>
+          <div class="package-sub">Reach niche segments effectively</div>
+          <p style="font-size: 0.98rem; line-height: 1.8;">
+            Newspaper advertising can target explicit demographics that are generally hard to reach through different mediums, enabling promoters to reach specialty groups across regions and interests.
+          </p>
+        </div>
+        <div class="package-card">
+          <div class="service-icon-badge"><i class="fa-solid fa-link"></i></div>
+          <div class="package-name">Flexible Newspaper advertising</div>
+          <div class="package-sub">Seamless print‑to‑web integration</div>
+          <p style="font-size: 0.98rem; line-height: 1.8;">
+            Newspaper ads can coordinate print‑to‑web highlights such as QR codes, linking readers with important online data, offers, and forms, enabling quick changes to any advertisement.
+          </p>
+        </div>
+        <div class="package-card">
+          <div class="service-icon-badge"><i class="fa-solid fa-wallet"></i></div>
+          <div class="package-name">More affordable</div>
+          <div class="package-sub">Budget‑friendly ad formats</div>
+          <p style="font-size: 0.98rem; line-height: 1.8;">
+            Newspaper advertising can be modified to meet any budget. Decrease in paper advertisement income implies less print and more digital promotions incorporated into each circulation, increasing coverage and frequency.
+          </p>
+        </div>
+        <div class="package-card">
+          <div class="service-icon-badge"><i class="fa-solid fa-users"></i></div>
+          <div class="package-name">Reaches more customers</div>
+          <div class="package-sub">High readership and trust</div>
+          <p style="font-size: 0.98rem; line-height: 1.8;">
+            A normal issue of a day or Sunday paper achieves a larger number of adults than many prime‑time TV shows. Readers also save data like events, coupons, and classifieds, boosting campaign impact.
+          </p>
+        </div>
+      </div>
+      <div class="flex-center" style="margin-top: 1.5rem;">
+        <a href="./contact.html" class="cta-button cta-button--light"><span class="btn-text">Let's Enquire With Us</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section bg-black" style="padding-top: 2rem;">
+    <div class="container">
+      <h3 style="font-size: 2rem; margin-bottom: 10px; text-align:center;">Advantages</h3>
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
+        <div style="font-size: 1.05rem; line-height: 1.9;">
+          <p style="margin-bottom: 1rem;">
+            Through every one of these years, we as one of the newspaper advertising agencies in Chennai, have been perseveringly progressing in the direction of making marketing in traditional media proficient for setting up as well as up‑and‑coming brands alike.
+          </p>
+          <p>
+            Utilizing data on noteworthy Ad valuing and empty Ad inventory, we serve sponsors with financially effective advertising solutions. Our stage helps clients discharge promotions in preferred media with smart media buying to enhance spending plans fundamentally.
+          </p>
+        </div>
+        <div class="image-card tilt anim-card newspaper-illustration-2" style="display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 420 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="max-height: 340px;">
+            <rect x="30" y="30" width="360" height="240" rx="12" fill="rgba(255,255,255,0.05)" stroke="#D4AF37" stroke-width="2"/>
+            <g class="billboard">
+              <rect x="90" y="70" width="240" height="140" rx="8" fill="rgba(212,175,55,0.12)" stroke="#D4AF37"/>
+              <line x1="100" y1="120" x2="320" y2="120" stroke="#D4AF37" stroke-width="2"/>
+              <line x1="100" y1="140" x2="320" y2="140" stroke="#D4AF37" stroke-width="2"/>
+              <line x1="100" y1="160" x2="320" y2="160" stroke="#D4AF37" stroke-width="2"/>
+            </g>
+            <rect class="progress-bg" x="60" y="240" width="300" height="10" rx="5" fill="#333"/>
+            <rect class="progress-fill-2" x="60" y="240" width="0" height="10" rx="5" fill="#D4AF37"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <h2>GOLDEN</h2>
-          <p>Advertising & Publicity</p>
+          <a href="./index.html" class="logo-brand footer-logo" aria-label="Golden Advertising & Publicity">
+            <div class="logo-symbol">G</div>
+            <div class="logo-details">
+              <span class="logo-name">GAP</span>
+              <span class="logo-tagline">Golden Advertising & Publicity</span>
+            </div>
+          </a>
+          <p style="margin-top: 1rem; max-width: 300px;">Elevating brands through strategic design and innovative digital solutions.</p>
+          <div class="footer-socials" aria-label="Social links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Menu</h4>
+          <ul>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./services.html">Services</a></li>
+            <li><a href="./training.html">Training</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
         </div>
         <div class="contact-info">
-            <p>&copy; 2026 Golden Advertising & Publicity</p>
+          <h4>Contact</h4>
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <p>Twins Towers, No-305E, 1st Floor</p>
+              <p>TT Krishnamachari Road, Alwarpet</p>
+              <p>Chennai - 600018, Tamil Nadu</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <p><a href="tel:9840261727" class="text-gold">9840261727</a></p>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <p><a href="mailto:contact@goldenadvertising.in" class="text-gold">contact@goldenadvertising.in</a></p>
+          </div>
         </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 Golden Advertising & Publicity. All rights reserved.
       </div>
     </div>
   </footer>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="./main.js"></script>
 </body>
 </html>
