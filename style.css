@@ -429,6 +429,13 @@ nav .nav-wrapper {
   transition: transform 0.3s;
 }
 
+.feature-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
 .feature-card {
   display: flex;
   flex-direction: column;
@@ -571,6 +578,70 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.4);
+}
+
+/* Service Sidebar Navigation */
+.service-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.service-sidebar {
+  position: sticky;
+  top: 150px;
+  background: #f8f8f8;
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+.service-menu {
+  list-style: none;
+}
+
+.service-menu-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: white;
+  color: var(--color-black-rich);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  border: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 0.8rem;
+}
+
+.service-menu-link:hover {
+  background: var(--color-gold-light);
+  color: var(--color-black-rich);
+  transform: translateX(5px);
+}
+
+.service-menu-link.active {
+  background: var(--color-gold-primary);
+  color: var(--color-black-rich);
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .service-layout {
+    grid-template-columns: 1fr;
+  }
+  .service-sidebar {
+    position: static;
+    margin-bottom: 3rem;
+  }
+  .service-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .service-menu-link {
+    margin-bottom: 0;
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
