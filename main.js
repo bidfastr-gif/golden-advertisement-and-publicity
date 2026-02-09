@@ -153,6 +153,11 @@ initThreeJS('hero-canvas');
 initThreeJS('about-hero-canvas');
 initThreeJS('services-hero-canvas');
 initThreeJS('seo-hero-canvas');
+initThreeJS('smm-hero-canvas');
+initThreeJS('ppc-hero-canvas');
+initThreeJS('webdev-hero-canvas');
+initThreeJS('web-process-anim');
+initThreeJS('ecommerce-hero-canvas');
 
 // Marquee Animation
 safeTo('.marquee-content', {
@@ -205,21 +210,16 @@ counters.forEach(counter => {
     });
 });
 
-<<<<<<< Updated upstream
 // Load Services Section and Initialize Swiper
 fetch('what-we-offer.html')
   .then(response => response.text())
   .then(html => {
-    // Parse the fetched HTML
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const servicesSection = doc.getElementById('services');
-    
-    // Inject only the services section
     if (servicesSection) {
-      document.getElementById('services-container').innerHTML = servicesSection.outerHTML;
-      
-      // Initialize Swiper
+      const container = document.getElementById('services-container');
+      if (container) container.innerHTML = servicesSection.outerHTML;
       new Swiper('.services-swiper', {
         slidesPerView: 'auto',
         spaceBetween: 30,
@@ -228,39 +228,15 @@ fetch('what-we-offer.html')
         speed: 3000,
         grabCursor: true,
         allowTouchMove: false, 
-        autoplay: {
-          delay: 0,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: false,
-        },
-        breakpoints: {
-          320: {
-            spaceBetween: 20,
-          },
-          768: {
-            spaceBetween: 30,
-          },
-          1024: {
-            spaceBetween: 30,
-          },
-          1200: {
-            spaceBetween: 30,
-          }
-        }
+        autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
       });
     }
   })
   .catch(err => console.error('Failed to load services:', err));
 
-// Magnetic Button Effect (Simple) - Disabled
-/*
-=======
 // Feature Cards Animation
 safeFrom('.feature-card', {
-    scrollTrigger: {
-        trigger: '.services-grid',
-        start: 'top 75%'
-    },
+    scrollTrigger: { trigger: '.services-grid', start: 'top 75%' },
     y: 100,
     opacity: 0,
     duration: 1,
@@ -269,37 +245,15 @@ safeFrom('.feature-card', {
 });
 
 safeFrom('.service-card', {
-    scrollTrigger: {
-        trigger: '.services-grid',
-        start: 'top 75%'
-    },
+    scrollTrigger: { trigger: '.services-grid', start: 'top 75%' },
     y: 60,
     opacity: 0,
     duration: 0.9,
     stagger: 0.15,
     ease: 'power3.out'
 });
-// Magnetic Button Effect (Simple)
->>>>>>> Stashed changes
-const btns = document.querySelectorAll('.cta-button');
-
-btns.forEach((btn) => {
-    btn.addEventListener('mousemove', (e) => {
-        const position = btn.getBoundingClientRect();
-        const x = e.pageX - position.left - position.width / 2;
-        const y = e.pageY - position.top - position.height / 2;
-
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
-    });
-
-    btn.addEventListener('mouseout', () => {
-        btn.style.transform = 'translate(0px, 0px)';
-    });
-});
-<<<<<<< Updated upstream
-*/
-=======
-
+ 
+ 
 safeFrom('.about-hero .page-hero-content h1', {
     scrollTrigger: {
         trigger: '.about-hero',
@@ -367,6 +321,298 @@ safeFrom('.seo-hero .hero-subtitle', {
     ease: 'power3.out',
     delay: 0.1
 });
+
+safeFrom('.seo-hero .hero-contacts .cta-button', {
+    scrollTrigger: {
+        trigger: '.seo-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.15
+});
+
+safeFrom('.smm-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.smm-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.smm-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.smm-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+safeFrom('.smm-hero .hero-contacts .cta-button', {
+    scrollTrigger: {
+        trigger: '.smm-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.15
+});
+safeFrom('.ppc-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.ppc-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.ppc-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.ppc-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+safeFrom('.ppc-hero .hero-contacts .cta-button', {
+    scrollTrigger: {
+        trigger: '.ppc-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.15
+});
+safeFrom('.ecommerce-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.ecommerce-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.ecommerce-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.ecommerce-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+safeFrom('.ecommerce-hero .hero-contacts .cta-button', {
+    scrollTrigger: {
+        trigger: '.ecommerce-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.15
+});
+safeFrom('.adv-list li', {
+    scrollTrigger: {
+        trigger: '.adv-panel',
+        start: 'top 80%'
+    },
+    y: 16,
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power3.out',
+    stagger: 0.08
+});
+safeFrom('.webdev-illustration svg', {
+    scrollTrigger: {
+        trigger: '.webdev-illustration',
+        start: 'top 85%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out'
+});
+safeFrom('.webdev-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.webdev-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.webdev-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.webdev-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+safeFrom('.webdev-hero .hero-contacts .cta-button', {
+    scrollTrigger: {
+        trigger: '.webdev-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.15
+});
+safeFrom('.image-card', {
+    scrollTrigger: {
+        trigger: '.image-grid',
+        start: 'top 85%'
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+
+safeFrom('.workflow-step', {
+    scrollTrigger: {
+        trigger: '.workflow-section',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.25,
+    ease: 'power3.out'
+});
+
+safeTo('.workflow-connector', {
+    scrollTrigger: {
+        trigger: '.workflow-section',
+        start: 'top 80%'
+    },
+    scaleX: 1,
+    duration: 1,
+    stagger: 0.25,
+    ease: 'power3.out'
+});
+(() => {
+    const cards = document.querySelectorAll('.tilt');
+    if (cards.length === 0) return;
+    cards.forEach(card => {
+        let bounds;
+        const calc = (e) => {
+            if (!bounds) bounds = card.getBoundingClientRect();
+            const x = e.clientX - bounds.left - bounds.width / 2;
+            const y = e.clientY - bounds.top - bounds.height / 2;
+            const rx = (-y / bounds.height) * 10;
+            const ry = (x / bounds.width) * 10;
+            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+        };
+        card.addEventListener('mousemove', calc);
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0) rotateY(0)';
+            bounds = undefined;
+        });
+    });
+})();
+
+(() => {
+    const ecomSvg = document.querySelector('.ecom-illustration svg');
+    if (ecomSvg) {
+        gsap.to('.ecom-illustration .cart', {
+            x: 20,
+            duration: 2,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
+        gsap.to('.ecom-illustration .progress-fill', {
+            attr: { width: 280 },
+            duration: 2.2,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
+        gsap.to('.ecom-illustration .progress-fill-2', {
+            attr: { width: 220 },
+            duration: 2.0,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
+        gsap.to('.ecom-illustration .boxes rect', {
+            y: '-=5',
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            stagger: 0.2
+        });
+        safeFrom('.ecom-illustration svg', {
+            scrollTrigger: {
+                trigger: '.ecom-illustration',
+                start: 'top 85%'
+            },
+            y: 20,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        });
+    }
+})();
+
+(() => {
+    const target = document.getElementById('webdev-typing');
+    const cursor = document.getElementById('webdev-cursor');
+    if (!target || !cursor) return;
+    const lines = [
+        'const app = new Website({ responsive: true });',
+        'app.optimize({ speed: \"fast\", seo: \"on\" });',
+        'deploy(\"gap\", { region: \"in\", secure: true });'
+    ];
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+    const typeLine = (text) => gsap.to({ i: 0 }, {
+        i: text.length,
+        duration: Math.max(0.8, text.length * 0.05),
+        ease: 'none',
+        onUpdate: function () {
+            const idx = Math.floor(this.targets()[0].i);
+            target.textContent = text.slice(0, idx);
+        }
+    });
+    lines.forEach((line) => {
+        tl.add(typeLine(line));
+        tl.to({}, { duration: 0.6 });
+    });
+    gsap.to(cursor, { opacity: 0.2, repeat: -1, yoyo: true, duration: 0.4 });
+})();
 
 safeFrom('.package-card', {
     scrollTrigger: {
@@ -492,4 +738,3 @@ const initTestimonialCarousel = () => {
 };
 
 initTestimonialCarousel();
->>>>>>> Stashed changes
