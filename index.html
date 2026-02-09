@@ -67,7 +67,7 @@
         A 360° Marketing Solution for all your Business Needs.
       </p>
       <div class="hero-ctas">
-            <a href="#contact" class="cta-button"><span class="btn-text">Start Your Project With Us Today!</span></a>
+            <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us Today!</span></a>
             <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
           <a href="tel:+919840261727" style="display: block; margin-bottom: 0.5rem;">
             <span class="text-gold" style="margin-right: 10px;">📞</span> +91 98402 61727
@@ -144,27 +144,50 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <h2>GOLDEN</h2>
-          <p>Advertising & Publicity</p>
+          <a href="./index.html" class="logo-brand footer-logo" aria-label="Golden Advertising & Publicity">
+            <div class="logo-symbol">G</div>
+            <div class="logo-details">
+              <span class="logo-name">GAP</span>
+              <span class="logo-tagline">Golden Advertising & Publicity</span>
+            </div>
+          </a>
           <p style="margin-top: 1rem; max-width: 300px;">
             Elevating brands through strategic design and innovative digital solutions.
           </p>
+          <div class="footer-socials" aria-label="Social links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
         </div>
         <div class="footer-links">
           <h4>Menu</h4>
           <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./services.html">Services</a></li>
+            <li><a href="./training.html">Training</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="contact-info">
           <h4>Contact</h4>
-          <p>Twins Towers, No-305E, 1st Floor</p>
-          <p>TT Krishnamachari Road, Alwarpet</p>
-          <p>Chennai - 600018, Tamil Nadu</p>
-          <p><a href="tel:9840261727" class="text-gold">9840261727</a></p>
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <p>Twins Towers, No-305E, 1st Floor</p>
+              <p>TT Krishnamachari Road, Alwarpet</p>
+              <p>Chennai - 600018, Tamil Nadu</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <p><a href="tel:9840261727" class="text-gold">9840261727</a></p>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <p><a href="mailto:contact@goldenadvertising.in" class="text-gold">contact@goldenadvertising.in</a></p>
+          </div>
         </div>
       </div>
       <div class="copyright">
@@ -173,6 +196,7 @@
     </div>
   </footer>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="./main.js"></script>
 </body>
 
