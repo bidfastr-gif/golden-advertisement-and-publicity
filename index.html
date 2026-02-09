@@ -13,6 +13,8 @@
     rel="stylesheet">
 
   <!-- CDN Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -49,16 +51,22 @@
   <section class="hero">
     <div class="hero-background" id="hero-canvas"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">
-        <span class="line">Elevating</span>
-        <span class="line text-gold">Brands</span>
-        <span class="line">Beyond Limits</span>
-      </h1>
+        <h1 class="hero-title">
+          <span class="line">Hello!</span>
+          <span class="line">We Are GAP</span>
+          <span class="line text-gold">Digital Marketing</span>
+          <span class="line">Company in Chennai</span>
+        </h1>
       <p class="hero-subtitle">
-        We craft digital experiences that leave a lasting impression. Where bold ideas find their golden standard.
+        A 360° Marketing Solution for all your Business Needs.
       </p>
       <div class="hero-ctas">
-        <a href="#services" class="cta-button">Our Services</a>
+            <a href="#contact" class="cta-button"><span class="btn-text">Start Your Project With Us Today!</span></a>
+            <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
+          <a href="tel:+919840261727" style="display: block; margin-bottom: 0.5rem;">
+            <span class="text-gold" style="margin-right: 10px;">📞</span> +91 98402 61727
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -66,13 +74,7 @@
   <!-- Infinite Marquee Section -->
   <section class="marquee-section">
     <div class="marquee-content">
-      <span class="marquee-item">BRANDING</span>
-      <span class="marquee-item">DIGITAL MARKETING</span>
-      <span class="marquee-item">WEB DEVELOPMENT</span>
-      <span class="marquee-item">STRATEGY</span>
-      <span class="marquee-item">DESIGN</span>
-      <span class="marquee-item">SEO</span>
-      <span class="marquee-item">PRODUCTION</span>
+      <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
     </div>
   </section>
 
@@ -114,54 +116,8 @@
     </div>
   </section>
 
-  <!-- Services Section (Grid Layout similar to Millennial Labs) -->
-  <section id="services" class="features-section">
-    <div class="container">
-      <span class="section-label">What We Do</span>
-      <h2 style="margin-bottom: 4rem; font-size: 3rem;">Complete Digital <span class="text-gold">Solutions</span></h2>
-
-      <div class="services-grid"
-        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">Brand Identity</h3>
-          <p>From logos to comprehensive brand guidelines, we define who you are and how the world sees you.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">Web Development</h3>
-          <p>Custom, high-performance websites that look stunning and convert visitors into loyal customers.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">Digital Marketing</h3>
-          <p>Data-driven strategies including SEO, PPC, and Social Media Marketing to maximize your reach.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">Content Production</h3>
-          <p>High-quality photography, videography, and copywriting that tells your story effectively.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">UI/UX Design</h3>
-          <p>User-centric interfaces that provide intuitive and engaging experiences for your audience.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">✦</div>
-          <h3 class="feature-title">Consulting</h3>
-          <p>Strategic advice to help you navigate the complex digital landscape and achieve business growth.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
+  <!-- Services Section (Loaded dynamically) -->
+  <div id="services-container"></div>
 
   <!-- Contact Section -->
   <section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
@@ -172,9 +128,7 @@
         <p style="margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
           Let's create something exceptional together. Reach out to us for a consultation.
         </p>
-        <a href="mailto:contact@goldenadvertising.in" class="cta-button"
-          style="background: var(--color-gold-primary); color: var(--color-black-rich); border: none;">Start a
-          Project</a>
+        <a href="mailto:contact@goldenadvertising.in" class="cta-button"><span class="btn-text">Start a Project</span></a>
       </div>
     </div>
   </section>

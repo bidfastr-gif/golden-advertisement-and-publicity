@@ -262,8 +262,8 @@ nav .nav-wrapper {
 }
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 10rem);
-  line-height: 0.9;
+  font-size: clamp(2.5rem, 6vw, 7rem);
+  line-height: 1.1;
   margin-bottom: 2rem;
   overflow: hidden;
 }
@@ -299,7 +299,12 @@ nav .nav-wrapper {
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: all 0.4s var(--transition-smooth);
+  transition: color 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth);
+}
+
+.cta-button .btn-text {
+  position: relative;
+  z-index: 2;
 }
 
 .cta-button::before {
@@ -344,16 +349,16 @@ nav .nav-wrapper {
   font-family: var(--font-heading);
   font-size: 8vw;
   white-space: nowrap;
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 1px var(--color-gold-light);
-  opacity: 0.5;
-  transition: opacity 0.3s ease, color 0.3s ease;
+  opacity: 1;
+  -webkit-text-stroke: 0px;
 }
 
 .marquee-item:hover {
   opacity: 1;
-  color: var(--color-gold-primary);
-  -webkit-text-stroke: 0px;
 }
 
 /* About Section */
@@ -407,34 +412,118 @@ nav .nav-wrapper {
   background-color: var(--color-black-soft);
 }
 
+/* Swiper Carousel Customization */
+.services-swiper {
+  width: 100%;
+  padding: 20px 0 20px 0;
+  overflow: visible !important;
+}
+
+.services-swiper .swiper-wrapper {
+  transition-timing-function: linear;
+}
+
+.swiper-slide {
+  width: 220px !important;
+  height: auto;
+  transition: transform 0.3s;
+}
+
 .feature-card {
-  background: var(--color-glass-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-glass-border);
-  padding: 3rem;
-  position: relative;
-  transition: all 0.5s var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--color-gold-primary);
+  color: var(--color-white);
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
   height: 100%;
-  border-radius: 2px;
+  min-height: 200px;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.feature-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--color-gold-primary);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  background: rgba(255, 255, 255, 0.08);
+.card-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.feature-icon {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--color-gold-primary);
+.card-bg-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+  mix-blend-mode: multiply;
 }
 
-.feature-title {
-  font-size: 1.5rem;
+.feature-card:hover .card-bg-image img,
+.feature-card.active .card-bg-image img {
+  opacity: 0.15;
+  transform: scale(1.1);
+}
+
+.feature-card .feature-icon {
   margin-bottom: 1rem;
+  color: var(--color-black-rich);
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-card .feature-title {
+  color: var(--color-black-rich);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: auto;
+  margin-bottom: 0;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Active Card Style */
+.feature-card.active,
+.swiper-slide-active .feature-card {
+  transform: translateY(-10px);
+}
+
+.card-dots {
+  display: flex;
+  gap: 5px;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.card-dots span {
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+}
+
+.card-dots span:nth-child(2) {
+  background: #fff;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  background: var(--color-gold-primary) !important;
+  opacity: 0.5;
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
 }
 
 /* Footer */

@@ -182,20 +182,54 @@ counters.forEach(counter => {
     });
 });
 
-// Feature Cards Animation
-gsap.from('.feature-card', {
-    scrollTrigger: {
-        trigger: '.services-grid',
-        start: 'top 75%'
-    },
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    ease: 'power3.out'
-});
+// Load Services Section and Initialize Swiper
+fetch('what-we-offer.html')
+  .then(response => response.text())
+  .then(html => {
+    // Parse the fetched HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const servicesSection = doc.getElementById('services');
+    
+    // Inject only the services section
+    if (servicesSection) {
+      document.getElementById('services-container').innerHTML = servicesSection.outerHTML;
+      
+      // Initialize Swiper
+      new Swiper('.services-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        speed: 3000,
+        grabCursor: true,
+        allowTouchMove: false, 
+        autoplay: {
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: false,
+        },
+        breakpoints: {
+          320: {
+            spaceBetween: 20,
+          },
+          768: {
+            spaceBetween: 30,
+          },
+          1024: {
+            spaceBetween: 30,
+          },
+          1200: {
+            spaceBetween: 30,
+          }
+        }
+      });
+    }
+  })
+  .catch(err => console.error('Failed to load services:', err));
 
-// Magnetic Button Effect (Simple)
+// Magnetic Button Effect (Simple) - Disabled
+/*
 const btns = document.querySelectorAll('.cta-button');
 
 btns.forEach((btn) => {
@@ -211,3 +245,4 @@ btns.forEach((btn) => {
         btn.style.transform = 'translate(0px, 0px)';
     });
 });
+*/
