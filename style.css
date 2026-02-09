@@ -80,6 +80,14 @@ a {
   /* Text shadow breaks background clip */
   font-weight: 800;
 }
+/* Black gradient text utility */
+.text-black-gradient {
+  background: linear-gradient(135deg, var(--color-black-rich) 0%, #1b1b1b 50%, var(--color-black-soft) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
 
 .bg-black {
   background-color: var(--color-black-rich);
@@ -251,7 +259,8 @@ nav .nav-wrapper {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
   /* Add canvas or video here via JS */
 }
 
@@ -412,6 +421,7 @@ nav .nav-wrapper {
   background-color: var(--color-black-soft);
 }
 
+<<<<<<< Updated upstream
 /* Swiper Carousel Customization */
 .services-swiper {
   width: 100%;
@@ -427,6 +437,27 @@ nav .nav-wrapper {
   width: 220px !important;
   height: auto;
   transition: transform 0.3s;
+=======
+/* Override for single-color dark sections */
+.features-section.bg-black {
+  background-color: var(--color-black-rich);
+}
+
+/* Solid gold text inside black sections (no gradient) */
+.features-section.bg-black .text-gold {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Important names inside team overlay use gradient text */
+.features-section.bg-black .overlay-name strong {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+>>>>>>> Stashed changes
 }
 
 .feature-card-link {
@@ -533,6 +564,119 @@ nav .nav-wrapper {
   opacity: 1;
 }
 
+/* New Services Cards (dark theme, inspired by reference) */
+.service-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: transform 0.3s var(--transition-smooth), box-shadow 0.3s var(--transition-smooth), border-color 0.3s var(--transition-smooth);
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-gold-primary);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.08);
+}
+.service-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(212,175,55,0.45);
+  color: var(--color-gold-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(212,175,55,0.2);
+  margin-bottom: 1.25rem;
+}
+.service-icon-badge i {
+  font-size: 1.2rem;
+}
+.service-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  color: var(--color-white);
+}
+.service-desc {
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 1rem;
+}
+.service-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-gold-primary);
+  font-weight: 600;
+}
+.service-link:hover {
+  text-decoration: underline;
+}
+
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.package-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.package-popular {
+  border-color: var(--color-gold-primary);
+  box-shadow: 0 12px 24px rgba(212,175,55,0.25);
+}
+.package-badge {
+  display: inline-block;
+  background: var(--color-gold-primary);
+  color: var(--color-black-rich);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+.package-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+.package-price {
+  font-size: 1.6rem;
+  color: var(--color-white);
+  margin-bottom: 0.25rem;
+}
+.package-sub {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+}
+.package-features {
+  margin: 1rem 0 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+}
+.package-features li {
+  color: rgba(255,255,255,0.9);
+}
+.package-features i {
+  color: var(--color-gold-primary);
+  margin-right: 0.4rem;
+}
+.adv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.adv-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
 /* Footer */
 footer {
   padding: 5rem 0 2rem;
@@ -569,7 +713,69 @@ footer {
 }
 
 .contact-info p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Footer socials and newsletter */
+.footer-socials {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--color-white);
+  transition: all 0.3s var(--transition-smooth);
+}
+.footer-socials a:hover {
+  background: var(--color-gold-primary);
+  border-color: transparent;
+  color: var(--color-black-rich);
+  box-shadow: 0 0 12px rgba(212,175,55,0.35);
+}
+/* Footer logo sizing */
+.footer-logo {
+  margin-bottom: 0.8rem;
+}
+.footer-logo .logo-symbol {
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 1.6rem;
+}
+.footer-logo .logo-name {
+  font-size: 1.3rem;
+}
+.footer-logo .logo-tagline {
+  font-size: 0.58rem;
+}
+/* Spacing adjustments */
+.footer-links h4,
+.contact-info h4 {
+  margin-bottom: 1rem;
+}
+.footer-links li {
+  margin-bottom: 1rem;
+}
+/* Contact items with icons */
+.contact-item {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.contact-item i {
+  color: var(--color-gold-primary);
+  margin-top: 0.2rem;
+}
+.contact-info .contact-item div p {
+  margin-bottom: 0.2rem;
+  line-height: 1.4;
 }
 
 .copyright {
@@ -663,3 +869,262 @@ footer {
 
   /* Mobile nav implementation needed later */
 }
+<<<<<<< Updated upstream
+=======
+
+/* Page Hero (Subpages) */
+.page-hero {
+  height: 60vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black-rich);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.page-hero-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.page-hero h1 {
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+.about-hero .page-hero-content h1 {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.services-hero .page-hero-content h1 {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.seo-hero .page-hero-content h1 {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.about-hero {
+  background: radial-gradient(1000px 400px at 50% -200px, rgba(212,175,55,0.25) 0%, rgba(212,175,55,0.05) 40%, rgba(10,10,10,1) 100%);
+  padding-top: 7rem;
+}
+.services-hero {
+  background: radial-gradient(1000px 400px at 50% -200px, rgba(212,175,55,0.20) 0%, rgba(212,175,55,0.05) 40%, rgba(10,10,10,1) 100%);
+  padding-top: 7rem;
+}
+.seo-hero {
+  background: radial-gradient(1000px 400px at 50% -200px, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0.06) 40%, rgba(10,10,10,1) 100%);
+  padding-top: 7rem;
+}
+.about-hero .page-hero-content {
+  position: relative;
+  top: 40px;
+  text-align: center;
+}
+.divider {
+  width: 80px;
+  height: 3px;
+  background: var(--color-gold-primary);
+  border-radius: 2px;
+  margin: 0 auto 2rem;
+}
+.who-text {
+  font-size: 1.15rem;
+  max-width: 900px;
+  opacity: 0.9;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+.team-card {
+  background: var(--color-gold-primary);
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 2.5rem;
+  border-radius: 8px;
+  transition: transform 0.35s var(--transition-smooth), box-shadow 0.35s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  color: var(--color-black-rich);
+}
+.team-card .text-gold {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--color-black-rich);
+}
+.team-card .feature-title {
+  color: var(--color-black-rich);
+}
+.team-card p {
+  color: var(--color-black-rich);
+  opacity: 1;
+}
+.features-section.bg-black .team-card .text-gold {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--color-black-rich);
+}
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black-rich);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.avatar i {
+  font-size: 1.2rem;
+}
+.testimonial-quote {
+  font-size: 1.2rem;
+  max-width: 900px;
+  opacity: 0.9;
+}
+.team-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: var(--color-black-rich);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: none;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.4s var(--transition-smooth);
+}
+.team-card:hover .team-overlay,
+.team-card:focus-within .team-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+.overlay-top p {
+  color: var(--color-white);
+  margin-bottom: 1rem;
+  max-width: 28ch;
+}
+.overlay-socials {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+.overlay-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  color: var(--color-white);
+}
+.overlay-socials a i {
+  font-size: 0.9rem;
+}
+.overlay-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0,0,0,0.12);
+  border-radius: 6px;
+}
+.overlay-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-gold-primary);
+  color: var(--color-black-rich);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+.overlay-name strong {
+  color: var(--color-white);
+}
+.overlay-name span {
+  display: block;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.85rem;
+}
+.testimonial-author {
+  margin-top: 1rem;
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+}
+.testimonial-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 0 3rem;
+}
+.testimonial-track {
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
+  will-change: transform;
+}
+.testimonial-card {
+  background: var(--color-gold-primary);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 12px;
+  padding: 2.5rem 2.75rem;
+  min-width: min(820px, 90%);
+  margin: 0 auto;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+  color: var(--color-black-rich);
+}
+.testimonial-card .testimonial-quote {
+  max-width: 720px;
+  color: var(--color-black-rich);
+}
+.testimonial-card .testimonial-author {
+  margin-top: 1rem;
+  color: var(--color-black-rich);
+}
+.testimonial-card .text-gold {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--color-black-rich);
+}
+.hero-tags {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.85);
+}
+.hero-tags .tags-sep {
+  color: var(--color-gold-primary);
+}
+.hero-cta {
+  margin-top: 0.5rem;
+}
+>>>>>>> Stashed changes

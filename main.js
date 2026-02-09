@@ -14,13 +14,28 @@ const lenis = new Lenis({
     touchMultiplier: 2,
 })
 
-function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-}
+// Sync ScrollTrigger with Lenis
+lenis.on('scroll', ScrollTrigger.update);
 
-requestAnimationFrame(raf)
+// Add Lenis to GSAP Ticker for perfect synchronization
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // Convert to milliseconds
+});
 
+// Disable lag smoothing for smoother scroll
+gsap.ticker.lagSmoothing(0);
+
+const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
+const safeFrom = (selector, vars) => {
+    if (!exists(selector)) return;
+    const st = vars && vars.scrollTrigger;
+    if (st && typeof st.trigger === 'string' && !exists(st.trigger)) return;
+    gsap.from(selector, vars);
+};
+const safeTo = (selector, vars) => {
+    if (!exists(selector)) return;
+    gsap.to(selector, vars);
+};
 // Preloader
 window.addEventListener('load', () => {
     const tl = gsap.timeline();
@@ -60,15 +75,20 @@ window.addEventListener('load', () => {
 
 
 // Three.js Background Animation
-const initThreeJS = () => {
-    const container = document.getElementById('hero-canvas');
+const initThreeJS = (containerId = 'hero-canvas') => {
+    const container = document.getElementById(containerId);
     if (!container) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
@@ -116,23 +136,26 @@ const initThreeJS = () => {
         particlesMesh.rotation.y += mouseX * 0.1;
 
         renderer.render(scene, camera);
-        window.requestAnimationFrame(tick);
+    window.requestAnimationFrame(tick);
     }
 
     tick();
 
     // Resize
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(container.clientWidth, container.clientHeight);
     });
 };
 
-initThreeJS();
+initThreeJS('hero-canvas');
+initThreeJS('about-hero-canvas');
+initThreeJS('services-hero-canvas');
+initThreeJS('seo-hero-canvas');
 
 // Marquee Animation
-gsap.to('.marquee-content', {
+safeTo('.marquee-content', {
     xPercent: -50,
     ease: "none",
     duration: 20,
@@ -182,6 +205,7 @@ counters.forEach(counter => {
     });
 });
 
+<<<<<<< Updated upstream
 // Load Services Section and Initialize Swiper
 fetch('what-we-offer.html')
   .then(response => response.text())
@@ -230,6 +254,33 @@ fetch('what-we-offer.html')
 
 // Magnetic Button Effect (Simple) - Disabled
 /*
+=======
+// Feature Cards Animation
+safeFrom('.feature-card', {
+    scrollTrigger: {
+        trigger: '.services-grid',
+        start: 'top 75%'
+    },
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: 'power3.out'
+});
+
+safeFrom('.service-card', {
+    scrollTrigger: {
+        trigger: '.services-grid',
+        start: 'top 75%'
+    },
+    y: 60,
+    opacity: 0,
+    duration: 0.9,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+// Magnetic Button Effect (Simple)
+>>>>>>> Stashed changes
 const btns = document.querySelectorAll('.cta-button');
 
 btns.forEach((btn) => {
@@ -245,4 +296,200 @@ btns.forEach((btn) => {
         btn.style.transform = 'translate(0px, 0px)';
     });
 });
+<<<<<<< Updated upstream
 */
+=======
+
+safeFrom('.about-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.about-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+
+safeFrom('.services-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.services-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+
+safeFrom('.services-hero .hero-tags', {
+    scrollTrigger: {
+        trigger: '.services-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+
+safeFrom('.services-hero .hero-cta', {
+    scrollTrigger: {
+        trigger: '.services-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.2
+});
+safeFrom('.seo-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.seo-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+
+safeFrom('.seo-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.seo-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+
+safeFrom('.package-card', {
+    scrollTrigger: {
+        trigger: '.package-grid',
+        start: 'top 80%'
+    },
+    y: 60,
+    opacity: 0,
+    duration: 0.9,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+
+safeFrom('.adv-card', {
+    scrollTrigger: {
+        trigger: '.adv-grid',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+safeFrom('.about-hero .hero-tags', {
+    scrollTrigger: {
+        trigger: '.about-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+
+safeFrom('.about-hero .hero-cta', {
+    scrollTrigger: {
+        trigger: '.about-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.2
+});
+safeFrom('.who-text', {
+    scrollTrigger: {
+        trigger: '.who-text',
+        start: 'top 85%'
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out'
+});
+
+safeFrom('.team-card', {
+    scrollTrigger: {
+        trigger: '.team-grid',
+        start: 'top 75%'
+    },
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+
+safeFrom('.testimonial-quote', {
+    scrollTrigger: {
+        trigger: '.testimonial-quote',
+        start: 'top 85%'
+    },
+    y: 25,
+    opacity: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+});
+
+const initTestimonialCarousel = () => {
+    const carousel = document.querySelector('.testimonial-carousel');
+    if (!carousel) return;
+    const track = carousel.querySelector('.testimonial-track');
+    const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+    if (cards.length === 0) return;
+    let x = 0;
+    let running = false;
+    const speed = 2;
+    const getGap = () => parseFloat(getComputedStyle(track).gap || '0');
+    let gap = getGap();
+    const tick = () => {
+        const delta = gsap.ticker.deltaRatio();
+        x -= speed * delta;
+        track.style.transform = `translateX(${x}px)`;
+        const first = track.firstElementChild;
+        const w = first.getBoundingClientRect().width;
+        if (-x >= w + gap) {
+            track.appendChild(first);
+            x += w + gap;
+        }
+    };
+    ScrollTrigger.create({
+        trigger: carousel,
+        start: 'top 90%',
+        onEnter: () => {
+            if (!running) {
+                gsap.ticker.add(tick);
+                running = true;
+            }
+        },
+        onLeaveBack: () => {
+            if (running) {
+                gsap.ticker.remove(tick);
+                running = false;
+            }
+        }
+    });
+    window.addEventListener('resize', () => {
+        gap = getGap();
+    });
+};
+
+initTestimonialCarousel();
+>>>>>>> Stashed changes
