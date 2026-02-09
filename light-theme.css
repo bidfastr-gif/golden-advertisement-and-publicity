@@ -1,0 +1,270 @@
+@import url('./light-theme.css');
+
+/* Light Theme Styling */
+/* This file is active when data-theme="light" is set on the html element */
+
+:root[data-theme="light"] {
+  /* Refined Color Palette for Light Mode */
+  --color-black-rich: #ffffff; /* Main background - Pure White */
+  --color-black-soft: #f8f8f8; /* Secondary background - Very light gray/white */
+  --color-card-bg: #ffffff;
+  --color-white: #000000;      /* Main text color - Pure Black */
+  --color-gold-primary: #D4AF37; /* Original Gold */
+  --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #D4AF37 35%, #B38728 55%, #D4AF37 85%, #AA771C 100%);
+  --color-glass-surface: rgba(255, 255, 255, 0.9);
+  --color-glass-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Fix for Color Inversion (Blue issue) */
+[data-theme="light"] .hero-content {
+  mix-blend-mode: normal;
+  color: #000000;
+}
+
+[data-theme="light"] .hero-subtitle {
+  color: #333333;
+}
+
+/* Navbar Override */
+[data-theme="light"] nav {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .nav-link {
+  color: #000000; /* Pure Black */
+  font-weight: 600;
+}
+
+[data-theme="light"] .nav-link::after {
+  background: var(--color-gold-primary);
+}
+
+/* Logo Override */
+[data-theme="light"] .logo-symbol {
+  background: var(--color-gold-primary);
+  color: #ffffff; /* White text on Gold background */
+  box-shadow: none;
+}
+
+[data-theme="light"] .logo-name {
+  color: #000000; /* Black text */
+}
+
+[data-theme="light"] .logo-tagline {
+  color: #555555;
+  font-weight: 600;
+}
+
+/* Buttons Override */
+[data-theme="light"] .cta-button {
+  border-color: var(--color-gold-primary);
+  color: #000000; /* Black Text */
+  background: transparent;
+  font-weight: 700;
+}
+
+[data-theme="light"] .cta-button:hover {
+  background: var(--color-gold-primary);
+  color: #ffffff; /* White on Hover */
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  border-color: var(--color-gold-primary);
+}
+
+/* Footer - Keep it dark for contrast */
+[data-theme="light"] footer {
+  background: #000000;
+  color: #ffffff;
+  border-top: none;
+}
+
+[data-theme="light"] footer h2,
+[data-theme="light"] footer h4,
+[data-theme="light"] footer a {
+    color: #ffffff;
+}
+
+[data-theme="light"] footer p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .copyright {
+    border-top-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Theme Toggle Button */
+[data-theme="light"] .theme-toggle {
+    color: #000000; /* Black icon */
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    color: var(--color-gold-primary);
+    background: rgba(0,0,0,0.05);
+    border-radius: 50%;
+}
+
+/* Specific Section Overrides */
+[data-theme="light"] .features-section {
+    background-color: #f8f8f8;
+}
+
+[data-theme="light"] .stat-item {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .stat-number {
+    color: var(--color-gold-primary);
+}
+
+[data-theme="light"] .stat-label {
+    color: #000000;
+}
+
+[data-theme="light"] .card-dots span {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .card-dots span:nth-child(2) {
+    background: var(--color-gold-primary);
+}
+
+[data-theme="light"] .service-sidebar {
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+[data-theme="light"] .service-menu-link {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #000000;
+}
+
+[data-theme="light"] .service-menu-link:hover {
+    background: #f8f8f8;
+    border-color: var(--color-gold-primary);
+    color: #000000;
+}
+
+[data-theme="light"] .service-menu-link.active {
+    background: var(--color-gold-primary);
+    color: #ffffff;
+}
+
+/* Text Selection Color */
+[data-theme="light"] ::selection {
+  background: var(--color-gold-primary);
+  color: #ffffff;
+}
+
+/* Ensure Text Gold is visible and correct */
+[data-theme="light"] .text-gold {
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Fallback managed by background */
+  text-shadow: none;
+}
+
+[data-theme="light"] .tags-sep {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+/* Team Section Light Theme Overrides */
+[data-theme="light"] .team-card {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+[data-theme="light"] .team-card h3 {
+  color: #000000;
+}
+
+[data-theme="light"] .team-card p {
+  color: var(--color-gold-dark);
+}
+
+[data-theme="light"] .avatar {
+  background: #f8f8f8;
+}
+
+/* Testimonial Section Light Theme Overrides */
+[data-theme="light"] .testimonial-card {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+[data-theme="light"] .testimonial-quote {
+  color: #333333;
+}
+
+[data-theme="light"] .testimonial-author {
+  color: #666666;
+}
+
+/* Services Light Theme */
+[data-theme="light"] .service-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .service-card:hover {
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+}
+
+[data-theme="light"] .service-title {
+    color: #000000;
+}
+
+[data-theme="light"] .service-desc {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* SEO / Service Page Overrides */
+
+[data-theme="light"] .step-circle {
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    color: var(--color-gold-primary);
+}
+
+[data-theme="light"] .workflow-step:hover .step-circle {
+    color: #ffffff;
+}
+
+[data-theme="light"] .package-card {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+[data-theme="light"] .package-card:hover {
+    border-color: transparent;
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+}
+
+[data-theme="light"] .package-name {
+    color: #000000;
+}
+
+[data-theme="light"] .package-sub {
+    color: rgba(0,0,0,0.6);
+}
+
+[data-theme="light"] .package-features li {
+    color: rgba(0,0,0,0.7);
+}
+
+[data-theme="light"] .adv-card {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.05);
+}
+
+[data-theme="light"] .adv-card:hover {
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+}
