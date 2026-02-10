@@ -42,7 +42,7 @@
           <a href="./index.html" class="nav-link">Home</a>
           <a href="./about.html" class="nav-link">About Us</a>
           <a href="./services.html" class="nav-link">Services</a>
-          <a href="./training.html" class="nav-link">Training</a>
+          <a href="./case-study.html" class="nav-link">Case Study</a>
           <a href="./contact.html" class="nav-link">Contact Us</a>
         </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -84,46 +84,106 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="about-section bg-black">
+  <section class="workflow-section">
     <div class="container">
-      <span class="section-label">Who We Are</span>
-      <div class="about-grid">
-        <div class="about-text">
-          <h2>Crafting The <span class="text-gold">Extraordinary</span></h2>
-          <div data-reveal-text>
-            <p>
-              Golden Advertising & Publicity is a premier digital agency based in Chennai. We don't just build websites;
-              we build legacies. Inspired by the relentless pursuit of perfection, we blend creative storytelling with
-              cutting-edge technology to propel your brand forward.
-            </p>
-            <br>
-            <p>
-              Our philosophy is simple: Average is not an option. From branding to performance marketing, we ensure
-              every touchpoint is golden.
-            </p>
+      <span class="section-label">It's Perfect Way</span>
+      <h2 style="text-align: center; margin-bottom: 2rem;">How Does GAP <span class="text-gold">Work</span></h2>
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-circle">1</div>
+          <div>
+            <h3 style="margin-bottom: 0.4rem;">Planning</h3>
+            <p>Get your unique plan tailored to your goals.</p>
           </div>
         </div>
-        <div class="about-stats">
-          <div class="stat-item">
-            <span class="stat-number" data-count="10">0</span>
-            <span class="stat-label">Years of Experience</span>
+        <div class="workflow-connector"></div>
+        <div class="workflow-step">
+          <div class="step-circle">2</div>
+          <div>
+            <h3 style="margin-bottom: 0.4rem;">Development</h3>
+            <p>We build according to the strategy and plan.</p>
           </div>
-          <div class="stat-item">
-            <span class="stat-number" data-count="150">0</span>
-            <span class="stat-label">Projects Completed</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number" data-count="98">0</span>
-            <span class="stat-label">% Client Retention</span>
+        </div>
+        <div class="workflow-connector"></div>
+        <div class="workflow-step">
+          <div class="step-circle">3</div>
+          <div>
+            <h3 style="margin-bottom: 0.4rem;">Launching</h3>
+            <p>We deliver on time and measure performance.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <section class="marquee-section stats-banner">
+    <div class="marquee-content" aria-label="Company stats marquee">
+      <span class="marquee-item">10+ Years of Experience • 564+ Projects Completed • 98% Client Retention</span>
+      <span class="marquee-item">10+ Years of Experience • 564+ Projects Completed • 98% Client Retention</span>
+    </div>
+  </section>
+
+  <section class="features-section bg-black projects-section" style="padding: 6rem 0;">
+    <div class="container">
+      <div class="projects-top" style="display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 2.4rem;">Projects <span class="text-gold">Done</span></h2>
+        <a href="./services.html" class="cta-button cta-button--light"><span class="btn-text">Explore All</span></a>
+      </div>
+      <div class="projects-grid">
+        <div class="image-card tilt">
+          <img src="./assets/projects/1.png" alt="Branding">
+          <div class="project-caption"><span>Branding</span></div>
+        </div>
+        <div class="image-card tilt">
+          <img src="./assets/projects/2.png" alt="Restaurant">
+          <div class="project-caption"><span>Restaurant</span></div>
+        </div>
+        <div class="image-card tilt">
+          <img src="./assets/projects/3.png" alt="Signboard">
+          <div class="project-caption"><span>Signboard</span></div>
+        </div>
+        <div class="image-card tilt">
+          <img src="./assets/projects/4.png" alt="Brochure">
+          <div class="project-caption"><span>Brochure</span></div>
+        </div>
+        <div class="image-card tilt">
+          <img src="./assets/projects/5.png" alt="Web Design">
+          <div class="project-caption"><span>Web Design</span></div>
+        </div>
+        <div class="image-card tilt">
+          <img src="./assets/projects/6.png" alt="Poster">
+          <div class="project-caption"><span>Poster</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- Services Section (Loaded dynamically) -->
   <div id="services-container"></div>
+
+  <!-- Our Partners -->
+  <section class="features-section bg-black partners-section" style="padding: 6rem 0;">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our Partners</div>
+      <h2 style="text-align:center; margin-bottom: 2.5rem; font-size: 2.6rem;">Customers who <span class="text-gold">love us</span></h2>
+      <div class="swiper partners-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10"></div></div>
+          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Contact Section -->
   <section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
@@ -166,7 +226,7 @@
           <ul>
             <li><a href="./about.html">About</a></li>
             <li><a href="./services.html">Services</a></li>
-            <li><a href="./training.html">Training</a></li>
+            <li><a href="./case-study.html">Case Study</a></li>
             <li><a href="./contact.html">Contact</a></li>
           </ul>
         </div>

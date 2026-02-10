@@ -2,6 +2,43 @@
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Theme Toggle (Persistent across pages, mobile-friendly)
+;(() => {
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const sunIcon = toggle ? toggle.querySelector('.sun-icon') : null;
+    const moonIcon = toggle ? toggle.querySelector('.moon-icon') : null;
+    const setTheme = (theme) => {
+        root.setAttribute('data-theme', theme);
+        try { localStorage.setItem('gap-theme', theme); } catch (_) {}
+        if (sunIcon && moonIcon) {
+            if (theme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = '';
+            } else {
+                sunIcon.style.display = '';
+                moonIcon.style.display = 'none';
+            }
+        }
+        try {
+            window.dispatchEvent(new CustomEvent('gap-theme-change', { detail: { theme } }));
+        } catch (_) {}
+    };
+    const initTheme = () => {
+        let saved = null;
+        try { saved = localStorage.getItem('gap-theme'); } catch (_) {}
+        const preferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        setTheme(saved || preferred || 'dark');
+    };
+    initTheme();
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            const current = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            setTheme(current);
+        });
+    }
+})();
+
 // Initialize Smooth Scroll
 const lenis = new Lenis({
     duration: 1.2,
@@ -104,10 +141,11 @@ const initThreeJS = (containerId = 'hero-canvas') => {
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    // Gold Color Material
+    // Particle Material (theme-aware)
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     const material = new THREE.PointsMaterial({
         size: 0.015,
-        color: 0xD4AF37, // Gold
+        color: isLight ? 0x0D0D0D : 0xD4AF37,
         transparent: true,
         opacity: 0.8,
     });
@@ -147,6 +185,16 @@ const initThreeJS = (containerId = 'hero-canvas') => {
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
+
+    // React to theme changes
+    window.addEventListener('gap-theme-change', (e) => {
+        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
+        const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
+        try {
+            material.color.set(nextColor);
+            material.needsUpdate = true;
+        } catch (_) {}
+    });
 };
 
 initThreeJS('hero-canvas');
@@ -162,6 +210,8 @@ initThreeJS('logo-hero-canvas');
 initThreeJS('brochure-hero-canvas');
 initThreeJS('newspaper-hero-canvas');
 initThreeJS('fm-hero-canvas');
+initThreeJS('case-study-hero-canvas');
+initThreeJS('contact-hero-canvas');
 
 // Marquee Animation
 safeTo('.marquee-content', {
@@ -238,6 +288,46 @@ fetch('what-we-offer.html')
   })
   .catch(err => console.error('Failed to load services:', err));
 
+// Initialize Projects slider (continuous auto scroll)
+(() => {
+  const el = document.querySelector('.projects-swiper');
+  if (el) {
+    new Swiper('.projects-swiper', {
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      centeredSlides: false,
+      loop: true,
+      loopAdditionalSlides: 8,
+      speed: 6000,
+      freeMode: true,
+      freeModeMomentum: false,
+      grabCursor: false,
+      allowTouchMove: false,
+      autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
+    });
+  }
+})();
+
+// Initialize Partners slider (continuous auto scroll)
+(() => {
+  const el = document.querySelector('.partners-swiper');
+  if (el) {
+    new Swiper('.partners-swiper', {
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      centeredSlides: false,
+      loop: true,
+      loopAdditionalSlides: 12,
+      speed: 6000,
+      freeMode: true,
+      freeModeMomentum: false,
+      grabCursor: false,
+      allowTouchMove: false,
+      autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
+    });
+  }
+})();
+
 // Feature Cards Animation
 safeFrom('.feature-card', {
     scrollTrigger: { trigger: '.services-grid', start: 'top 75%' },
@@ -254,6 +344,19 @@ safeFrom('.service-card', {
     opacity: 0,
     duration: 0.9,
     stagger: 0.15,
+    ease: 'power3.out'
+});
+safeFrom('.workflow-step', {
+    scrollTrigger: { trigger: '.workflow-section', start: 'top 95%' },
+    y: 40,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out'
+});
+safeTo('.workflow-connector', {
+    scrollTrigger: { trigger: '.workflow-section', start: 'top 95%' },
+    scaleX: 1,
+    duration: 1,
     ease: 'power3.out'
 });
  
@@ -569,6 +672,48 @@ safeFrom('.fm-hero .hero-contacts .cta-button', {
     ease: 'power3.out',
     stagger: 0.1,
     delay: 0.15
+});
+safeFrom('.case-study-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.case-study-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.case-study-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.case-study-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
+});
+safeFrom('.contact-hero .page-hero-content h1', {
+    scrollTrigger: {
+        trigger: '.contact-hero',
+        start: 'top 80%'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out'
+});
+safeFrom('.contact-hero .hero-subtitle', {
+    scrollTrigger: {
+        trigger: '.contact-hero',
+        start: 'top 80%'
+    },
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    delay: 0.1
 });
 safeFrom('.adv-list li', {
     scrollTrigger: {
