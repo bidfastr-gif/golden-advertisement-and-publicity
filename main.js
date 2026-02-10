@@ -73,6 +73,26 @@ const safeTo = (selector, vars) => {
     if (!exists(selector)) return;
     gsap.to(selector, vars);
 };
+const initTicker = (selector, duration = 40) => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    const wrapper = el.querySelector('.swiper-wrapper');
+    if (!wrapper) return;
+    if (!wrapper.dataset.tickerCloned) {
+        wrapper.innerHTML += wrapper.innerHTML;
+        wrapper.dataset.tickerCloned = 'true';
+    }
+    const half = wrapper.scrollWidth / 2;
+    gsap.killTweensOf(wrapper);
+    gsap.set(wrapper, { x: 0 });
+    gsap.to(wrapper, { x: -half, duration, ease: 'none', repeat: -1 });
+    window.addEventListener('resize', () => {
+        const h = wrapper.scrollWidth / 2;
+        gsap.killTweensOf(wrapper);
+        gsap.set(wrapper, { x: 0 });
+        gsap.to(wrapper, { x: -h, duration, ease: 'none', repeat: -1 });
+    });
+};
 // Preloader
 window.addEventListener('load', () => {
     const tl = gsap.timeline();
@@ -278,7 +298,7 @@ fetch('what-we-offer.html')
         slidesPerView: 'auto',
         spaceBetween: 30,
         centeredSlides: true,
-        loop: true,
+        loop: false,
         speed: 3000,
         grabCursor: true,
         allowTouchMove: false, 
@@ -288,44 +308,12 @@ fetch('what-we-offer.html')
   })
   .catch(err => console.error('Failed to load services:', err));
 
-// Initialize Projects slider (continuous auto scroll)
 (() => {
-  const el = document.querySelector('.projects-swiper');
-  if (el) {
-    new Swiper('.projects-swiper', {
-      slidesPerView: 'auto',
-      spaceBetween: 30,
-      centeredSlides: false,
-      loop: true,
-      loopAdditionalSlides: 8,
-      speed: 6000,
-      freeMode: true,
-      freeModeMomentum: false,
-      grabCursor: false,
-      allowTouchMove: false,
-      autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
-    });
-  }
+  initTicker('.projects-swiper', 40);
 })();
 
-// Initialize Partners slider (continuous auto scroll)
 (() => {
-  const el = document.querySelector('.partners-swiper');
-  if (el) {
-    new Swiper('.partners-swiper', {
-      slidesPerView: 'auto',
-      spaceBetween: 30,
-      centeredSlides: false,
-      loop: true,
-      loopAdditionalSlides: 12,
-      speed: 6000,
-      freeMode: true,
-      freeModeMomentum: false,
-      grabCursor: false,
-      allowTouchMove: false,
-      autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
-    });
-  }
+  initTicker('.partners-swiper', 40);
 })();
 
 // Feature Cards Animation
