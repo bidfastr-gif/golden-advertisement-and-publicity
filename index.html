@@ -37,7 +37,7 @@
           <span class="logo-tagline">Golden Advertising & Publicity</span>
         </div>
       </a>
-      <div style="display: flex; align-items: center;">
+      <div class="nav-actions">
         <div class="nav-links">
           <a href="./index.html" class="nav-link">Home</a>
           <a href="./about.html" class="nav-link">About Us</a>
@@ -46,8 +46,13 @@
           <a href="./contact.html" class="nav-link">Contact Us</a>
         </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="moon-icon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <div class="switch-icon moon-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+          <div class="switch-icon sun-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </div>
+          <div class="switch-thumb"></div>
         </button>
       </div>
     </div>
@@ -57,18 +62,19 @@
   <section class="hero">
     <div class="hero-background" id="hero-canvas"></div>
     <div class="container hero-content">
-        <h1 class="hero-title">
-          <span class="line">Hello!</span>
-          <span class="line">We Are GAP</span>
-          <span class="line text-gold">Digital Marketing</span>
-          <span class="line">Company in Chennai</span>
-        </h1>
+      <h1 class="hero-title">
+        <span class="line">Hello!</span>
+        <span class="line">We Are GAP</span>
+        <span class="line text-gold">Digital Marketing</span>
+        <span class="line">Company in Chennai</span>
+      </h1>
       <p class="hero-subtitle">
         A 360° Marketing Solution for all your Business Needs.
       </p>
       <div class="hero-ctas">
-            <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us Today!</span></a>
-            <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
+        <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us
+            Today!</span></a>
+        <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
           <a href="tel:+919840261727" style="display: block; margin-bottom: 0.5rem;">
             <span class="text-gold" style="margin-right: 10px;">📞</span> +91 98402 61727
           </a>
@@ -125,7 +131,8 @@
 
   <section class="features-section bg-black projects-section" style="padding: 6rem 0;">
     <div class="container">
-      <div class="projects-top" style="display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 2rem;">
+      <div class="projects-top"
+        style="display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 2rem;">
         <h2 style="font-size: 2.4rem;">Projects <span class="text-gold">Done</span></h2>
         <a href="./services.html" class="cta-button cta-button--light"><span class="btn-text">Explore All</span></a>
       </div>
@@ -165,21 +172,45 @@
   <!-- Our Partners -->
   <section class="features-section bg-black partners-section" style="padding: 6rem 0;">
     <div class="container">
-      <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our Partners</div>
-      <h2 style="text-align:center; margin-bottom: 2.5rem; font-size: 2.6rem;">Customers who <span class="text-gold">love us</span></h2>
+      <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our
+        Partners</div>
+      <h2 style="text-align:center; margin-bottom: 2.5rem; font-size: 2.6rem;">Customers who <span
+          class="text-gold">love us</span></h2>
       <div class="swiper partners-swiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10"></div></div>
-          <div class="swiper-slide"><div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11"></div></div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10"></div>
+          </div>
+          <div class="swiper-slide">
+            <div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -194,7 +225,8 @@
         <p style="margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
           Let's create something exceptional together. Reach out to us for a consultation.
         </p>
-        <a href="mailto:contact@goldenadvertising.in" class="cta-button cta-button--outline"><span class="btn-text">Start a Project</span></a>
+        <a href="mailto:contact@goldenadvertising.in" class="cta-button cta-button--outline"><span
+            class="btn-text">Start a Project</span></a>
       </div>
     </div>
   </section>

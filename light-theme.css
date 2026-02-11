@@ -95,14 +95,15 @@
 }
 
 /* Theme Toggle Button */
-[data-theme="light"] .theme-toggle {
-    color: #000000; /* Black icon */
+[data-theme="light"] nav .theme-toggle {
+  background: #0A0A0A;
+  color: #D4AF37;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 [data-theme="light"] .theme-toggle:hover {
     color: var(--color-gold-primary);
-    background: rgba(0,0,0,0.05);
-    border-radius: 50%;
+    border-color: var(--color-gold-primary);
 }
 
 /* Specific Section Overrides */
