@@ -69,27 +69,15 @@ const setupReveal = (selector) => {
 };
 
 const safeFrom = (selector, vars) => {
-    if (!exists(selector)) return;
-    const st = vars && vars.scrollTrigger;
-    if (st && typeof st.trigger === 'string' && !exists(st.trigger)) return;
-    const sel = typeof selector === 'string' ? selector : '';
-    if (sel.includes('.marquee-content') || sel.includes('.workflow-connector')) return;
-    const finalVars = { ...(vars || {}) };
-    if (finalVars.scrollTrigger) {
-        finalVars.scrollTrigger = { ...finalVars.scrollTrigger };
-        if (!finalVars.scrollTrigger.end) finalVars.scrollTrigger.end = 'center center';
-    }
-    try { gsap.from(selector, finalVars); } catch (_) { }
-    setupReveal(selector);
+    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!els || els.length === 0) return;
+    els.forEach(el => el.classList.add('is-visible'));
 };
 
 const safeTo = (selector, vars) => {
-    if (!exists(selector)) return;
-    const sel = typeof selector === 'string' ? selector : '';
-    if (sel.includes('.marquee-content') || sel.includes('.workflow-connector')) {
-        return;
-    }
-    try { gsap.to(selector, vars); } catch (_) { }
+    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!els || els.length === 0) return;
+    els.forEach(el => el.classList.add('is-visible'));
 };
 
 const initTicker = (selector, duration = 40) => {
@@ -309,41 +297,7 @@ counters.forEach(counter => {
 
 // Reusable 3D Scroll Effect Function
 const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
-    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!elements || elements.length === 0) return;
-
-    elements.forEach((el, i) => {
-        if (el.closest('footer')) return;
-        // Kill existing tweens to avoid conflicts
-        gsap.killTweensOf(el);
-        
-        gsap.fromTo(el, 
-            { y: 100, opacity: 0, rotationX: 15, transformPerspective: 1000 },
-            {
-                scrollTrigger: { 
-                    trigger: el, 
-                    start: 'top 90%',
-                    scrub: 1,
-                    end: 'center center'
-                },
-                y: 0, 
-                opacity: 1, 
-                rotationX: 0,
-                ease: 'none',
-                delay: stagger ? i * stagger : 0
-            }
-        );
-        
-        if (withHover) {
-            // Add hover effect via JS for smoother interaction
-            el.addEventListener('mouseenter', () => {
-                gsap.to(el, { scale: 1.05, duration: 0.4, ease: 'power2.out' });
-            });
-            el.addEventListener('mouseleave', () => {
-                gsap.to(el, { scale: 1, duration: 0.4, ease: 'power2.out' });
-            });
-        }
-    });
+    return;
 };
 
 // Load Services Section and Initialize Swiper
