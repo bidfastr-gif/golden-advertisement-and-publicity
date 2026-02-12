@@ -838,6 +838,11 @@ nav .theme-toggle {
 
 .partners-swiper .swiper-wrapper {
   transition-timing-function: linear;
+  gap: 5px;
+}
+
+.partners-swiper {
+  overflow: hidden !important;
 }
 
 .swiper-slide {
@@ -850,6 +855,8 @@ nav .theme-toggle {
 .partners-swiper .swiper-wrapper.is-ticker {
   will-change: transform;
   animation: marquee-linear var(--ticker-duration, 40s) linear infinite;
+  display: inline-flex;
+  width: max-content;
 }
 
 /* Override for single-color dark sections */

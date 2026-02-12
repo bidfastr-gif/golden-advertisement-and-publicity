@@ -72,6 +72,14 @@ const safeFrom = (selector, vars) => {
     if (!exists(selector)) return;
     const st = vars && vars.scrollTrigger;
     if (st && typeof st.trigger === 'string' && !exists(st.trigger)) return;
+    const sel = typeof selector === 'string' ? selector : '';
+    if (sel.includes('.marquee-content') || sel.includes('.workflow-connector')) return;
+    const finalVars = { ...(vars || {}) };
+    if (finalVars.scrollTrigger) {
+        finalVars.scrollTrigger = { ...finalVars.scrollTrigger };
+        if (!finalVars.scrollTrigger.end) finalVars.scrollTrigger.end = 'center center';
+    }
+    try { gsap.from(selector, finalVars); } catch (_) { }
     setupReveal(selector);
 };
 
@@ -316,7 +324,7 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
                     trigger: el, 
                     start: 'top 90%',
                     scrub: 1,
-                    end: 'top 60%'
+                    end: 'center center'
                 },
                 y: 0, 
                 opacity: 1, 
@@ -359,7 +367,7 @@ fetch('what-we-offer.html')
                     loopAdditionalSlides: 10,
                     freeMode: true,
                     freeModeMomentum: false,
-                    speed: 3000,
+                    speed: 1200,
                     grabCursor: true,
                     allowTouchMove: true,
                     autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
@@ -380,7 +388,7 @@ fetch('what-we-offer.html')
 })();
 
 (() => {
-    initTicker('.partners-swiper', 11);
+    initTicker('.partners-swiper', 20);
 })();
 
 // Replaced Workflow Animation with 3D Effect
@@ -1180,7 +1188,7 @@ apply3DScrollEffect('.stat-item');
 apply3DScrollEffect('.anim-card');
 apply3DScrollEffect('.testimonial-card');
 // Partners and Contact sections
-apply3DScrollEffect('.partners-swiper .partner-logo');
+// Skip 3D effect on partners to keep ticker smooth
 apply3DScrollEffect('#contact p', 0, false);
 apply3DScrollEffect('#contact .cta-button', 0, true);
 
