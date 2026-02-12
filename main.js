@@ -388,15 +388,14 @@ fetch('what-we-offer.html')
 })();
 
 (() => {
-    initTicker('.partners-swiper', 20);
+    initTicker('.partners-swiper', 11);
 })();
 
-// Replaced Workflow Animation with 3D Effect
-apply3DScrollEffect('.workflow-step');
-// Connector line reveal via CSS
-safeFrom('.workflow-connector', {
-    scrollTrigger: { trigger: '.workflow-section', start: 'top 95%' }
+const wfTl = gsap.timeline({
+    scrollTrigger: { trigger: '.workflow-section', start: 'top 85%', toggleActions: 'play none none none' }
 });
+wfTl.from('.workflow-step', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.15 });
+wfTl.to('.workflow-connector', { scaleX: 1, duration: 0.8, ease: 'power2.out', stagger: 0.15 }, '<');
 
 safeFrom('.hero .hero-subtitle');
 

@@ -241,7 +241,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 2rem 0;
+  padding: 0.8rem 0;
   z-index: 100;
   z-index: 100;
   background: rgba(10, 10, 10, 0.85);
@@ -264,27 +264,36 @@ nav .nav-wrapper {
   position: relative;
 }
 
+nav .container {
+  padding-left: 0;
+  width: 96%;
+}
+
 /* Logo Styles */
 .logo-brand {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0;
   text-decoration: none;
   color: white;
 }
 
 .logo-symbol {
-  width: 3rem;
-  height: 3rem;
-  background: var(--color-gold-primary);
-  color: var(--color-black-rich);
+  width: 11rem;
+  height: 8rem;
+  background: none;
+  background-image: url('./assets/golden_logo.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.8rem;
-  transform: rotate(-10deg);
+  font-size: 0;
+  transform: none;
   border-radius: 2px;
 }
 
@@ -311,6 +320,14 @@ nav .nav-wrapper {
   color: var(--color-gold-light);
   opacity: 0.8;
   margin-top: 2px;
+}
+
+.logo-brand .logo-details {
+  display: none;
+}
+
+.nav-wrapper .logo-symbol {
+  height: 6rem;
 }
 
 .nav-actions {
@@ -1357,6 +1374,12 @@ nav .theme-toggle {
   justify-self: stretch;
 }
 
+.workflow-step > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .step-circle {
   width: 56px;
   height: 56px;
@@ -1683,9 +1706,8 @@ footer {
 }
 
 .footer-logo .logo-symbol {
-  width: 2.6rem;
-  height: 2.6rem;
-  font-size: 1.6rem;
+  width: 8rem;
+  height: 8rem;
 }
 
 .footer-logo .logo-name {
