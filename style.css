@@ -251,6 +251,12 @@ nav {
   transition: padding 0.3s ease;
 }
 
+/* Light theme: keep navbar black */
+[data-theme="light"] nav {
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
 nav .nav-wrapper {
   display: flex;
   justify-content: space-between;
@@ -1222,6 +1228,15 @@ nav .theme-toggle {
 
 .projects-section .image-card {
   min-height: 180px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.projects-section .image-card img {
+  width: calc(100% - 40px);
+  height: calc(100% - 120px);
+  margin: 20px;
 }
 
 .project-caption {
@@ -1234,6 +1249,10 @@ nav .theme-toggle {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-white);
+}
+
+.projects-section .project-caption {
+  display: none;
 }
 
 [data-theme="light"] .project-caption {
@@ -1585,6 +1604,11 @@ footer {
   padding: 5rem 0 2rem;
   background: var(--color-black-rich);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] footer {
+  background: #000000;
+  border-top-color: rgba(255, 255, 255, 0.12);
 }
 
 .footer-content {

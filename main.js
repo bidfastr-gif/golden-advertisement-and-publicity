@@ -354,12 +354,15 @@ fetch('what-we-offer.html')
                 new Swiper('.services-swiper', {
                     slidesPerView: 'auto',
                     spaceBetween: 30,
-                    centeredSlides: true,
-                    loop: false,
+                    centeredSlides: false,
+                    loop: true,
+                    loopAdditionalSlides: 10,
+                    freeMode: true,
+                    freeModeMomentum: false,
                     speed: 3000,
                     grabCursor: true,
-                    allowTouchMove: true, // Changed to true for better UX
-                    autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }, // Changed to true
+                    allowTouchMove: true,
+                    autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
                 });
 
                 // Apply 3D Scroll Animation to Service Cards
@@ -377,7 +380,7 @@ fetch('what-we-offer.html')
 })();
 
 (() => {
-    initTicker('.partners-swiper', 40);
+    initTicker('.partners-swiper', 11);
 })();
 
 // Replaced Workflow Animation with 3D Effect
