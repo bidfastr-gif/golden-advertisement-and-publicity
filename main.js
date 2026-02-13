@@ -29,34 +29,17 @@ gsap.registerPlugin(ScrollTrigger)
         }
     })();
 
-    // Mobile Nav Toggle
-    const nav = document.querySelector('nav');
-    const navToggle = document.getElementById('nav-toggle');
-    const links = document.querySelectorAll('.nav-links .nav-link');
-    if (nav && navToggle) {
-        const closeMenu = () => {
-            nav.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', 'false');
-        };
-        navToggle.addEventListener('click', () => {
-            const isOpen = nav.classList.toggle('open');
-            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-        links.forEach(a => a.addEventListener('click', closeMenu));
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) closeMenu();
-        });
-    }
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.35,
+    duration: 1.5,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 0.9,
+    mouseMultiplier: 1,
     smoothTouch: false,
     touchMultiplier: 2,
+    infinite: false,
 })
 
 // Sync ScrollTrigger with Lenis
@@ -68,6 +51,12 @@ gsap.ticker.add((time) => {
 });
 
 gsap.ticker.lagSmoothing(500, 33);
+
+// Set default GSAP ease for all animations
+gsap.defaults({
+    ease: "power3.out",
+    duration: 1.2
+});
 
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
@@ -412,11 +401,63 @@ fetch('what-we-offer.html')
     initTicker('.partners-swiper', 11);
 })();
 
-const wfTl = gsap.timeline({
-    scrollTrigger: { trigger: '.workflow-section', start: 'top 85%', toggleActions: 'play none none none' }
-});
-wfTl.from('.workflow-step', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.15 });
-wfTl.to('.workflow-connector', { scaleX: 1, duration: 0.8, ease: 'power2.out', stagger: 0.15 }, '<');
+// Unified Workflow Section Animation
+(() => {
+    const sections = document.querySelectorAll('.workflow-section');
+    if (sections.length === 0) return;
+
+    sections.forEach(section => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            }
+        });
+
+        const label = section.querySelector('.section-label');
+        const heading = section.querySelector('h2');
+        const steps = section.querySelectorAll('.workflow-step');
+        const connectors = section.querySelectorAll('.workflow-connector');
+
+        if (label) {
+            tl.from(label, {
+                y: 20,
+                opacity: 0,
+                duration: 0.6,
+                ease: 'power2.out'
+            });
+        }
+
+        if (heading) {
+            tl.from(heading, {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, label ? '-=0.4' : '0');
+        }
+
+        if (steps.length > 0) {
+            tl.from(steps, {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: 'back.out(1.2)'
+            }, '-=0.2');
+        }
+
+        if (connectors.length > 0) {
+            tl.to(connectors, {
+                scaleX: 1,
+                duration: 1,
+                stagger: 0.3,
+                ease: 'expo.out'
+            }, '-=0.8');
+        }
+    });
+})();
 
 safeFrom('.hero .hero-subtitle');
 
@@ -829,44 +870,24 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     stagger: 0.1,
     delay: 0.15
 });
-(() => {
-    const triggerEl = document.querySelector('.projects-grid') || document.querySelector('.image-grid');
-    if (!triggerEl) return;
-    safeFrom('.image-card', {
-        scrollTrigger: {
-            trigger: triggerEl,
-            start: 'top 85%'
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out'
-    });
+;(() => {
+    const imageGrid = document.querySelector('.image-grid');
+    if (imageGrid) {
+        safeFrom('.image-card', {
+            scrollTrigger: {
+                trigger: imageGrid,
+                start: 'top 85%'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+    }
 })();
 
-safeFrom('.workflow-step', {
-    scrollTrigger: {
-        trigger: '.workflow-section',
-        start: 'top 80%'
-    },
-    y: 40,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.25,
-    ease: 'power3.out'
-});
-
-safeTo('.workflow-connector', {
-    scrollTrigger: {
-        trigger: '.workflow-section',
-        start: 'top 80%'
-    },
-    scaleX: 1,
-    duration: 1,
-    stagger: 0.25,
-    ease: 'power3.out'
-});
+// Workflow section safeFrom handled in unified animation
 ; (() => {
     const newsSvg1 = document.querySelector('.newspaper-illustration svg');
     const newsSvg2 = document.querySelector('.newspaper-illustration-2 svg');
@@ -1199,14 +1220,13 @@ safeTo('.workflow-connector', {
 // Apply 3D effect to all card types across the project
 apply3DScrollEffect('.package-card');
 apply3DScrollEffect('.adv-card');
-apply3DScrollEffect('.team-card');
 apply3DScrollEffect('.service-card');
 apply3DScrollEffect('.case-study-card');
 apply3DScrollEffect('.blog-card');
 apply3DScrollEffect('.feature-card');
 apply3DScrollEffect('.contact-card');
 apply3DScrollEffect('.contact-form-card');
-apply3DScrollEffect('.workflow-step');
+// apply3DScrollEffect('.workflow-step'); removed for unified entrance animation
 apply3DScrollEffect('.image-card');
 apply3DScrollEffect('.stat-item');
 apply3DScrollEffect('.anim-card');
@@ -1254,34 +1274,8 @@ safeFrom('.about-hero .hero-cta', {
     delay: 0.2
 });
 
-safeFrom('.team-card', {
-    scrollTrigger: {
-        trigger: '.team-grid',
-        start: 'top 75%'
-    },
-    y: 60,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.15,
-    ease: 'power3.out'
-});
 
 // Dedicated Team Section reveal (ensures smooth stagger and avoids overlap)
-(() => {
-    const grid = document.querySelector('.team-grid');
-    if (!grid) return;
-    gsap.timeline({
-        scrollTrigger: { trigger: grid, start: 'top 85%' }
-    })
-    .from(grid.querySelectorAll('.team-card'), {
-        y: 28,
-        opacity: 0,
-        scale: 0.985,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: 0.15
-    });
-})();
 const initTestimonialCarousel = () => {
     const carousel = document.querySelector('.testimonial-carousel');
     if (!carousel) return;
@@ -1436,18 +1430,7 @@ initTestimonialCarousel();
         });
     };
 
-    // Workflow Section - Line Drawing Animation
-    // Animate connector lines drawing
-    gsap.fromTo('.workflow-connector', 
-        { scaleX: 0, transformOrigin: 'left center' },
-        { 
-            scrollTrigger: { trigger: '.workflow-steps', start: 'top 75%' },
-            scaleX: 1, 
-            duration: 1.5, 
-            ease: 'expo.out',
-            stagger: 0.3
-        }
-    );
+// Workflow section animation handled by unified logic below
     
     // Workflow Steps Animation handled by apply3DScrollEffect() in main scope
 
