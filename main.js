@@ -29,6 +29,24 @@ gsap.registerPlugin(ScrollTrigger)
         }
     })();
 
+    // Mobile Nav Toggle
+    const nav = document.querySelector('nav');
+    const navToggle = document.getElementById('nav-toggle');
+    const links = document.querySelectorAll('.nav-links .nav-link');
+    if (nav && navToggle) {
+        const closeMenu = () => {
+            nav.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+        };
+        navToggle.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        links.forEach(a => a.addEventListener('click', closeMenu));
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeMenu();
+        });
+    }
 // Initialize Smooth Scroll
 const lenis = new Lenis({
     duration: 1.35,
@@ -811,17 +829,21 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     stagger: 0.1,
     delay: 0.15
 });
-safeFrom('.image-card', {
-    scrollTrigger: {
-        trigger: '.image-grid',
-        start: 'top 85%'
-    },
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.15,
-    ease: 'power3.out'
-});
+(() => {
+    const triggerEl = document.querySelector('.projects-grid') || document.querySelector('.image-grid');
+    if (!triggerEl) return;
+    safeFrom('.image-card', {
+        scrollTrigger: {
+            trigger: triggerEl,
+            start: 'top 85%'
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out'
+    });
+})();
 
 safeFrom('.workflow-step', {
     scrollTrigger: {
