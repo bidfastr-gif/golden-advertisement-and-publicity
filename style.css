@@ -2145,6 +2145,7 @@ footer .contact-info .contact-item div p {
   position: relative;
   overflow: hidden;
   color: var(--color-black-rich);
+  will-change: transform;
 }
 
 .team-card .text-gold {

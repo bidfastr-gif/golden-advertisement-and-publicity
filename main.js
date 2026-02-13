@@ -31,12 +31,12 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.2,
+    duration: 1.35,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 1,
+    mouseMultiplier: 0.9,
     smoothTouch: false,
     touchMultiplier: 2,
 })
@@ -49,7 +49,7 @@ gsap.ticker.add((time) => {
     lenis.raf(time * 1000); // Convert to milliseconds
 });
 
-gsap.ticker.lagSmoothing(0);
+gsap.ticker.lagSmoothing(500, 33);
 
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
@@ -71,13 +71,34 @@ const setupReveal = (selector) => {
 const safeFrom = (selector, vars) => {
     const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
     if (!els || els.length === 0) return;
-    els.forEach(el => el.classList.add('is-visible'));
+    els.forEach((el) => {
+        const defaults = {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            force3D: true,
+            scrollTrigger: { trigger: el, start: 'top 85%' }
+        };
+        const config = Object.assign({}, defaults, vars || {});
+        gsap.from(el, config);
+    });
 };
 
 const safeTo = (selector, vars) => {
     const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
     if (!els || els.length === 0) return;
-    els.forEach(el => el.classList.add('is-visible'));
+    els.forEach((el) => {
+        const defaults = {
+            xPercent: -30,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' }
+        };
+        const config = Object.assign({}, defaults, vars || {});
+        gsap.to(el, config);
+    });
 };
 
 const initTicker = (selector, duration = 40) => {
@@ -297,7 +318,35 @@ counters.forEach(counter => {
 
 // Reusable 3D Scroll Effect Function
 const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
-    return;
+    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!elements || elements.length === 0) return;
+
+    elements.forEach((el, i) => {
+        const delay = stagger ? i * stagger : 0;
+
+        gsap.fromTo(el,
+            { y: 22, opacity: 0, scale: 0.985, force3D: true },
+            {
+                y: -8,
+                opacity: 1,
+                scale: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 95%',
+                    end: 'top 40%',
+                    scrub: 0.6,
+                    invalidateOnRefresh: true
+                },
+                delay
+            }
+        );
+
+        if (withHover) {
+            el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.18, ease: 'power2.out' }));
+            el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
+        }
+    });
 };
 
 // Load Services Section and Initialize Swiper
@@ -1195,6 +1244,22 @@ safeFrom('.team-card', {
     ease: 'power3.out'
 });
 
+// Dedicated Team Section reveal (ensures smooth stagger and avoids overlap)
+(() => {
+    const grid = document.querySelector('.team-grid');
+    if (!grid) return;
+    gsap.timeline({
+        scrollTrigger: { trigger: grid, start: 'top 85%' }
+    })
+    .from(grid.querySelectorAll('.team-card'), {
+        y: 28,
+        opacity: 0,
+        scale: 0.985,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.15
+    });
+})();
 const initTestimonialCarousel = () => {
     const carousel = document.querySelector('.testimonial-carousel');
     if (!carousel) return;
