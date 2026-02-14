@@ -58,6 +58,290 @@ gsap.defaults({
     duration: 1.2
 });
 
+(() => {
+    const nav = document.querySelector('nav');
+    const navToggle = document.getElementById('nav-toggle');
+    const links = document.querySelectorAll('.nav-links .nav-link');
+    if (!nav || !navToggle) return;
+    const closeMenu = () => {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+    };
+    navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.forEach(a => a.addEventListener('click', closeMenu));
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+})();
+
+(() => {
+    const makeEl = (tag, cls) => {
+        const el = document.createElement(tag);
+        if (cls) el.className = cls;
+        return el;
+    };
+    const widget = makeEl('div', 'chat-widget');
+    const toggle = makeEl('button', 'chat-toggle');
+    const avatar = document.createElement('img');
+    avatar.className = 'avatar-img';
+    avatar.src = './assets/alien_chatbot_icon.png';
+    avatar.alt = 'Chatbot';
+    toggle.appendChild(avatar);
+    const panel = makeEl('div', 'chat-panel');
+    const header = makeEl('div', 'chat-header');
+    const title = makeEl('div', 'chat-title');
+    title.textContent = 'GAP Assistant';
+    const closeBtn = makeEl('button', 'chat-close');
+    closeBtn.textContent = '×';
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+    const body = makeEl('div', 'chat-body');
+    const footer = makeEl('div', 'chat-footer');
+    const input = makeEl('input', 'chat-input');
+    input.type = 'text';
+    input.placeholder = 'Type a message...';
+    const send = makeEl('button', 'chat-send');
+    send.textContent = 'Send';
+    footer.appendChild(input);
+    footer.appendChild(send);
+    panel.appendChild(header);
+    panel.appendChild(body);
+    panel.appendChild(footer);
+    widget.appendChild(toggle);
+    document.body.appendChild(widget);
+    document.body.appendChild(panel);
+    const tip = makeEl('div', 'chat-prompt');
+    tip.textContent = 'Chat now';
+    widget.appendChild(tip);
+    const addMsg = (text, who = 'bot') => {
+        const msg = makeEl('div', `chat-msg ${who}`);
+        msg.textContent = text;
+        body.appendChild(msg);
+        body.scrollTop = body.scrollHeight;
+    };
+    const addSuggestions = (items) => {
+        const wrap = makeEl('div', 'chat-suggestions');
+        items.forEach(t => {
+            const chip = makeEl('button', 'chat-chip');
+            chip.textContent = t;
+            chip.addEventListener('click', () => onUser(t));
+            wrap.appendChild(chip);
+        });
+        body.appendChild(wrap);
+        body.scrollTop = body.scrollHeight;
+    };
+    let expectingName = false;
+    let clientName = '';
+    let expectingPhone = false;
+    let clientPhone = '';
+    let expectingPhoneCountry = false;
+    let countryCode = '';
+    const reply = (text) => {
+        const t = text.toLowerCase();
+        if (/website\s*design/i.test(t)) {
+            return 'We build fast, responsive websites. Do you want a business site, e‑commerce, or landing page?';
+        }
+        if (/logo\s*design/i.test(t)) {
+            return 'We design modern logos and brand kits. Share your brand name and style preference.';
+        }
+        if (/digital\s*marketing/i.test(t)) {
+            return 'Full-stack digital marketing: SEO, social, PPC, content. Which channel should we focus on first?';
+        }
+        if (/seo|search\s*engine\s*optimi/i.test(t)) {
+            return 'SEO includes technical, on-page, and off-page. Drop your site URL to begin an audit.';
+        }
+        if (/google\s*ads|ppc/i.test(t)) {
+            return 'We run high-ROI Google Ads campaigns. What is your monthly budget and goal?';
+        }
+        if (/social\s*media/i.test(t)) {
+            return 'We handle Instagram, Facebook, LinkedIn. Which platforms and content style do you prefer?';
+        }
+        if (/brochure/i.test(t)) {
+            return 'We design print-ready brochures and flyers. Share size, pages, and target audience.';
+        }
+        if (/training/i.test(t)) {
+            return 'We provide marketing training workshops. Which topics and batch size do you need?';
+        }
+        if (/others?/i.test(t)) {
+            return 'Tell me what you are looking for. I will route it to the right team.';
+        }
+        if (/(price|cost|rate|quote)/.test(t)) {
+            return 'We prepare tailored quotes after a quick chat. What service do you need?';
+        }
+        if (/(service|offer|do you)/.test(t)) {
+            return 'We offer branding, websites, SEO, social media, PPC, brochure, newspaper and FM ads.';
+        }
+        if (/(contact|phone|email)/.test(t)) {
+            return 'You can call +91 98402 61727 or email contact@goldenadvertising.in.';
+        }
+        if (/(project|start|begin)/.test(t)) {
+            return 'Great! Share your goal and deadline. We will respond quickly.';
+        }
+        return 'I can help with services, pricing, and contact. What would you like to know?';
+    };
+    const onUser = (text) => {
+        if (!text || !text.trim()) return;
+        const val = text.trim();
+        addMsg(val, 'user');
+        if (expectingName) {
+            clientName = val;
+            expectingName = false;
+            input.value = '';
+            input.placeholder = 'Type a message...';
+            setTimeout(() => {
+                addMsg(`Nice to meet you, ${clientName}!`, 'bot');
+                setTimeout(() => {
+                    addMsg('Please share your country code.', 'bot');
+                    expectingPhoneCountry = true;
+                    input.type = 'tel';
+                    input.setAttribute('inputmode', 'numeric');
+                    input.setAttribute('pattern', '^\\+?\\d{1,4}$');
+                    input.placeholder = 'Country code (e.g., +91)';
+                    input.className = 'chat-input tel';
+                    addSuggestions(['+91', '+1', '+44', '+61', '+971', 'Others']);
+                    try { input.focus(); } catch (_) {}
+                }, 250);
+            }, 200);
+            return;
+        }
+        if (expectingPhoneCountry) {
+            let cc = val.trim();
+            if (/^others?$/i.test(cc)) {
+                addMsg('Type your country code like +91', 'bot');
+                input.value = '';
+                return;
+            }
+            if (!/^\+?\d{1,4}$/.test(cc)) {
+                setTimeout(() => addMsg('Please enter a valid country code (e.g., +91).', 'bot'), 150);
+                try { input.focus(); } catch (_) {}
+                return;
+            }
+            if (!cc.startsWith('+')) cc = '+' + cc;
+            countryCode = cc;
+            expectingPhoneCountry = false;
+            input.value = '';
+            addMsg(`Got it: ${countryCode}`, 'bot');
+            setTimeout(() => {
+                addMsg('Now enter your phone number.', 'bot');
+                expectingPhone = true;
+                input.type = 'tel';
+                input.setAttribute('inputmode', 'numeric');
+                input.setAttribute('pattern', '[0-9]{7,15}');
+                input.placeholder = 'Your phone number';
+                input.className = 'chat-input tel';
+                try { input.focus(); } catch (_) {}
+            }, 200);
+            return;
+        }
+        if (expectingPhone) {
+            const digits = val.replace(/\D+/g, '');
+            if (digits.length < 7 || digits.length > 15) {
+                setTimeout(() => addMsg('Please enter a valid contact number (digits only).', 'bot'), 150);
+                try { input.focus(); } catch (_) {}
+                return;
+            }
+            clientPhone = digits;
+            expectingPhone = false;
+            input.value = '';
+            input.type = 'text';
+            input.removeAttribute('pattern');
+            input.setAttribute('inputmode', 'text');
+            input.className = 'chat-input';
+            input.placeholder = 'Type a message...';
+            setTimeout(() => {
+                addMsg(`Thanks, we will contact you at ${countryCode} ${clientPhone}.`, 'bot');
+                setTimeout(() => {
+                    addMsg('Your query was received successfully. Our team will contact you soon.', 'bot');
+                    try {
+                        input.disabled = true;
+                        send.disabled = true;
+                        input.blur();
+                    } catch (_) {}
+                    setTimeout(() => {
+                        close();
+                    }, 1200);
+                }, 250);
+            }, 200);
+            return;
+        }
+        const r = reply(val);
+        setTimeout(() => {
+            addMsg(r, 'bot');
+            setTimeout(() => {
+                addMsg('May I know your name?', 'bot');
+                expectingName = true;
+                input.placeholder = 'Your name';
+                input.type = 'search';
+                input.setAttribute('inputmode', 'text');
+                input.className = 'chat-input search';
+                input.value = '';
+                try { input.focus(); } catch (_) {}
+            }, 250);
+        }, 200);
+        input.value = '';
+    };
+    const open = () => {
+        panel.classList.add('open');
+        try {
+            input.disabled = false;
+            send.disabled = false;
+        } catch (_) {}
+        if (!panel.dataset.init) {
+            addMsg('What are you looking for?', 'bot');
+            addSuggestions([
+                'Website Designing',
+                'Logo Designing',
+                'Digital Marketing Services',
+                'SEO (search engine optimization)',
+                'Google Ads',
+                'Social Media Marketing',
+                'Brochure Designing',
+                'Training',
+                'Others'
+            ]);
+            panel.dataset.init = '1';
+        }
+        try { input.focus(); } catch (_) {}
+    };
+    const close = () => panel.classList.remove('open');
+    let peekTimer = null;
+    const triggerPeek = () => {
+        widget.classList.remove('peek');
+        void widget.offsetWidth;
+        widget.classList.add('peek');
+        tip.classList.add('show');
+        setTimeout(() => tip.classList.remove('show'), 2200);
+    };
+    const startPeek = () => {
+        if (peekTimer) return;
+        triggerPeek();
+        peekTimer = setInterval(triggerPeek, 5000);
+    };
+    const stopPeek = () => {
+        if (peekTimer) {
+            clearInterval(peekTimer);
+            peekTimer = null;
+        }
+        tip.classList.remove('show');
+    };
+    toggle.addEventListener('click', () => {
+        if (panel.classList.contains('open')) close(); else open();
+        stopPeek();
+    });
+    tip.addEventListener('click', () => {
+        open();
+        stopPeek();
+    });
+    closeBtn.addEventListener('click', close);
+    send.addEventListener('click', () => onUser(input.value));
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') onUser(input.value);
+    });
+    setTimeout(startPeek, 600);
+})();
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
 const setupReveal = (selector) => {
