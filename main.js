@@ -77,6 +77,46 @@ gsap.defaults({
     });
 })();
 
+let successPopupOverlay = null;
+let successPopupTimeout = null;
+const showSuccessPopup = (message) => {
+    if (!successPopupOverlay) {
+        const overlay = document.createElement('div');
+        overlay.className = 'success-popup-overlay';
+        const box = document.createElement('div');
+        box.className = 'success-popup';
+        const icon = document.createElement('div');
+        icon.className = 'success-popup-icon';
+        icon.textContent = '✓';
+        const msg = document.createElement('div');
+        msg.className = 'success-popup-message';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'success-popup-close';
+        btn.textContent = 'Close';
+        box.appendChild(icon);
+        box.appendChild(msg);
+        box.appendChild(btn);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+        const hide = () => {
+            overlay.classList.remove('active');
+        };
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) hide();
+        });
+        btn.addEventListener('click', hide);
+        successPopupOverlay = overlay;
+    }
+    const msgEl = successPopupOverlay.querySelector('.success-popup-message');
+    if (msgEl) msgEl.textContent = message;
+    successPopupOverlay.classList.add('active');
+    if (successPopupTimeout) clearTimeout(successPopupTimeout);
+    successPopupTimeout = setTimeout(() => {
+        successPopupOverlay.classList.remove('active');
+    }, 2200);
+};
+
 (() => {
     const makeEl = (tag, cls) => {
         const el = document.createElement(tag);
@@ -114,13 +154,20 @@ gsap.defaults({
     document.body.appendChild(widget);
     document.body.appendChild(panel);
     const tip = makeEl('div', 'chat-prompt');
-    tip.textContent = 'Chat now';
+    const tipLabel = makeEl('span', 'chat-prompt-label');
+    tipLabel.textContent = 'Chat now';
+    const tipDots = makeEl('span', 'chat-prompt-dots');
+    tipDots.innerHTML = '<span></span><span></span><span></span>';
+    tip.appendChild(tipLabel);
+    tip.appendChild(tipDots);
     widget.appendChild(tip);
+    const chatLog = [];
     const addMsg = (text, who = 'bot') => {
         const msg = makeEl('div', `chat-msg ${who}`);
         msg.textContent = text;
         body.appendChild(msg);
         body.scrollTop = body.scrollHeight;
+        chatLog.push({ who, text });
     };
     const addSuggestions = (items) => {
         const wrap = makeEl('div', 'chat-suggestions');
@@ -181,6 +228,23 @@ gsap.defaults({
             return 'Great! Share your goal and deadline. We will respond quickly.';
         }
         return 'I can help with services, pricing, and contact. What would you like to know?';
+    };
+    const sendChatToFormspree = () => {
+        if (!chatLog.length) return;
+        const fd = new FormData();
+        fd.append('source', 'Chatbot Conversation');
+        if (clientName) fd.append('name', clientName);
+        if (countryCode || clientPhone) {
+            const phoneLabel = `${countryCode} ${clientPhone}`.trim();
+            if (phoneLabel) fd.append('phone', phoneLabel);
+        }
+        fd.append('_subject', 'New chatbot conversation on GAP');
+        fd.append('_to', 'admin@goldenadvertising.in');
+        fetch('https://formspree.io/f/xjgewnpo', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: fd
+        }).catch(() => {});
     };
     const onUser = (text) => {
         if (!text || !text.trim()) return;
@@ -255,6 +319,7 @@ gsap.defaults({
                 addMsg(`Thanks, we will contact you at ${countryCode} ${clientPhone}.`, 'bot');
                 setTimeout(() => {
                     addMsg('Your query was received successfully. Our team will contact you soon.', 'bot');
+                    sendChatToFormspree();
                     try {
                         input.disabled = true;
                         send.disabled = true;
@@ -317,8 +382,6 @@ gsap.defaults({
     };
     const startPeek = () => {
         if (peekTimer) return;
-        triggerPeek();
-        peekTimer = setInterval(triggerPeek, 5000);
     };
     const stopPeek = () => {
         if (peekTimer) {
@@ -411,34 +474,34 @@ window.addEventListener('load', () => {
     tl.to('.loader-text', {
         y: -100,
         opacity: 0,
-        duration: 1,
+        duration: 0.3,
         ease: 'power4.inOut',
-        delay: 0.5
+        delay: 0.1
     })
         .to('#preloader', {
             y: '-100%',
-            duration: 1.2,
+            duration: 0.4,
             ease: 'power4.inOut'
-        }, "-=0.5")
+        }, "-=0.2")
+        .from('nav', {
+            y: -80,
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.out'
+        }, "-=0.35")
         .from('.hero-title span', {
             y: '100%',
             opacity: 0,
-            duration: 1.5,
-            stagger: 0.2,
+            duration: 0.8,
+            stagger: 0.12,
             ease: 'power4.out'
-        }, "-=0.8")
+        }, "-=0.3")
         .to('.hero-subtitle', {
             y: 0,
             opacity: 0.8,
-            duration: 1,
+            duration: 0.5,
             ease: 'power2.out'
-        }, "-=1")
-        .from('nav', {
-            y: -100,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
-        }, "-=1");
+        }, "-=0.5");
 });
 
 
@@ -555,14 +618,6 @@ initThreeJS('newspaper-hero-canvas');
 initThreeJS('fm-hero-canvas');
 initThreeJS('case-study-hero-canvas');
 initThreeJS('contact-hero-canvas');
-
-// Marquee Animation
-safeTo('.marquee-content', {
-    xPercent: -50,
-    ease: "none",
-    duration: 20,
-    repeat: -1
-});
 
 // Scroll Animations
 const splitTypes = document.querySelectorAll('[data-reveal-text]')
@@ -682,7 +737,7 @@ fetch('what-we-offer.html')
 })();
 
 (() => {
-    initTicker('.partners-swiper', 11);
+    initTicker('.partners-swiper', 40);
 })();
 
 // Unified Workflow Section Animation
@@ -1308,14 +1363,29 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const data = new FormData(form);
-        const name = data.get('name');
-        const phone = data.get('phone');
+        const country = data.get('country_code') || '';
+        const rawPhone = data.get('phone') || '';
+        const fullPhone = `${country} ${rawPhone}`.trim();
+        data.set('phone', fullPhone);
+        data.append('source', 'Website Contact Form');
+        data.append('_to', 'admin@goldenadvertising.in');
+        data.append('_subject', 'New form submission on GAP');
         const email = data.get('email');
-        const service = data.get('service');
-        const message = data.get('message');
-        const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\nMessage:\n${message}`);
-        const mail = `mailto:contact@goldenadvertising.in?subject=${encodeURIComponent('Website Contact')}&body=${body}`;
-        window.location.href = mail;
+        if (email) data.append('_replyto', email);
+        fetch('https://formspree.io/f/xjgewnpo', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: data
+        }).then((response) => {
+            if (response.ok) {
+                form.reset();
+                showSuccessPopup('Your enquiry has been submitted.');
+            } else {
+                alert('Unable to send message. Please email contact@goldenadvertising.in directly.');
+            }
+        }).catch(() => {
+            alert('Unable to send message. Please email contact@goldenadvertising.in directly.');
+        });
     });
 })();
 ; (() => {
@@ -1613,26 +1683,23 @@ initTestimonialCarousel();
           <div class="enquiry-dialog" role="dialog" aria-modal="true" aria-labelledby="enquiry-title">
             <button class="enquiry-close" type="button" aria-label="Close">×</button>
             <h3 id="enquiry-title" class="enquiry-title">Quick Enquiry</h3>
-            <form class="enquiry-form">
+            <form class="enquiry-form" method="POST" action="https://formspree.io/f/xjgewnpo">
               <div class="enquiry-row">
                 <input type="text" name="name" placeholder="Your Name" required />
                 <input type="tel" name="phone" placeholder="Phone" required />
               </div>
               <div class="enquiry-row">
                 <input type="email" name="email" placeholder="Email" required />
-                <select name="service" required>
-                  <option value="">Select Service</option>
-                  <option>SEO</option>
-                  <option>Social Media</option>
-                  <option>PPC</option>
+                <select name="service" class="select-gradient-text" required>
+                  <option value="">Select a Service</option>
+                  <option>Search Engine Optimization (SEO)</option>
+                  <option>Social Media Marketing</option>
                   <option>Website Development</option>
-                  <option>E‑Commerce</option>
+                  <option>E‑Commerce Website Development</option>
                   <option>Logo Designing</option>
                   <option>Brochure Designing</option>
                   <option>Newspaper Advertising</option>
                   <option>FM Advertising</option>
-                  <option>Content Production</option>
-                  <option>Brand Creation</option>
                 </select>
               </div>
               <textarea name="message" placeholder="Tell us briefly about your requirement" required></textarea>
@@ -1682,15 +1749,29 @@ initTestimonialCarousel();
         if (!form) return;
         e.preventDefault();
         const data = new FormData(form);
-        const name = data.get('name');
-        const phone = data.get('phone');
+        data.append('source', 'Quick Enquiry Modal');
+        data.append('_to', 'admin@goldenadvertising.in');
+        data.append('_subject', 'New quick enquiry on GAP');
         const email = data.get('email');
-        const service = data.get('service');
-        const message = data.get('message');
-        const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\nMessage:\n${message}`);
-        const mail = `mailto:contact@goldenadvertising.in?subject=${encodeURIComponent('Quick Enquiry')}&body=${body}`;
-        close();
-        setTimeout(() => { window.location.href = mail; }, 250);
+        if (email) data.append('_replyto', email);
+        fetch('https://formspree.io/f/xjgewnpo', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: data
+        }).then((response) => {
+            if (response.ok) {
+                form.reset();
+                const hint = form.querySelector('.enquiry-hint');
+                if (hint) {
+                    hint.textContent = 'Your enquiry has been submitted.';
+                }
+                showSuccessPopup('Your enquiry has been submitted.');
+            } else {
+                alert('Unable to send enquiry. Please email contact@goldenadvertising.in directly.');
+            }
+        }).catch(() => {
+            alert('Unable to send enquiry. Please email contact@goldenadvertising.in directly.');
+        });
     });
 })();
 
