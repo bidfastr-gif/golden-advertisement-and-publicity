@@ -955,6 +955,11 @@ footer .service-menu-link:hover {
   width: max-content;
 }
 
+.nav-links a[href="./case-study.html"],
+.footer-links a[href="./case-study.html"] {
+  display: none;
+}
+
 /* Override for single-color dark sections */
 .features-section.bg-black {
   background-color: var(--color-black-rich);
