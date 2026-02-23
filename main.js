@@ -554,28 +554,30 @@ const initTicker = (selector, duration = 40) => {
     wrapper.style.setProperty('--ticker-duration', `${duration}s`);
     wrapper.classList.add('is-ticker');
 };
-// Preloader
 window.addEventListener('load', () => {
     const tl = gsap.timeline();
-
-    tl.to('.loader-text', {
-        y: -100,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power4.inOut',
-        delay: 0.1
-    })
-        .to('#preloader', {
-            y: '-100%',
-            duration: 0.4,
-            ease: 'power4.inOut'
-        }, "-=0.2")
-        .from('nav', {
-            y: -80,
+    const loaderText = document.querySelector('.loader-text');
+    const preloader = document.getElementById('preloader');
+    if (loaderText && preloader) {
+        tl.to(loaderText, {
+            y: -100,
             opacity: 0,
             duration: 0.3,
-            ease: 'power2.out'
-        }, "-=0.35")
+            ease: 'power4.inOut',
+            delay: 0.1
+        })
+            .to(preloader, {
+                y: '-100%',
+                duration: 0.4,
+                ease: 'power4.inOut'
+            }, "-=0.2");
+    }
+    tl.from('nav', {
+        y: -80,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.out'
+    })
         .from('.hero-title span', {
             y: '100%',
             opacity: 0,

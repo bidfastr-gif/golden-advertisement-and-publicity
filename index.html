@@ -11,6 +11,21 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./assets/golden_logo.png" />
   <link rel="canonical" href="https://goldenadvertising.in/index.html" />
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var theme = 'dark';
+      try {
+        var saved = localStorage.getItem('gap-theme');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          theme = 'light';
+        }
+      } catch (e) { }
+      root.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

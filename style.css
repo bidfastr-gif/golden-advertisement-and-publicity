@@ -1587,6 +1587,10 @@ footer .service-menu-link:hover {
   transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
+[data-theme="light"] .page-transition-overlay {
+  background: #FFFFFF;
+}
+
 body.page-transition-enter .page-transition-overlay,
 body.page-transition-exit .page-transition-overlay {
   transform: translateX(0);
