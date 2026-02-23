@@ -58,6 +58,67 @@ gsap.defaults({
     duration: 1.2
 });
 
+// Page swipe transition between internal pages
+(() => {
+    const body = document.body;
+    if (!body) return;
+
+    const ensureOverlay = () => {
+        let overlay = document.querySelector('.page-transition-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'page-transition-overlay';
+            const logo = document.createElement('div');
+            logo.className = 'page-transition-logo';
+            overlay.appendChild(logo);
+            document.body.appendChild(overlay);
+        }
+        return overlay;
+    };
+
+    const overlay = ensureOverlay();
+
+    // Enter animation: swipe overlay off to the right on load
+    body.classList.add('page-transition-enter');
+    // Force reflow so the browser registers the starting state
+    overlay.getBoundingClientRect();
+    body.classList.remove('page-transition-enter');
+
+    const shouldHandleLink = (link) => {
+        const href = link.getAttribute('href');
+        if (!href) return false;
+        if (href.startsWith('#')) return false;
+        if (link.hasAttribute('download')) return false;
+        if (link.target && link.target !== '_self') return false;
+        try {
+            const url = new URL(link.href, window.location.href);
+            if (url.origin !== window.location.origin) return false;
+            if (url.pathname === window.location.pathname && !url.hash) return false;
+        } catch {
+            return false;
+        }
+        return true;
+    };
+
+    const TRANSITION_MS = 600;
+
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+        if (!shouldHandleLink(link)) return;
+
+        e.preventDefault();
+        const targetUrl = link.href;
+
+        body.classList.add('page-transition-exit');
+        overlay.getBoundingClientRect();
+
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, TRANSITION_MS);
+    });
+})();
+
 (() => {
     const nav = document.querySelector('nav');
     const navToggle = document.getElementById('nav-toggle');
@@ -123,11 +184,17 @@ const showSuccessPopup = (message) => {
         if (cls) el.className = cls;
         return el;
     };
+    const darkAvatarSrc = './assets/alien_chatbot_icon.png';
+    const lightAvatarSrc = './assets/Light_chatbot.png';
     const widget = makeEl('div', 'chat-widget');
     const toggle = makeEl('button', 'chat-toggle');
     const avatar = document.createElement('img');
     avatar.className = 'avatar-img';
-    avatar.src = './assets/alien_chatbot_icon.png';
+    const updateAvatarForTheme = (theme) => {
+        const t = theme || document.documentElement.getAttribute('data-theme') || 'dark';
+        avatar.src = t === 'light' ? lightAvatarSrc : darkAvatarSrc;
+    };
+    updateAvatarForTheme();
     avatar.alt = 'Chatbot';
     toggle.appendChild(avatar);
     const panel = makeEl('div', 'chat-panel');
@@ -145,6 +212,8 @@ const showSuccessPopup = (message) => {
     input.placeholder = 'Type a message...';
     const send = makeEl('button', 'chat-send');
     send.textContent = 'Send';
+    input.disabled = true;
+    send.disabled = true;
     footer.appendChild(input);
     footer.appendChild(send);
     panel.appendChild(header);
@@ -161,7 +230,12 @@ const showSuccessPopup = (message) => {
     tip.appendChild(tipLabel);
     tip.appendChild(tipDots);
     widget.appendChild(tip);
+    window.addEventListener('gap-theme-change', (e) => {
+        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
+        updateAvatarForTheme(t);
+    });
     const chatLog = [];
+    let hasSelectedPrimaryIntent = false;
     const addMsg = (text, who = 'bot') => {
         const msg = makeEl('div', `chat-msg ${who}`);
         msg.textContent = text;
@@ -174,7 +248,17 @@ const showSuccessPopup = (message) => {
         items.forEach(t => {
             const chip = makeEl('button', 'chat-chip');
             chip.textContent = t;
-            chip.addEventListener('click', () => onUser(t));
+            chip.addEventListener('click', () => {
+                if (!hasSelectedPrimaryIntent) {
+                    hasSelectedPrimaryIntent = true;
+                    try {
+                        input.disabled = false;
+                        send.disabled = false;
+                        input.placeholder = 'Type a message...';
+                    } catch (_) {}
+                }
+                onUser(t);
+            });
             wrap.appendChild(chip);
         });
         body.appendChild(wrap);
@@ -189,31 +273,31 @@ const showSuccessPopup = (message) => {
     const reply = (text) => {
         const t = text.toLowerCase();
         if (/website\s*design/i.test(t)) {
-            return 'We build fast, responsive websites. Do you want a business site, e‑commerce, or landing page?';
+            return 'We build fast, responsive business, e‑commerce and landing page websites.';
         }
         if (/logo\s*design/i.test(t)) {
-            return 'We design modern logos and brand kits. Share your brand name and style preference.';
+            return 'We design modern logos and complete brand identity kits.';
         }
         if (/digital\s*marketing/i.test(t)) {
-            return 'Full-stack digital marketing: SEO, social, PPC, content. Which channel should we focus on first?';
+            return 'Full-stack digital marketing including SEO, social, PPC and content.';
         }
         if (/seo|search\s*engine\s*optimi/i.test(t)) {
-            return 'SEO includes technical, on-page, and off-page. Drop your site URL to begin an audit.';
+            return 'SEO services covering technical, on-page and off-page optimisation.';
         }
         if (/google\s*ads|ppc/i.test(t)) {
-            return 'We run high-ROI Google Ads campaigns. What is your monthly budget and goal?';
+            return 'We run high-ROI Google Ads campaigns tailored to your goals and budget.';
         }
         if (/social\s*media/i.test(t)) {
-            return 'We handle Instagram, Facebook, LinkedIn. Which platforms and content style do you prefer?';
+            return 'We manage Instagram, Facebook and LinkedIn social media marketing.';
         }
         if (/brochure/i.test(t)) {
-            return 'We design print-ready brochures and flyers. Share size, pages, and target audience.';
+            return 'We design print-ready brochures and flyers for your products and services.';
         }
         if (/training/i.test(t)) {
-            return 'We provide marketing training workshops. Which topics and batch size do you need?';
+            return 'We provide marketing training workshops for businesses and teams.';
         }
         if (/others?/i.test(t)) {
-            return 'Tell me what you are looking for. I will route it to the right team.';
+            return 'We also handle custom advertising and branding requirements.';
         }
         if (/(price|cost|rate|quote)/.test(t)) {
             return 'We prepare tailored quotes after a quick chat. What service do you need?';
@@ -351,8 +435,11 @@ const showSuccessPopup = (message) => {
     const open = () => {
         panel.classList.add('open');
         try {
-            input.disabled = false;
-            send.disabled = false;
+            input.disabled = !hasSelectedPrimaryIntent;
+            send.disabled = !hasSelectedPrimaryIntent;
+            if (!hasSelectedPrimaryIntent) {
+                input.placeholder = 'Select what you are looking for above to start...';
+            }
         } catch (_) {}
         if (!panel.dataset.init) {
             addMsg('What are you looking for?', 'bot');
@@ -981,6 +1068,27 @@ safeFrom('.ecommerce-hero .hero-contacts .cta-button', {
     stagger: 0.1,
     delay: 0.15
 });
+safeFrom('#ecom-offer h2', {
+    scrollTrigger: {
+        trigger: '#ecom-offer',
+        start: 'top 80%'
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+});
+safeFrom('#ecom-offer p', {
+    scrollTrigger: {
+        trigger: '#ecom-offer',
+        start: 'top 80%'
+    },
+    y: 24,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.12
+});
 safeFrom('.logo-hero .page-hero-content h1', {
     scrollTrigger: {
         trigger: '.logo-hero',
@@ -1014,6 +1122,27 @@ safeFrom('.logo-hero .hero-contacts .cta-button', {
     stagger: 0.1,
     delay: 0.15
 });
+safeFrom('#logo-process h2', {
+    scrollTrigger: {
+        trigger: '#logo-process',
+        start: 'top 80%'
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+});
+safeFrom('#logo-process p', {
+    scrollTrigger: {
+        trigger: '#logo-process',
+        start: 'top 80%'
+    },
+    y: 24,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.12
+});
 safeFrom('.brochure-hero .page-hero-content h1', {
     scrollTrigger: {
         trigger: '.brochure-hero',
@@ -1046,6 +1175,27 @@ safeFrom('.brochure-hero .hero-contacts .cta-button', {
     ease: 'power3.out',
     stagger: 0.1,
     delay: 0.15
+});
+safeFrom('#brochure-process h2', {
+    scrollTrigger: {
+        trigger: '#brochure-process',
+        start: 'top 80%'
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+});
+safeFrom('#brochure-process p', {
+    scrollTrigger: {
+        trigger: '#brochure-process',
+        start: 'top 80%'
+    },
+    y: 24,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    stagger: 0.12
 });
 safeFrom('.newspaper-hero .page-hero-content h1', {
     scrollTrigger: {
@@ -1435,6 +1585,42 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     }
 })();
 ; (() => {
+    const processSvg = document.querySelector('.brochure-process-illustration svg');
+    if (!processSvg) return;
+    gsap.fromTo('.brochure-process-illustration .step-card', {
+        y: 8,
+        opacity: 0.6
+    }, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.12
+    });
+    gsap.fromTo('.brochure-process-illustration .flow-arrow', {
+        opacity: 0.4
+    }, {
+        opacity: 1,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.2
+    });
+    safeFrom('.brochure-process-illustration svg', {
+        scrollTrigger: {
+            trigger: '.brochure-process-illustration',
+            start: 'top 85%'
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+})();
+; (() => {
     const cards = document.querySelectorAll('.tilt');
     if (cards.length === 0) return;
     cards.forEach(card => {
@@ -1501,6 +1687,39 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 })();
 
 ; (() => {
+    const offerSvg = document.querySelector('.ecom-offer-illustration svg');
+    if (!offerSvg) return;
+    gsap.fromTo('.ecom-offer-illustration .offer-bar-fill', {
+        attr: { width: 0 }
+    }, {
+        attr: { width: 220 },
+        duration: 2.0,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.2
+    });
+    gsap.to('.ecom-offer-illustration .offer-dot', {
+        y: -4,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.15
+    });
+    safeFrom('.ecom-offer-illustration svg', {
+        scrollTrigger: {
+            trigger: '.ecom-offer-illustration',
+            start: 'top 85%'
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+})();
+
+; (() => {
     const logoSvg = document.querySelector('.logo-illustration svg');
     if (!logoSvg) return;
     gsap.to('.logo-illustration .logo-mark', {
@@ -1537,6 +1756,52 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     safeFrom('.logo-illustration svg', {
         scrollTrigger: {
             trigger: '.logo-illustration',
+            start: 'top 85%'
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+})();
+; (() => {
+    const processSvg = document.querySelector('.logo-process-illustration svg');
+    if (!processSvg) return;
+    gsap.fromTo('.logo-process-illustration .step-dot', {
+        scale: 0.8,
+        opacity: 0.5
+    }, {
+        scale: 1.1,
+        opacity: 1,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.15
+    });
+    gsap.fromTo('.logo-process-illustration .logo-tiles rect', {
+        y: 6,
+        opacity: 0.6
+    }, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.12
+    });
+    gsap.to('.logo-process-illustration .final-mark', {
+        scale: 1.06,
+        duration: 1.6,
+        transformOrigin: '50% 50%',
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
+    safeFrom('.logo-process-illustration svg', {
+        scrollTrigger: {
+            trigger: '.logo-process-illustration',
             start: 'top 85%'
         },
         y: 20,
@@ -1588,7 +1853,6 @@ apply3DScrollEffect('.testimonial-card');
 // Partners and Contact sections
 // Skip 3D effect on partners to keep ticker smooth
 apply3DScrollEffect('#contact p', 0, false);
-apply3DScrollEffect('#contact .cta-button', 0, true);
 
 // Apply 3D effect to text elements across the project (without hover scale)
 apply3DScrollEffect('h1:not(.logo-name)', 0, false);
@@ -1820,19 +2084,9 @@ initTestimonialCarousel();
         y: 30, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out'
     });
     
-    // Contact Section - Magnetic Button Effect
+    // Contact Section CTA Reveal
     const contactBtn = document.querySelector('#contact .cta-button');
     if (contactBtn) {
-        contactBtn.addEventListener('mousemove', (e) => {
-            const rect = contactBtn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            gsap.to(contactBtn, { x: x * 0.2, y: y * 0.2, duration: 0.3 });
-        });
-        contactBtn.addEventListener('mouseleave', () => {
-            gsap.to(contactBtn, { x: 0, y: 0, duration: 0.3 });
-        });
-        
         safeFrom('#contact .cta-button', {
             scrollTrigger: { trigger: '#contact', start: 'top 80%' },
             y: 20, opacity: 0, duration: 0.8, delay: 0.3, ease: 'power3.out'

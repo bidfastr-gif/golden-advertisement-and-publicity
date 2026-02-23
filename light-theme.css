@@ -27,9 +27,9 @@
 
 /* Navbar Override */
 [data-theme="light"] nav {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  background: #13120F !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 [data-theme="light"] .nav-link {
@@ -74,7 +74,7 @@
 
 /* Footer - Keep it dark for contrast */
 [data-theme="light"] footer {
-  background: #000000;
+  background: #13120F;
   color: #ffffff;
   border-top: none;
 }

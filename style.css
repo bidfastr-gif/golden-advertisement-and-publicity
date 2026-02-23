@@ -65,7 +65,7 @@
 
 /* Light theme footer palette */
 [data-theme="light"] footer {
-  background: #000000;
+  background: #13120F;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -273,17 +273,17 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 0.8rem 0;
+  padding: 0.45rem 0;
   z-index: 100;
   z-index: 100;
-  background: #000000;
+  background: #13120F;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: padding 0.3s ease;
 }
 
 /* Light theme: keep navbar black */
 [data-theme="light"] nav {
-  background: #000000;
+  background: #13120F;
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -357,7 +357,7 @@ nav .container {
 }
 
 .nav-wrapper .logo-symbol {
-  height: 6rem;
+  height: 4.5rem;
 }
 
 .nav-actions {
@@ -620,12 +620,41 @@ nav .theme-toggle {
 .cta-button:hover {
   color: var(--color-black-rich);
   border-color: transparent;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.9),
+    0 0 18px rgba(212, 175, 55, 0.65);
 }
 
 .cta-button:hover::before {
   transform: scaleY(1);
   transform-origin: top;
+}
+
+@keyframes button-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+button:hover,
+.cta-button:hover,
+.service-link:hover,
+.service-menu-link:hover {
+  animation: button-shake 0.35s ease-in-out;
+}
+
+nav button:hover,
+nav .cta-button:hover,
+nav .service-link:hover,
+nav .service-menu-link:hover,
+footer button:hover,
+footer .cta-button:hover,
+footer .service-link:hover,
+footer .service-menu-link:hover {
+  animation: none;
 }
 
 .cta-button--outline {
@@ -641,7 +670,15 @@ nav .theme-toggle {
 .cta-button--outline:hover {
   color: var(--color-black-rich);
   border-color: transparent;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.9),
+    0 0 18px rgba(212, 175, 55, 0.65);
+}
+
+#contact .cta-button--outline {
+  background: var(--color-gold-primary);
+  color: var(--color-black-rich);
+  border-color: var(--color-gold-primary);
 }
 
 .cta-button--light {
@@ -819,8 +856,8 @@ nav .theme-toggle {
   justify-content: center;
   min-height: 100px;
   border-radius: 12px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid #FFFFFF;
+  background: var(--color-gold-primary);
   color: var(--color-white);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -832,8 +869,8 @@ nav .theme-toggle {
   position: absolute;
   inset: 0;
   border-radius: 12px;
-  padding: 2px;
-  background: var(--color-gold-gradient);
+  padding: 3px;
+  background: var(--color-gold-primary);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -852,7 +889,7 @@ nav .theme-toggle {
 /* Light theme keeps neutral look */
 [data-theme="light"] .partner-logo {
   border: 1px solid transparent;
-  background: rgba(0, 0, 0, 0.04);
+  background: #FFFFFF;
 }
 
 [data-theme="light"] .partner-logo img {
@@ -1088,7 +1125,10 @@ nav .theme-toggle {
 .service-card:hover {
   transform: translateY(-6px);
   border-color: var(--color-gold-primary);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.9),
+    0 0 18px rgba(212, 175, 55, 0.65),
+    0 12px 24px rgba(0, 0, 0, 0.35);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -1161,7 +1201,9 @@ nav .theme-toggle {
 .service-link:hover {
   color: var(--color-black-rich);
   border-color: transparent;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.9),
+    0 0 18px rgba(212, 175, 55, 0.65);
 }
 
 .service-link:hover::before {
@@ -1186,7 +1228,10 @@ nav .theme-toggle {
 .package-card:hover {
   transform: translateY(-6px);
   border-color: var(--color-gold-primary);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.9),
+    0 0 18px rgba(212, 175, 55, 0.65),
+    0 12px 24px rgba(0, 0, 0, 0.35);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -1416,6 +1461,12 @@ nav .theme-toggle {
   justify-self: stretch;
 }
 
+.home-page .workflow-step,
+.smm-page .workflow-step,
+.seo-page .workflow-step {
+  border-radius: 4px;
+}
+
 .workflow-step h3 {
   margin: 0 0 0.3rem;
   font-size: 1.05rem;
@@ -1516,6 +1567,38 @@ nav .theme-toggle {
 
 .success-popup-overlay.active {
   display: flex;
+}
+
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.18) 0, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.14) 0, transparent 45%),
+    #13120F;
+  z-index: 1400;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+body.page-transition-enter .page-transition-overlay,
+body.page-transition-exit .page-transition-overlay {
+  transform: translateX(0);
+}
+
+.page-transition-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 100px;
+  background-image: url('./assets/golden_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.95;
 }
 
 .success-popup {
@@ -1753,12 +1836,12 @@ nav .theme-toggle {
 /* Footer */
 footer {
   padding: 5rem 0 2rem;
-  background: #000000;
+  background: #13120F;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="light"] footer {
-  background: #000000;
+  background: #13120F;
   border-top-color: rgba(255, 255, 255, 0.12);
 }
 
@@ -1967,22 +2050,18 @@ footer .contact-info .contact-item div p {
   border-radius: 50%;
   object-fit: cover;
   display: inline-block;
-  box-shadow: 0 0 18px rgba(0, 180, 255, 0.5);
   animation: chatbotFloat 3s ease-in-out infinite;
 }
 
 @keyframes chatbotFloat {
   0% {
     transform: translateY(0) scale(1);
-    box-shadow: 0 0 14px rgba(0, 180, 255, 0.45);
   }
   50% {
     transform: translateY(-6px) scale(1.04);
-    box-shadow: 0 0 22px rgba(0, 220, 255, 0.7);
   }
   100% {
     transform: translateY(0) scale(1);
-    box-shadow: 0 0 14px rgba(0, 180, 255, 0.45);
   }
 }
 .chat-prompt {
