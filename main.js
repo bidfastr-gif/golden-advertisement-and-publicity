@@ -31,14 +31,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.5,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 1.1,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
+    mouseMultiplier: 0.9,
+    smoothTouch: true,
+    touchMultiplier: 1.4,
     infinite: false,
 })
 
@@ -58,31 +58,19 @@ gsap.defaults({
     duration: 1.2
 });
 
-// Page swipe transition between internal pages
 (() => {
     const body = document.body;
     if (!body) return;
 
-    const ensureOverlay = () => {
-        let overlay = document.querySelector('.page-transition-overlay');
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'page-transition-overlay';
-            const logo = document.createElement('div');
-            logo.className = 'page-transition-logo';
-            overlay.appendChild(logo);
-            document.body.appendChild(overlay);
-        }
-        return overlay;
-    };
-
-    const overlay = ensureOverlay();
-
-    // Enter animation: swipe overlay off to the right on load
-    body.classList.add('page-transition-enter');
-    // Force reflow so the browser registers the starting state
-    overlay.getBoundingClientRect();
-    body.classList.remove('page-transition-enter');
+    let overlay = document.querySelector('.page-transition-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'page-transition-overlay';
+        const logo = document.createElement('div');
+        logo.className = 'page-transition-logo';
+        overlay.appendChild(logo);
+        document.body.appendChild(overlay);
+    }
 
     const shouldHandleLink = (link) => {
         const href = link.getAttribute('href');
@@ -100,7 +88,17 @@ gsap.defaults({
         return true;
     };
 
-    const TRANSITION_MS = 600;
+    const showLoader = () => {
+        body.classList.add('page-loading');
+    };
+
+    const hideLoader = () => {
+        body.classList.remove('page-loading');
+    };
+
+    window.addEventListener('pageshow', () => {
+        hideLoader();
+    });
 
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
@@ -109,13 +107,11 @@ gsap.defaults({
 
         e.preventDefault();
         const targetUrl = link.href;
-
-        body.classList.add('page-transition-exit');
-        overlay.getBoundingClientRect();
+        showLoader();
 
         setTimeout(() => {
             window.location.href = targetUrl;
-        }, TRANSITION_MS);
+        }, 350);
     });
 })();
 
@@ -2064,6 +2060,24 @@ initTestimonialCarousel();
 // Workflow section animation handled by unified logic below
     
     // Workflow Steps Animation handled by apply3DScrollEffect() in main scope
+
+    // Home hero CTAs
+    safeFrom('.hero-ctas', {
+        scrollTrigger: { trigger: '.hero', start: 'top 80%' },
+        y: 25,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.15,
+        ease: 'power3.out'
+    });
+
+    // Marquee sections (top tagline + stats banner)
+    safeFrom('.marquee-section', {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
 
     // Stats Banner - Rolling Numbers & Fade
     safeFrom('.stats-banner', {
