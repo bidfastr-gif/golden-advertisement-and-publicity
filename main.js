@@ -2061,24 +2061,6 @@ initTestimonialCarousel();
     
     // Workflow Steps Animation handled by apply3DScrollEffect() in main scope
 
-    // Home hero CTAs
-    safeFrom('.hero-ctas', {
-        scrollTrigger: { trigger: '.hero', start: 'top 80%' },
-        y: 25,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.15,
-        ease: 'power3.out'
-    });
-
-    // Marquee sections (top tagline + stats banner)
-    safeFrom('.marquee-section', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out'
-    });
-
     // Stats Banner - Rolling Numbers & Fade
     safeFrom('.stats-banner', {
         scrollTrigger: { trigger: '.stats-banner', start: 'top 90%' },
