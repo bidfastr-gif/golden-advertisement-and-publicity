@@ -2319,8 +2319,8 @@ footer .contact-info .contact-item div p {
 }
 
 .chat-toggle .avatar-img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   display: inline-block;
@@ -2343,7 +2343,7 @@ footer .contact-info .contact-item div p {
 
 .chat-prompt {
   position: absolute;
-  right: 90px;
+  right: 110px;
   bottom: 32px;
   padding: 8px 12px;
   border-radius: 16px;
