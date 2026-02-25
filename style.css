@@ -2343,16 +2343,16 @@ footer .contact-info .contact-item div p {
 
 .chat-prompt {
   position: absolute;
-  right: 110px;
+  right: 100px;
   bottom: 32px;
-  padding: 8px 12px;
-  border-radius: 16px;
+  padding: 6px 10px;
+  border-radius: 12px;
   background: var(--color-gold-primary);
   color: var(--color-black-rich);
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
@@ -2369,10 +2369,10 @@ footer .contact-info .contact-item div p {
 .chat-prompt::after {
   content: '';
   position: absolute;
-  right: -6px;
-  bottom: 12px;
-  width: 10px;
-  height: 10px;
+  right: -4px;
+  bottom: 10px;
+  width: 8px;
+  height: 8px;
   background: var(--color-gold-primary);
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-left: none;
