@@ -31,13 +31,13 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.2,
+    duration: 1.5,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
     mouseMultiplier: 1,
-    smoothTouch: false, // Disabled to prevent touch scrolling issues
+    smoothTouch: true,
     touchMultiplier: 2,
     infinite: false,
 })
@@ -50,8 +50,7 @@ gsap.ticker.add((time) => {
     lenis.raf(time * 1000); // Convert to milliseconds
 });
 
-// Disable lag smoothing to prevent jumps during heavy loads
-gsap.ticker.lagSmoothing(0);
+gsap.ticker.lagSmoothing(500, 33);
 
 // Set default GSAP ease for all animations
 gsap.defaults({
@@ -826,7 +825,10 @@ fetch('what-we-offer.html')
                 container.innerHTML = servicesSection.outerHTML;
 
                 // Use CSS ticker instead of Swiper for continuous marquee
-                initTicker('.services-swiper', 40);
+                // Add a small delay to ensure DOM is ready and layout is calculated
+                setTimeout(() => {
+                    initTicker('.services-swiper', 40);
+                }, 300);
             }
         }
     })

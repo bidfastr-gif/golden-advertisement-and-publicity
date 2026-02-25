@@ -961,7 +961,9 @@ footer .service-menu-link:hover {
   overflow: hidden;
   width: 100%;
   padding: 1rem 0;
-  /* Fade edges for smoother look - Removed per user request */
+  /* Fade edges removed per request */
+  /* mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); */
+  /* -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); */
 }
 
 .marquee-row {
@@ -972,7 +974,7 @@ footer .service-menu-link:hover {
   gap: 1.5rem;
 }
 
-.projects-marquee-content {
+.marquee-content {
   display: flex;
   gap: 1.5rem;
   flex-shrink: 0;
@@ -981,7 +983,7 @@ footer .service-menu-link:hover {
 }
 
 /* Pause on hover for better UX */
-.marquee-row:hover .projects-marquee-content {
+.marquee-row:hover .marquee-content {
   animation-play-state: paused;
 }
 
@@ -1035,11 +1037,11 @@ footer .service-menu-link:hover {
   }
 }
 
-.marquee-row.scroll-left .projects-marquee-content {
+.marquee-row.scroll-left .marquee-content {
   animation: marquee-scroll 40s linear infinite;
 }
 
-.marquee-row.scroll-right .projects-marquee-content {
+.marquee-row.scroll-right .marquee-content {
   animation: marquee-scroll-reverse 40s linear infinite;
 }
 
