@@ -1,15 +1,35 @@
-<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E‑Commerce Website Development | Golden Advertising & Publicity</title>
-  <meta name="description" content="E‑commerce website development services to build secure, conversion-focused online stores for growing businesses." />
-  <meta property="og:title" content="E‑Commerce Website Development | Golden Advertising & Publicity" />
-  <meta property="og:description" content="Launch and scale your online store with user-friendly, high-performing e‑commerce website solutions." />
+  <title>E-Commerce Website Development | Golden Advertising & Publicity</title>
+  <meta name="description" content="E-commerce website development services to build secure, conversion-focused online stores for growing businesses." />
+  <meta property="og:title" content="E-Commerce Website Development | Golden Advertising & Publicity" />
+  <meta property="og:description" content="Launch and scale your online store with user-friendly, high-performing e-commerce website solutions." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./assets/golden_logo.png" />
+  
+  <meta property="og:url" content="https://goldenadvertising.in/ecommerce.html" />
   <link rel="canonical" href="https://goldenadvertising.in/ecommerce.html" />
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var theme = 'dark';
+      try {
+        var saved = localStorage.getItem('gap-theme-v2');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        }
+      } catch (e) { }
+      root.setAttribute('data-theme', theme);
+      // Anti-FOUC: Disable transitions during load
+      var style = document.createElement('style');
+      style.textContent = '*, *::before, *::after { transition: none !important; }';
+      document.head.appendChild(style);
+      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
+    })();
+  </script>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +37,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-text">GAP</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
   <nav>
     <div class="container nav-wrapper">
       <a href="./index.html" class="logo-brand">
@@ -50,7 +77,7 @@
   <section class="page-hero ecommerce-hero">
     <div id="ecommerce-hero-canvas" class="hero-background"></div>
     <div class="page-hero-content">
-      <h1>E‑Commerce Website Development</h1>
+      <h1>E-Commerce Website Development</h1>
       <p class="hero-subtitle">Golden Advertising & Publicity</p>
       <div class="hero-contacts">
         <a href="./contact.html" class="cta-button cta-button--clean"><i class="fa-solid fa-paper-plane"></i><span class="btn-text">Quick Enquiry</span></a>
@@ -69,7 +96,7 @@
             Our team, as a website development company in Chennai, examines any custom functionality needs to tailor an answer that coordinates your brand and eCommerce objectives.
           </p>
           <p style="margin-bottom: 1rem;">
-            In today’s world, most customers fulfill their requirements through online shopping, which increases the need for successful business websites.
+            In today's world, most customers fulfill their requirements through online shopping, which increases the need for successful business websites.
           </p>
           <p>
             GAP, as an eCommerce website development company in Chennai, proficiently delivers custom eCommerce development along with a thorough rundown of web composition contributions including expansion, improvement, theme customization, and support.
@@ -114,10 +141,10 @@
             Our eCommerce arrangements offer the best in standard highlights and usability while staying agile and fully adjustable.
           </p>
           <p style="margin-top: 1rem;">
-            We engineer scalable, modular architectures with clean code and accessible design, ensuring fast load times and long‑term maintainability.
+            We engineer scalable, modular architectures with clean code and accessible design, ensuring fast load times and long-term maintainability.
           </p>
           <p>
-            From concept to go‑live, our QA covers performance, SEO, security hardening, and cross‑device testing so your storefront performs flawlessly everywhere.
+            From concept to go-live, our QA covers performance, SEO, security hardening, and cross-device testing so your storefront performs flawlessly everywhere.
           </p>
         </div>
         <div class="image-card tilt anim-card ecom-illustration" style="display:flex; align-items:center; justify-content:center;">
@@ -139,10 +166,10 @@
 
   <section class="features-section bg-black" style="padding-top: 2rem;">
     <div class="container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:55vh;">
-      <h2 style="margin-bottom: 1.5rem; font-size: 2.4rem; text-align:center;">E‑Commerce in current Businesses</h2>
+      <h2 style="margin-bottom: 1.5rem; font-size: 2.4rem; text-align:center;">E-Commerce in current Businesses</h2>
       <div style="font-size: 1.1rem; line-height: 1.9; max-width: 950px; margin: 0 auto; text-align: center;">
         <p style="margin-bottom: 1rem;">
-          E‑Commerce is growing across B2B and B2C segments. Advances in devices, networks, and payment solutions drive this growth.
+          E-Commerce is growing across B2B and B2C segments. Advances in devices, networks, and payment solutions drive this growth.
         </p>
         <p>
           To compete effectively, businesses partner with an experienced eCommerce website company that keeps them a step ahead.
@@ -159,7 +186,7 @@
         <div class="testimonial-card testimonial-card--grid">
           <div class="avatar"><i class="fa-solid fa-user"></i></div>
           <p class="testimonial-quote">
-            I don’t know what else to say. I wish I would have thought of it first. Really good. Promotional Design is worth much more than I paid.
+            I don't know what else to say. I wish I would have thought of it first. Really good. Promotional Design is worth much more than I paid.
           </p>
           <p class="testimonial-author"><strong class="text-white-gradient">AMK Global Foods</strong></p>
         </div>
@@ -207,7 +234,7 @@
     <div class="container">
       <h2 style="text-align:center; margin-bottom: 1rem; font-size: 2.4rem;">Why GAP?</h2>
       <p style="max-width: 950px; margin: 0 auto 1.5rem; text-align: center; opacity: 0.95; font-size: 1.05rem; line-height: 1.9;">
-        Our e‑commerce site bundles are effectively moderate and give customers a quicker method to discover precisely what they need. Feature the most relevant items and let your clients channel the outcomes with characteristics like value, shading, and so on and in this manner, your potential clients feel certain purchasing from, exceptionally simple and clear.
+        Our e-commerce site bundles are effectively moderate and give customers a quicker method to discover precisely what they need. Feature the most relevant items and let your clients channel the outcomes with characteristics like value, shading, and so on and in this manner, your potential clients feel certain purchasing from, exceptionally simple and clear.
       </p>
       <div class="flex-center">
         <a href="./contact.html" class="cta-button cta-button--light"><span class="btn-text">Let's Enquire With Us</span></a>
@@ -223,7 +250,7 @@
             Each bundle accompanies completely customizable options which enables you to effectively alter your pictures and content by methods by our easy to understand administrator board and to flaunt your image and items, a secure shopping basket, promotional tools, website analytics, and search engine optimization tools to help get more clients.
           </p>
           <p style="margin-bottom: 1rem;">
-            We offer you a total scope of E‑commerce promoting tools required for you to set up an online business. Rather than utilizing the structured formats accessible online, we plan the website starting with no outside help which will be customized to your business needs.
+            We offer you a total scope of E-commerce promoting tools required for you to set up an online business. Rather than utilizing the structured formats accessible online, we plan the website starting with no outside help which will be customized to your business needs.
           </p>
           <p>
             We give you access to amazing billing, shipping, promoting, and stock administration tools to keep you in control for completely everything. As an Ecommerce Website Company in Chennai, we likewise give you a completely responsive site implying that your site and checkout are 100% versatile and tablet.
@@ -270,10 +297,10 @@
           </a>
           <p style="margin-top: 1rem; max-width: 300px;">Elevating brands through strategic design and innovative digital solutions.</p>
           <div class="footer-socials" aria-label="Social links">
-            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span class="sr-only">Twitter</span></a>
+            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
+            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
           </div>
         </div>
         <div class="footer-links">
@@ -318,3 +345,8 @@
   <script src="./main.js"></script>
 </body>
 </html>
+
+
+
+
+

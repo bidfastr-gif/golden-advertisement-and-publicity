@@ -1,31 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Golden Advertising & Publicity | Premium Digital Solutions</title>
-  <meta name="description" content="Golden Advertising & Publicity is a 360° digital marketing agency in Chennai offering branding, web design, SEO, social media and advertising." />
+  <meta name="description" content="Golden Advertising & Publicity is a 360&deg; digital marketing agency in Chennai offering branding, web design, SEO, social media and advertising." />
   <meta property="og:title" content="Golden Advertising & Publicity | Premium Digital Solutions" />
-  <meta property="og:description" content="Full‑service advertising and digital marketing agency delivering branding, websites, SEO, social media campaigns and more." />
+  <meta property="og:description" content="Full-service advertising and digital marketing agency delivering branding, websites, SEO, social media campaigns and more." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./assets/golden_logo.png" />
-  <link rel="canonical" href="https://goldenadvertising.in/index.html" />
+  
+  <meta property="og:url" content="https://goldenadvertising.in/" />
+  <link rel="canonical" href="https://goldenadvertising.in/" />
   <script>
     (function () {
       var root = document.documentElement;
       var theme = 'dark';
       try {
-        var saved = localStorage.getItem('gap-theme');
+        var saved = localStorage.getItem('gap-theme-v2');
         if (saved === 'light' || saved === 'dark') {
           theme = saved;
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-          theme = 'light';
         }
       } catch (e) { }
       root.setAttribute('data-theme', theme);
+      // Anti-FOUC: Disable transitions during load
+      var style = document.createElement('style');
+      style.textContent = '*, *::before, *::after { transition: none !important; }';
+      document.head.appendChild(style);
+      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
     })();
   </script>
+  <style>
+    html, body { background-color: #0A0A0A; color: #FFFFFF; }
+    [data-theme="light"], [data-theme="light"] body { background-color: #FFFFFF; color: #0D0D0D; }
+  </style>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +72,13 @@
 
 <body class="home-page">
   <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-text">GAP</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+  
   
   <!-- Navigation -->
   <nav>
@@ -105,14 +121,14 @@
         <span class="line">Company in Chennai</span>
       </h1>
       <p class="hero-subtitle">
-        A 360° Marketing Solution for all your Business Needs.
+        A 360&deg; Marketing Solution for all your Business Needs.
       </p>
       <div class="hero-ctas">
         <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us
             Today!</span></a>
         <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
           <a href="tel:+919840261727" style="display: block; margin-bottom: 0.5rem;">
-            <span class="text-gold" style="margin-right: 10px;">📞</span> +91 98402 61727
+            <span class="text-gold" style="margin-right: 10px;"><i class="fa-solid fa-phone"></i></span> +91 98402 61727
           </a>
         </div>
       </div>
@@ -161,8 +177,8 @@
 
   <section class="marquee-section stats-banner">
     <div class="marquee-content" aria-label="Company stats marquee">
-      <span class="marquee-item">10+ Years of Experience • 564+ Projects Completed • 98% Client Retention</span>
-      <span class="marquee-item">10+ Years of Experience • 564+ Projects Completed • 98% Client Retention</span>
+      <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client Retention</span>
+      <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client Retention</span>
     </div>
   </section>
 
@@ -173,30 +189,55 @@
         <h2 style="font-size: 2.4rem;">Projects <span class="text-gold">Done</span></h2>
         <a href="./services.html" class="cta-button cta-button--light"><span class="btn-text">Explore All</span></a>
       </div>
-      <div class="projects-grid">
-        <div class="image-card tilt">
-          <img src="./assets/projects/1.png" alt="Branding">
-          <div class="project-caption"><span>Branding</span></div>
+      <div class="projects-marquee">
+        <!-- Row 1: Scrolling Left -->
+        <div class="marquee-row scroll-left">
+          <div class="marquee-content">
+            <div class="image-card tilt"><img src="./assets/projects/1.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/2.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/3.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/4.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/5.jpeg" alt="Web Design" width="362" height="453" title="Web Design" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/6.png" alt="Poster" width="362" height="453" title="Poster" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/7.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/8.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+          </div>
+          <!-- Duplicate for Loop -->
+          <div class="marquee-content" aria-hidden="true">
+            <div class="image-card tilt"><img src="./assets/projects/1.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/2.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/3.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/4.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/5.jpeg" alt="Web Design" width="362" height="453" title="Web Design" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/6.png" alt="Poster" width="362" height="453" title="Poster" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/7.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/8.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+          </div>
         </div>
-        <div class="image-card tilt">
-          <img src="./assets/projects/2.png" alt="Restaurant">
-          <div class="project-caption"><span>Restaurant</span></div>
-        </div>
-        <div class="image-card tilt">
-          <img src="./assets/projects/3.png" alt="Signboard">
-          <div class="project-caption"><span>Signboard</span></div>
-        </div>
-        <div class="image-card tilt">
-          <img src="./assets/projects/4.png" alt="Brochure">
-          <div class="project-caption"><span>Brochure</span></div>
-        </div>
-        <div class="image-card tilt">
-          <img src="./assets/projects/5.png" alt="Web Design">
-          <div class="project-caption"><span>Web Design</span></div>
-        </div>
-        <div class="image-card tilt">
-          <img src="./assets/projects/6.png" alt="Poster">
-          <div class="project-caption"><span>Poster</span></div>
+
+        <!-- Row 2: Scrolling Right -->
+        <div class="marquee-row scroll-right">
+          <div class="marquee-content">
+            <div class="image-card tilt"><img src="./assets/projects/9.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/10.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/11.jpeg" alt="Web Design" width="362" height="453" title="Web Design" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/12.png" alt="Poster" width="362" height="453" title="Poster" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/13.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/14.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/15.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/16.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+          </div>
+          <!-- Duplicate for Loop -->
+          <div class="marquee-content" aria-hidden="true">
+            <div class="image-card tilt"><img src="./assets/projects/9.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/10.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/11.jpeg" alt="Web Design" width="362" height="453" title="Web Design" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/12.png" alt="Poster" width="362" height="453" title="Poster" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/13.jpeg" alt="Branding" width="362" height="453" title="Branding" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/14.jpeg" alt="Restaurant" width="362" height="453" title="Restaurant" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/15.png" alt="Signboard" width="362" height="453" title="Signboard" loading="lazy"></div>
+            <div class="image-card tilt"><img src="./assets/projects/16.jpeg" alt="Brochure" width="362" height="453" title="Brochure" loading="lazy"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -216,37 +257,37 @@
       <div class="swiper partners-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1"></div>
+            <div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1" width="160" height="60" title="Partner 1" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2"></div>
+            <div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2" width="160" height="60" title="Partner 2" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3"></div>
+            <div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3" width="160" height="60" title="Partner 3" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4"></div>
+            <div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4" width="160" height="60" title="Partner 4" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5"></div>
+            <div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5" width="160" height="60" title="Partner 5" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6"></div>
+            <div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6" width="160" height="60" title="Partner 6" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7"></div>
+            <div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7" width="160" height="60" title="Partner 7" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8"></div>
+            <div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8" width="160" height="60" title="Partner 8" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9"></div>
+            <div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9" width="160" height="60" title="Partner 9" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10"></div>
+            <div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10" width="160" height="60" title="Partner 10" loading="lazy"></div>
           </div>
           <div class="swiper-slide">
-            <div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11"></div>
+            <div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11" width="160" height="60" title="Partner 11" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -284,10 +325,10 @@
             Elevating brands through strategic design and innovative digital solutions.
           </p>
           <div class="footer-socials" aria-label="Social links">
-            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span class="sr-only">Twitter</span></a>
+            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
+            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
           </div>
         </div>
         <div class="footer-links">
@@ -329,3 +370,10 @@
 </body>
 
 </html>
+
+
+
+
+
+
+

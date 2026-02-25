@@ -10,7 +10,27 @@
   <meta property="og:description" content="Run full-funnel digital marketing campaigns that connect branding, content and performance for measurable growth." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./assets/golden_logo.png" />
+  
+  <meta property="og:url" content="https://goldenadvertising.in/digital-marketing.html" />
   <link rel="canonical" href="https://goldenadvertising.in/digital-marketing.html" />
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var theme = 'dark';
+      try {
+        var saved = localStorage.getItem('gap-theme-v2');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        }
+      } catch (e) { }
+      root.setAttribute('data-theme', theme);
+      // Anti-FOUC: Disable transitions during load
+      var style = document.createElement('style');
+      style.textContent = '*, *::before, *::after { transition: none !important; }';
+      document.head.appendChild(style);
+      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
+    })();
+  </script>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +47,12 @@
 <body>
   <!-- Preloader -->
   <div id="preloader">
-    <div class="loader-text">GOLDEN</div>
+    <div class="loader-content">
+      <div class="loader-text">GAP</div>
+      <div class="loader-spinner"></div>
+    </div>
   </div>
-
+  
   <!-- Navigation -->
   <nav>
     <div class="container nav-wrapper">
@@ -65,7 +88,7 @@
   <section class="service-detail" style="padding-top: 150px; padding-bottom: 100px; min-height: 100vh; background-color: var(--color-white); color: var(--color-black-rich);">
     <div class="container">
       <div style="margin-bottom: 3rem;">
-        <h1 style="font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1rem; color: var(--color-black-rich);">Digital Marketing</h1>
+        <h1 style="font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1rem; color: var(--color-black-rich);">Digital Marketing Services</h1>
         <div style="width: 100px; height: 4px; background: var(--color-gold-primary);"></div>
       </div>
 
@@ -91,15 +114,15 @@
             
             <ul style="list-style: none; padding: 0; margin-bottom: 3rem;">
               <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
+                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">&#10003;</span> 
                 SEO/SEM Optimization
               </li>
               <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
+                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">&#10003;</span> 
                 Social Media Marketing
               </li>
               <li style="margin-bottom: 1rem; display: flex; align-items: center; font-size: 1.1rem; font-weight: 500;">
-                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">✓</span> 
+                <span style="color: var(--color-gold-primary); margin-right: 15px; font-size: 1.5rem;">&#10003;</span> 
                 Targeted Campaigns
               </li>
             </ul>
@@ -147,3 +170,8 @@
   <script src="./main.js"></script>
 </body>
 </html>
+
+
+
+
+

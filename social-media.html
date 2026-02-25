@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,7 +9,27 @@
   <meta property="og:description" content="Plan, create and optimize social media campaigns that build communities, engagement and measurable results." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./assets/golden_logo.png" />
+  
+  <meta property="og:url" content="https://goldenadvertising.in/social-media.html" />
   <link rel="canonical" href="https://goldenadvertising.in/social-media.html" />
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var theme = 'dark';
+      try {
+        var saved = localStorage.getItem('gap-theme-v2');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        }
+      } catch (e) { }
+      root.setAttribute('data-theme', theme);
+      // Anti-FOUC: Disable transitions during load
+      var style = document.createElement('style');
+      style.textContent = '*, *::before, *::after { transition: none !important; }';
+      document.head.appendChild(style);
+      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
+    })();
+  </script>
   <link rel="stylesheet" href="./style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +41,13 @@
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 <body class="smm-page">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-text">GAP</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
   <nav>
     <div class="container nav-wrapper">
       <a href="./index.html" class="logo-brand">
@@ -69,13 +96,13 @@
       <h2 style="margin-bottom: 1.5rem; font-size: 2.4rem;">Social Media Agency</h2>
       <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: start;">
         <div style="font-size: 1.05rem; line-height: 1.9;">
-          <p style="margin-bottom: 1rem;">Golden Advertising and Publicity, a social media marketing agency in Chennai, can make your association with clients increasingly easy‑going and exceptional through Social Media, along these lines making a progressively steadfast and drawing in web‑based social Media services for your business.</p>
+          <p style="margin-bottom: 1rem;">Golden Advertising and Publicity, a social media marketing agency in Chennai, can make your association with clients increasingly easy-going and exceptional through Social Media, along these lines making a progressively steadfast and drawing in web-based social Media services for your business.</p>
           <p style="margin-bottom: 1rem;">We furnish you with an ideal solution that makes and deal with all your Social Media posting, channel development, and client interaction.</p>
           <p style="margin-bottom: 1rem;">As there are a lot of things happening in the world of SMM in a short time, we always observe the changes and trends closely.</p>
-          <p>This helps us develop great ideas for the SMM campaign we execute as a social media company in Chennai. We’ll consider ideology and campaign patterns followed by the competitors in the field and set the best social setup for your business.</p>
+          <p>This helps us develop great ideas for the SMM campaign we execute as a social media company in Chennai. We'll consider ideology and campaign patterns followed by the competitors in the field and set the best social setup for your business.</p>
         </div>
         <div class="image-card tilt smm-illustration">
-          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=60" alt="Team collaborating on social media content">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=60" alt="Team collaborating on social media content" title="Team collaborating on social media content" width="900" height="600" loading="lazy">
         </div>
       </div>
     </div>
@@ -87,7 +114,7 @@
       <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: start;">
         <div style="font-size: 1.05rem; line-height: 1.9;">
           <p style="margin-bottom: 1rem;">
-            Organizations and client’s communication had been changed by the communication of Social media. The majority of the general population have different Social Media accounts. Be accessible where your clients are available. Cooperate with your clients and this is one of the approaches to hold the clients and to bring in new ones.
+            Organizations and client's communication had been changed by the communication of Social media. The majority of the general population have different Social Media accounts. Be accessible where your clients are available. Cooperate with your clients and this is one of the approaches to hold the clients and to bring in new ones.
           </p>
           <p>
             As there are such a large number of things occurring in the SMM world in a brief time, we generally watch the progressions and trends intently. This causes us to create incredible thoughts for the social media campaign we execute.
@@ -99,7 +126,7 @@
             A consistent posting calendar and quality creatives increase visibility, grow community reach, and drive meaningful interactions.
           </p>
           <p>
-            Data‑led optimization keeps campaigns effective as trends change and platforms update, ensuring measurable growth over time.
+            Data-led optimization keeps campaigns effective as trends change and platforms update, ensuring measurable growth over time.
           </p>
         </div>
         <div class="image-card tilt smm-illustration">
@@ -129,13 +156,13 @@
   <section class="features-section workflow-section bg-black">
     <div class="container">
       <span class="section-label">Workflow</span>
-      <h2 style="margin-bottom: 2rem; font-size: 2.2rem;">How Does Social Media Works?</h2>
+      <h2 style="margin-bottom: 2rem; font-size: 2.2rem; text-align:center;">How Does Social Media <span class="text-gold">Work?</span></h2>
       <div class="workflow-steps">
         <div class="workflow-step">
           <div class="step-circle">1</div>
           <div class="step-content">
             <h3 class="service-title">Strategy</h3>
-            <p class="service-desc">To construct the brand, as a social media agency business in Chennai, make Advanced SMM Strategies, gain exposure and clients.</p>
+            <p class="service-desc">We develop advanced SMM strategies to build your brand and gain exposure.</p>
           </div>
         </div>
         <div class="workflow-connector"></div>
@@ -143,7 +170,7 @@
           <div class="step-circle">2</div>
           <div class="step-content">
             <h3 class="service-title">Content Creation</h3>
-            <p class="service-desc">The best way to draw in the clients is to make eye‑catching content. We produce content worth esteem that you, your clients and subscribers will want to share.</p>
+            <p class="service-desc">We produce eye-catching, shareable content that draws in clients.</p>
           </div>
         </div>
         <div class="workflow-connector"></div>
@@ -151,7 +178,7 @@
           <div class="step-circle">3</div>
           <div class="step-content">
             <h3 class="service-title">Analytics and Data</h3>
-            <p class="service-desc">We gather and analyze the information with the goal that we could comprehend what is working, what’s not, who your group of audience is and above all how to get your ROI.</p>
+            <p class="service-desc">We analyze data to understand what works and maximize your ROI.</p>
           </div>
         </div>
       </div>
@@ -193,7 +220,7 @@
         <div class="testimonial-card testimonial-card--grid">
           <div class="avatar"><i class="fa-solid fa-user"></i></div>
           <p class="testimonial-quote">
-            The team understands our brand and delivers content that resonates. Reliable, data‑driven, and proactive.
+            The team understands our brand and delivers content that resonates. Reliable, data-driven, and proactive.
           </p>
           <p class="testimonial-author"><strong class="text-white-gradient">My Law Associates</strong></p>
         </div>
@@ -207,7 +234,7 @@
       <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem;">
         <div>
           <p style="margin-bottom:1rem;">
-            We create, schedule, and manage content across platforms with a focus on consistency and conversion. From campaigns to community, we cover it end‑to‑end.
+            We create, schedule, and manage content across platforms with a focus on consistency and conversion. From campaigns to community, we cover it end-to-end.
           </p>
           <p style="margin-bottom:1rem;">
             Our approach blends brand storytelling with performance tactics to deliver measurable outcomes.
@@ -216,7 +243,7 @@
             We iterate based on insights and trends to keep your presence fresh and effective.
           </p>
           <p style="margin-bottom:1rem;">
-            We handle platform‑specific formats — reels, carousels, stories — ensuring consistent brand expression across assets.
+            We handle platform-specific formats - reels, carousels, stories - ensuring consistent brand expression across assets.
           </p>
           <p>
             We coordinate with sales and support to turn engagement into leads with clear CTAs and response workflows.
@@ -226,7 +253,7 @@
           <div class="service-icon-badge"><i class="fa-solid fa-share-nodes"></i></div>
           <h3 class="service-title">Why Choose Our SMM</h3>
           <p class="service-desc">Strategy, content, and performance tuned to your goals.</p>
-          <a href="./contact.html" class="service-link">Contact Us <span>→</span></a>
+          <a href="./contact.html" class="service-link">Contact Us <span>&rarr;</span></a>
         </div>
       </div>
     </div>
@@ -256,7 +283,7 @@
         <div class="adv-card">
           <div class="service-icon-badge"><i class="fa-solid fa-rectangle-ad"></i></div>
           <h3 class="service-title">Paid Social</h3>
-          <p class="service-desc">Laser‑targeted ads to accelerate growth.</p>
+          <p class="service-desc">Laser-targeted ads to accelerate growth.</p>
         </div>
       </div>
     </div>
@@ -275,10 +302,10 @@
           </a>
           <p style="margin-top: 1rem; max-width: 300px;">Elevating brands through strategic design and innovative digital solutions.</p>
           <div class="footer-socials" aria-label="Social links">
-            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span class="sr-only">Twitter</span></a>
+            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
+            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
           </div>
         </div>
         <div class="footer-links">
@@ -319,3 +346,8 @@
   <script src="./main.js"></script>
 </body>
 </html>
+
+
+
+
+

@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
         const toggle = document.getElementById('theme-toggle');
         const setTheme = (theme) => {
             root.setAttribute('data-theme', theme);
-            try { localStorage.setItem('gap-theme', theme); } catch (_) { }
+            try { localStorage.setItem('gap-theme-v2', theme); } catch (_) { }
             // Icons are now handled via CSS
             try {
                 window.dispatchEvent(new CustomEvent('gap-theme-change', { detail: { theme } }));
@@ -16,9 +16,9 @@ gsap.registerPlugin(ScrollTrigger)
         };
         const initTheme = () => {
             let saved = null;
-            try { saved = localStorage.getItem('gap-theme'); } catch (_) { }
-            const preferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-            setTheme(saved || preferred || 'dark');
+            try { saved = localStorage.getItem('gap-theme-v2'); } catch (_) { }
+            // Force default to dark, ignoring OS preference to ensure consistent brand experience
+            setTheme(saved || 'dark');
         };
         initTheme();
         if (toggle) {
@@ -31,14 +31,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.1,
-    easing: (t) => 1 - Math.pow(1 - t, 3),
+    duration: 1.5,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 0.9,
+    mouseMultiplier: 1,
     smoothTouch: true,
-    touchMultiplier: 1.4,
+    touchMultiplier: 2,
     infinite: false,
 })
 
@@ -58,61 +58,59 @@ gsap.defaults({
     duration: 1.2
 });
 
+// Page Transition Logic
 (() => {
-    const body = document.body;
-    if (!body) return;
-
-    let overlay = document.querySelector('.page-transition-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'page-transition-overlay';
-        const logo = document.createElement('div');
-        logo.className = 'page-transition-logo';
-        overlay.appendChild(logo);
-        document.body.appendChild(overlay);
+    // Inject transition element if not present
+    let transitionEl = document.querySelector('.page-transition');
+    if (!transitionEl) {
+        transitionEl = document.createElement('div');
+        transitionEl.className = 'page-transition';
+        document.body.appendChild(transitionEl);
     }
 
-    const shouldHandleLink = (link) => {
-        const href = link.getAttribute('href');
-        if (!href) return false;
-        if (href.startsWith('#')) return false;
-        if (link.hasAttribute('download')) return false;
-        if (link.target && link.target !== '_self') return false;
-        try {
-            const url = new URL(link.href, window.location.href);
-            if (url.origin !== window.location.origin) return false;
-            if (url.pathname === window.location.pathname && !url.hash) return false;
-        } catch {
-            return false;
-        }
-        return true;
-    };
-
-    const showLoader = () => {
-        body.classList.add('page-loading');
-    };
-
-    const hideLoader = () => {
-        body.classList.remove('page-loading');
-    };
-
-    window.addEventListener('pageshow', () => {
-        hideLoader();
-    });
-
+    // Handle internal links
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (!link) return;
-        if (!shouldHandleLink(link)) return;
+
+        const href = link.getAttribute('href');
+        const target = link.getAttribute('target');
+
+        // Check if valid link
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+        // Check if open in new tab
+        if (target === '_blank' || e.ctrlKey || e.metaKey) return;
+
+        // Check if internal (same hostname)
+        if (link.hostname !== window.location.hostname) return;
 
         e.preventDefault();
-        const targetUrl = link.href;
-        showLoader();
-
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 350);
+        
+        // Play exit animation
+        gsap.to(transitionEl, {
+            y: '0%',
+            duration: 0.6,
+            ease: 'power4.inOut',
+            onComplete: () => {
+                window.location.href = link.href;
+            }
+        });
     });
+
+    // Handle page load (entrance animation)
+    // Note: The existing preloader handles the initial load reveal.
+    // If navigating from another page, the preloader might not show (if cached),
+    // but the transition overlay will be there.
+    // However, since this is a multi-page site, the new page loads fresh.
+    // We need to ensure the transition overlay is reset or animated out if it's there.
+    // But since the new page HTML is fresh, the overlay starts at translateY(100%) defined in CSS.
+    // So we don't need an entrance animation here unless we want to override the preloader.
+    // The preloader covers the screen initially.
+    
+    // BUT: If the user navigates back, the browser might restore state.
+    // To be safe, we can ensure it's hidden on load.
+    gsap.set(transitionEl, { y: '100%' });
 })();
 
 (() => {
@@ -192,6 +190,10 @@ const showSuccessPopup = (message) => {
     };
     updateAvatarForTheme();
     avatar.alt = 'Chatbot';
+    avatar.title = 'Chatbot';
+    avatar.loading = 'lazy';
+    avatar.width = 579;
+    avatar.height = 712;
     toggle.appendChild(avatar);
     const panel = makeEl('div', 'chat-panel');
     const header = makeEl('div', 'chat-header');
@@ -552,41 +554,49 @@ const initTicker = (selector, duration = 40) => {
 };
 window.addEventListener('load', () => {
     const tl = gsap.timeline();
-    const loaderText = document.querySelector('.loader-text');
+    const loaderContent = document.querySelector('.loader-content') || document.querySelector('.loader-text');
     const preloader = document.getElementById('preloader');
-    if (loaderText && preloader) {
-        tl.to(loaderText, {
-            y: -100,
+    if (loaderContent && preloader) {
+        tl.to(loaderContent, {
+            y: -50,
             opacity: 0,
-            duration: 0.3,
-            ease: 'power4.inOut',
-            delay: 0.1
+            duration: 0.5,
+            ease: 'power2.inOut',
+            delay: 0.2
         })
             .to(preloader, {
                 y: '-100%',
-                duration: 0.4,
+                duration: 0.8,
                 ease: 'power4.inOut'
-            }, "-=0.2");
+            }, "-=0.1");
     }
     tl.from('nav', {
         y: -80,
         opacity: 0,
         duration: 0.3,
         ease: 'power2.out'
-    })
-        .from('.hero-title span', {
+    });
+
+    const heroTitleSpans = document.querySelectorAll('.hero-title span');
+    if (heroTitleSpans.length > 0) {
+        tl.from(heroTitleSpans, {
             y: '100%',
             opacity: 0,
             duration: 0.8,
             stagger: 0.12,
             ease: 'power4.out'
-        }, "-=0.3")
-        .to('.hero-subtitle', {
+        }, "-=0.3");
+    }
+
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) {
+        tl.to(heroSubtitle, {
             y: 0,
             opacity: 0.8,
             duration: 0.5,
             ease: 'power2.out'
         }, "-=0.5");
+    }
 });
 
 
@@ -2073,8 +2083,24 @@ initTestimonialCarousel();
         x: 20, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out'
     });
     
-    // Enhanced Project Card Animation - Unified with apply3DScrollEffect
-    apply3DScrollEffect('.projects-grid .image-card');
+    // Enhanced Project Card Animation - Staggered Reveal
+    const projectCards = document.querySelectorAll('.projects-grid .image-card');
+    if (projectCards.length > 0) {
+        gsap.set(projectCards, { y: 100, opacity: 0 }); // Initial state
+        
+        ScrollTrigger.batch(projectCards, {
+            onEnter: batch => gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.15,
+                duration: 1.2,
+                ease: 'power4.out',
+                overwrite: true
+            }),
+            start: 'top 85%',
+            once: true // Only animate once
+        });
+    }
 
     // Partners Section - Staggered Logo Reveal
     safeFrom('.partners-swiper', {
