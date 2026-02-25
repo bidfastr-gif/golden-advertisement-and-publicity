@@ -818,17 +818,6 @@ fetch('what-we-offer.html')
                     observer: true,
                     observeParents: true,
                 });
-
-                // Apply simple entrance animation instead of scrub-based 3D effect
-                // to prevent interference with Swiper's continuous scrolling
-                setTimeout(() => {
-                    safeFrom('#services-container .feature-card', {
-                        y: 30,
-                        opacity: 0,
-                        duration: 0.8,
-                        stagger: 0.05
-                    });
-                }, 100);
             }
         }
     })
