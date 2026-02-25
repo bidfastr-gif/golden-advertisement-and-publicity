@@ -31,13 +31,13 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Initialize Smooth Scroll
 const lenis = new Lenis({
-    duration: 1.5,
+    duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
     mouseMultiplier: 1,
-    smoothTouch: true,
+    smoothTouch: false, // Disabled to prevent touch scrolling issues
     touchMultiplier: 2,
     infinite: false,
 })
@@ -50,7 +50,8 @@ gsap.ticker.add((time) => {
     lenis.raf(time * 1000); // Convert to milliseconds
 });
 
-gsap.ticker.lagSmoothing(500, 33);
+// Disable lag smoothing to prevent jumps during heavy loads
+gsap.ticker.lagSmoothing(0);
 
 // Set default GSAP ease for all animations
 gsap.defaults({
@@ -86,7 +87,7 @@ gsap.defaults({
         if (link.hostname !== window.location.hostname) return;
 
         e.preventDefault();
-        
+
         // Play exit animation
         gsap.to(transitionEl, {
             y: '0%',
@@ -107,7 +108,7 @@ gsap.defaults({
     // But since the new page HTML is fresh, the overlay starts at translateY(100%) defined in CSS.
     // So we don't need an entrance animation here unless we want to override the preloader.
     // The preloader covers the screen initially.
-    
+
     // BUT: If the user navigates back, the browser might restore state.
     // To be safe, we can ensure it's hidden on load.
     gsap.set(transitionEl, { y: '100%' });
@@ -253,7 +254,7 @@ const showSuccessPopup = (message) => {
                         input.disabled = false;
                         send.disabled = false;
                         input.placeholder = 'Type a message...';
-                    } catch (_) {}
+                    } catch (_) { }
                 }
                 onUser(t);
             });
@@ -326,7 +327,7 @@ const showSuccessPopup = (message) => {
             method: 'POST',
             headers: { Accept: 'application/json' },
             body: fd
-        }).catch(() => {});
+        }).catch(() => { });
     };
     const onUser = (text) => {
         if (!text || !text.trim()) return;
@@ -348,7 +349,7 @@ const showSuccessPopup = (message) => {
                     input.placeholder = 'Country code (e.g., +91)';
                     input.className = 'chat-input tel';
                     addSuggestions(['+91', '+1', '+44', '+61', '+971', 'Others']);
-                    try { input.focus(); } catch (_) {}
+                    try { input.focus(); } catch (_) { }
                 }, 250);
             }, 200);
             return;
@@ -362,7 +363,7 @@ const showSuccessPopup = (message) => {
             }
             if (!/^\+?\d{1,4}$/.test(cc)) {
                 setTimeout(() => addMsg('Please enter a valid country code (e.g., +91).', 'bot'), 150);
-                try { input.focus(); } catch (_) {}
+                try { input.focus(); } catch (_) { }
                 return;
             }
             if (!cc.startsWith('+')) cc = '+' + cc;
@@ -378,7 +379,7 @@ const showSuccessPopup = (message) => {
                 input.setAttribute('pattern', '[0-9]{7,15}');
                 input.placeholder = 'Your phone number';
                 input.className = 'chat-input tel';
-                try { input.focus(); } catch (_) {}
+                try { input.focus(); } catch (_) { }
             }, 200);
             return;
         }
@@ -386,7 +387,7 @@ const showSuccessPopup = (message) => {
             const digits = val.replace(/\D+/g, '');
             if (digits.length < 7 || digits.length > 15) {
                 setTimeout(() => addMsg('Please enter a valid contact number (digits only).', 'bot'), 150);
-                try { input.focus(); } catch (_) {}
+                try { input.focus(); } catch (_) { }
                 return;
             }
             clientPhone = digits;
@@ -406,7 +407,7 @@ const showSuccessPopup = (message) => {
                         input.disabled = true;
                         send.disabled = true;
                         input.blur();
-                    } catch (_) {}
+                    } catch (_) { }
                     setTimeout(() => {
                         close();
                     }, 1200);
@@ -425,7 +426,7 @@ const showSuccessPopup = (message) => {
                 input.setAttribute('inputmode', 'text');
                 input.className = 'chat-input search';
                 input.value = '';
-                try { input.focus(); } catch (_) {}
+                try { input.focus(); } catch (_) { }
             }, 250);
         }, 200);
         input.value = '';
@@ -438,7 +439,7 @@ const showSuccessPopup = (message) => {
             if (!hasSelectedPrimaryIntent) {
                 input.placeholder = 'Select what you are looking for above to start...';
             }
-        } catch (_) {}
+        } catch (_) { }
         if (!panel.dataset.init) {
             addMsg('What are you looking for?', 'bot');
             addSuggestions([
@@ -454,7 +455,7 @@ const showSuccessPopup = (message) => {
             ]);
             panel.dataset.init = '1';
         }
-        try { input.focus(); } catch (_) {}
+        try { input.focus(); } catch (_) { }
     };
     const close = () => panel.classList.remove('open');
     let peekTimer = null;
@@ -567,9 +568,31 @@ window.addEventListener('load', () => {
             .to(preloader, {
                 y: '-100%',
                 duration: 0.8,
-                ease: 'power4.inOut'
+                ease: 'power4.inOut',
+                onComplete: () => {
+                    preloader.classList.add('loaded');
+                    // Ensure Lenis is notified of the height change if any
+                    if (typeof lenis !== 'undefined') lenis.resize();
+                }
             }, "-=0.1");
     }
+
+    // Safety fallback: If preloader is still there after 5 seconds, hide it
+    // Safety fallback: If preloader is still there after 5 seconds, hide it
+    setTimeout(() => {
+        if (preloader && !preloader.classList.contains('loaded')) {
+            gsap.to(preloader, {
+                y: '-100%',
+                duration: 0.8,
+                ease: 'power4.inOut',
+                onComplete: () => {
+                    preloader.classList.add('loaded');
+                    if (typeof lenis !== 'undefined') lenis.resize();
+                }
+            });
+        }
+    }, 5000);
+
     tl.from('nav', {
         y: -80,
         opacity: 0,
@@ -801,7 +824,7 @@ fetch('what-we-offer.html')
             const container = document.getElementById('services-container');
             if (container) {
                 container.innerHTML = servicesSection.outerHTML;
-                
+
                 // Use CSS ticker instead of Swiper for continuous marquee
                 initTicker('.services-swiper', 40);
             }
@@ -1349,7 +1372,7 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     stagger: 0.1,
     delay: 0.15
 });
-;(() => {
+; (() => {
     const imageGrid = document.querySelector('.image-grid');
     if (imageGrid) {
         safeFrom('.image-card', {
@@ -2029,7 +2052,7 @@ initTestimonialCarousel();
     });
 })();
 
-;(() => {
+; (() => {
     // Home Page Specific Scroll Animations
 
     // Helper to wrap characters for split text
@@ -2049,8 +2072,8 @@ initTestimonialCarousel();
         });
     };
 
-// Workflow section animation handled by unified logic below
-    
+    // Workflow section animation handled by unified logic below
+
     // Workflow Steps Animation handled by apply3DScrollEffect() in main scope
 
     // Stats Banner - Rolling Numbers & Fade
@@ -2064,12 +2087,12 @@ initTestimonialCarousel();
         scrollTrigger: { trigger: '.projects-section', start: 'top 80%' },
         x: 20, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out'
     });
-    
+
     // Enhanced Project Card Animation - Staggered Reveal
     const projectCards = document.querySelectorAll('.projects-grid .image-card');
     if (projectCards.length > 0) {
         gsap.set(projectCards, { y: 100, opacity: 0 }); // Initial state
-        
+
         ScrollTrigger.batch(projectCards, {
             onEnter: batch => gsap.to(batch, {
                 opacity: 1,
@@ -2089,7 +2112,7 @@ initTestimonialCarousel();
         scrollTrigger: { trigger: '.partners-section', start: 'top 80%' },
         y: 30, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out'
     });
-    
+
     // Contact Section CTA Reveal
     const contactBtn = document.querySelector('#contact .cta-button');
     if (contactBtn) {
