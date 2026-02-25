@@ -972,7 +972,7 @@ footer .service-menu-link:hover {
   gap: 1.5rem;
 }
 
-.marquee-content {
+.projects-marquee-content {
   display: flex;
   gap: 1.5rem;
   flex-shrink: 0;
@@ -981,7 +981,7 @@ footer .service-menu-link:hover {
 }
 
 /* Pause on hover for better UX */
-.marquee-row:hover .marquee-content {
+.marquee-row:hover .projects-marquee-content {
   animation-play-state: paused;
 }
 
@@ -1035,11 +1035,11 @@ footer .service-menu-link:hover {
   }
 }
 
-.marquee-row.scroll-left .marquee-content {
+.marquee-row.scroll-left .projects-marquee-content {
   animation: marquee-scroll 40s linear infinite;
 }
 
-.marquee-row.scroll-right .marquee-content {
+.marquee-row.scroll-right .projects-marquee-content {
   animation: marquee-scroll-reverse 40s linear infinite;
 }
 
