@@ -42,9 +42,8 @@
 }
 
 /* Logo Override */
-[data-theme="light"] .logo-symbol {
-  background: var(--color-gold-primary);
-  color: #ffffff; /* White text on Gold background */
+[data-theme="light"] .logo-img {
+  background: transparent;
   box-shadow: none;
 }
 

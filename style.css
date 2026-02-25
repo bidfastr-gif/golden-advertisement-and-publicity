@@ -364,6 +364,16 @@ nav .container {
 }
 
 /* Logo Styles */
+.logo-img {
+  height: 4.5rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-logo .logo-img {
+  height: 8rem;
+}
+
 .logo-brand {
   display: flex;
   align-items: center;
@@ -372,24 +382,8 @@ nav .container {
   color: white;
 }
 
-.logo-symbol {
-  width: 11rem;
-  height: 8rem;
-  background-color: transparent;
-  background-image: url('./assets/golden_logo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 0;
-  transform: none;
-  border-radius: 2px;
-}
+/* Deprecated: .logo-symbol styles removed as we switched to img tag */
+
 
 .logo-details {
   display: flex;
@@ -420,7 +414,7 @@ nav .container {
   display: none;
 }
 
-.nav-wrapper .logo-symbol {
+.nav-wrapper .logo-img {
   height: 4.5rem;
 }
 
@@ -2052,9 +2046,9 @@ footer {
   margin-top: -2.5rem;
 }
 
-.footer-brand .logo-symbol {
-  width: 14rem;
-  height: 10rem;
+.footer-brand .logo-img {
+  width: auto;
+  height: 8rem;
 }
 
 .footer-brand h2 {
@@ -2117,8 +2111,8 @@ footer {
   margin-bottom: 0.8rem;
 }
 
-.footer-logo .logo-symbol {
-  width: 8rem;
+.footer-logo .logo-img {
+  width: auto;
   height: 8rem;
 }
 
