@@ -1118,11 +1118,20 @@ footer .service-menu-link:hover {
 }
 
 .projects-swiper .swiper-wrapper.is-ticker,
-.partners-swiper .swiper-wrapper.is-ticker {
+.partners-swiper .swiper-wrapper.is-ticker,
+.services-swiper .swiper-wrapper.is-ticker {
   will-change: transform;
   animation: marquee-linear var(--ticker-duration, 40s) linear infinite;
   display: inline-flex;
   width: max-content;
+}
+
+.services-swiper {
+  overflow: hidden;
+}
+
+.services-swiper .swiper-slide {
+  margin-right: 30px;
 }
 
 .nav-links a[href="./case-study.html"],

@@ -802,22 +802,8 @@ fetch('what-we-offer.html')
             if (container) {
                 container.innerHTML = servicesSection.outerHTML;
                 
-                // Initialize Swiper
-                new Swiper('.services-swiper', {
-                    slidesPerView: 'auto',
-                    spaceBetween: 30,
-                    centeredSlides: false,
-                    loop: true,
-                    loopAdditionalSlides: 10,
-                    freeMode: true,
-                    freeModeMomentum: false,
-                    speed: 6000,
-                    grabCursor: false,
-                    allowTouchMove: false,
-                    autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
-                    observer: true,
-                    observeParents: true,
-                });
+                // Use CSS ticker instead of Swiper for continuous marquee
+                initTicker('.services-swiper', 40);
             }
         }
     })
