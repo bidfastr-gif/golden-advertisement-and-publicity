@@ -815,12 +815,19 @@ fetch('what-we-offer.html')
                     grabCursor: true,
                     allowTouchMove: true,
                     autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false },
+                    observer: true,
+                    observeParents: true,
                 });
 
-                // Apply 3D Scroll Animation to Service Cards
-                // We use a slight timeout to ensure DOM is ready and layout is calculated
+                // Apply simple entrance animation instead of scrub-based 3D effect
+                // to prevent interference with Swiper's continuous scrolling
                 setTimeout(() => {
-                    apply3DScrollEffect('#services-container .feature-card');
+                    safeFrom('#services-container .feature-card', {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.8,
+                        stagger: 0.05
+                    });
                 }, 100);
             }
         }
