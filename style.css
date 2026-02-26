@@ -3196,3 +3196,212 @@ footer .contact-info .contact-item div p {
     animation: none !important;
   }
 }
+
+/* Studies Grid - 2x2 Layout */
+.studies-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 768px) {
+  .studies-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Case Study Layout Redesign --- */
+.case-study-container {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 5rem;
+}
+
+@media (max-width: 992px) {
+  .case-study-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.case-study-sidebar {
+  /* background and border removed as they are now on .cs-info-box */
+  position: sticky;
+  top: 120px;
+}
+
+@media (max-width: 992px) {
+  .case-study-sidebar {
+    position: static;
+    margin-bottom: 3rem;
+  }
+}
+
+.cs-info-item {
+  margin-bottom: 2rem;
+}
+
+.cs-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.cs-info-label {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--color-gold-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+}
+
+.cs-info-value {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-white);
+  font-weight: 300;
+}
+
+.case-study-main h2 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  color: var(--color-white);
+}
+
+.case-study-main h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-gold-primary);
+  margin-top: 3rem;
+}
+
+.case-study-main h3:first-of-type {
+  margin-top: 0;
+}
+
+.case-study-main p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.result-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid var(--color-gold-primary);
+  padding: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.result-card:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.result-card-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+.strategy-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.strategy-list li {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  position: relative;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.strategy-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-gold-primary);
+  font-weight: bold;
+}
+
+/* --- Study Banner Section --- */
+.study-banner-section {
+  padding: 0;
+  background: var(--color-black-rich);
+}
+
+.study-banner-img {
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+}
+
+.study-banner-img img {
+  width: 100%;
+  height: 350px; /* Fixed height for banner look */
+  object-fit: cover; /* Fills the container, eliminating black bars */
+  display: block;
+  transition: transform 0.5s ease;
+  object-position: center; /* Centers the image */
+}
+
+.study-banner-img:hover img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .study-banner-img img {
+    height: 200px; /* Smaller height for mobile */
+  }
+}
+
+/* --- Case Study Sidebar Images --- */
+.cs-image-grid-top,
+.cs-image-grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr; /* Changed to single column for better visibility */
+  gap: 1.5rem; /* Increased gap */
+  margin-bottom: 2rem;
+}
+
+.cs-image-grid-bottom {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
+.cs-image-grid-top img,
+.cs-image-grid-bottom img {
+  width: 100%;
+  height: 250px; /* Increased height */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.cs-image-grid-top img:hover,
+.cs-image-grid-bottom img:hover {
+  transform: scale(1.05);
+}
+
+.cs-info-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+}
