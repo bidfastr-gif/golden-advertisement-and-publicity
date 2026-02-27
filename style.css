@@ -1158,13 +1158,7 @@ nav .theme-toggle {
 
 @media (max-width: 768px) {
 
-  nav .theme-toggle {
-
-    right: 6px;
-
-    top: 24px;
-
-  }
+  /* Removed to fix alignment */
 
 }
 
@@ -5338,6 +5332,62 @@ footer .contact-info .contact-item div p {
 
 }
 
+@media (max-width: 420px) {
+
+  .hero {
+
+    height: auto;
+
+    min-height: 100vh;
+
+    min-height: 100svh;
+
+    padding-top: calc(6.5rem + env(safe-area-inset-top));
+
+    padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
+
+    align-items: flex-start;
+
+  }
+
+
+
+  .hero-title {
+
+    font-size: clamp(2.3rem, 10vw, 3.1rem);
+
+    line-height: 1.05;
+
+    margin-bottom: 1.25rem;
+
+  }
+
+
+
+  .hero-subtitle {
+
+    font-size: 1.05rem;
+
+    margin-bottom: 1.75rem;
+
+  }
+
+  .hero-ctas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-ctas .cta-button {
+    width: 100%;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+  }
+}
+
 
 
 /* Page Hero (Subpages) */
@@ -7156,4 +7206,104 @@ footer .contact-info .contact-item div p {
 
 [data-theme="light"] .adv-card:hover {
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+}
+
+/* ==========================================================================
+   Responsive Navigation Styles
+   ========================================================================== */
+
+/* Hamburger Menu Button - Default Hidden */
+#nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+    padding: 0;
+    margin-left: 1rem;
+}
+
+.hamburger-line {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-gold-primary);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    #nav-toggle {
+        display: flex;
+    }
+
+    /* Adjust nav-actions to align toggle */
+    .nav-actions {
+        gap: 0.5rem;
+    }
+
+    nav .theme-toggle {
+        margin-left: 0;
+    }
+
+    /* Mobile Menu Overlay */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--color-black-rich);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 1001;
+        padding-top: 60px;
+    }
+    
+    /* Open State */
+    nav.open .nav-links {
+        right: 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    }
+    
+    /* Nav Link Styles in Mobile */
+    .nav-links .nav-link {
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    nav.open .nav-links .nav-link {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    nav.open .nav-links .nav-link:nth-child(1) { transition-delay: 0.1s; }
+    nav.open .nav-links .nav-link:nth-child(2) { transition-delay: 0.2s; }
+    nav.open .nav-links .nav-link:nth-child(3) { transition-delay: 0.3s; }
+    nav.open .nav-links .nav-link:nth-child(4) { transition-delay: 0.4s; }
+    nav.open .nav-links .nav-link:nth-child(5) { transition-delay: 0.5s; }
+
+    /* Hamburger Animation */
+    nav.open #nav-toggle .hamburger-line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    
+    nav.open #nav-toggle .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+    
+    nav.open #nav-toggle .hamburger-line:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
 }
