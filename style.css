@@ -3368,7 +3368,11 @@ footer .service-menu-link:hover {
 
 }
 
-
+.workflow-section .container {
+  max-width: 1800px;
+  width: 95%;
+  padding: 0 40px;
+}
 
 .workflow-steps {
   display: grid;
@@ -3376,7 +3380,7 @@ footer .service-menu-link:hover {
   align-items: stretch;
   justify-items: center;
   gap: 2rem;
-  max-width: 1600px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -3480,7 +3484,7 @@ footer .service-menu-link:hover {
 
   transform-origin: left;
 
-  width: 120px;
+  width: 80px;
 
   justify-self: center;
 
