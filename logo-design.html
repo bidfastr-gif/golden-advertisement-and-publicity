@@ -1,463 +1,926 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="icon" type="image/png" href="./assets/golden_logo.png">
-
-  <title>Logo Designing | Golden Advertising & Publicity</title>
-
-  <meta name="description" content="Professional logo design services in Chennai crafting memorable, versatile brand identities for businesses." />
-
-  <meta property="og:title" content="Logo Designing | Golden Advertising & Publicity" />
-
-  <meta property="og:description" content="Get custom logo designs that reflect your brand story, values and market positioning." />
-
-  <meta property="og:type" content="website" />
-
-  <meta property="og:image" content="./assets/golden_logo.png" />
-
-  
-
-  <meta property="og:url" content="https://goldenadvertising.in/logo-design.html" />
-
-  <link rel="canonical" href="https://goldenadvertising.in/logo-design.html" />
-
-  <script>
-
-    (function () {
-
-      var root = document.documentElement;
-
-      var theme = 'dark';
-
-      try {
-
-        var saved = localStorage.getItem('gap-theme-v2');
-
-        if (saved === 'light' || saved === 'dark') {
-
-          theme = saved;
-
-        }
-
-      } catch (e) { }
-
-      root.setAttribute('data-theme', theme);
-
-      // Anti-FOUC: Disable transitions during load
-
-      var style = document.createElement('style');
-
-      style.textContent = '*, *::before, *::after { transition: none !important; }';
-
-      document.head.appendChild(style);
-
-      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
-
-    })();
-
-  </script>
-
-  <style>
-
-    html, body { background-color: #0A0A0A; color: #FFFFFF; }
-
-    [data-theme="light"], [data-theme="light"] body { background-color: #FFFFFF; color: #0D0D0D; }
-
-  </style>
-
-
-
-  <link rel="stylesheet" href="./style.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-</head>
-
-<body>
-
-  <!-- Preloader -->
-
-  <div id="preloader">
-
-    <div class="loader-content">
-
-      <div class="loader-text">GAP</div>
-
-      <div class="loader-spinner"></div>
-
-    </div>
-
-  </div>
-
-  <nav>
-
-    <div class="container nav-wrapper">
-
-      <a href="./index.html" class="logo-brand">
-
-        <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1208" height="705" title="Golden Advertising & Publicity" loading="eager">
-
-      </a>
-
-      <div class="nav-actions">
-
-        <div class="nav-links">
-
-          <a href="./index.html" class="nav-link">Home</a>
-
-          <a href="./about.html" class="nav-link">About Us</a>
-
-          <a href="./services.html" class="nav-link">Services</a>
-
-          <a href="./studies.html" class="nav-link">Case Study</a>
-
-          <a href="./contact.html" class="nav-link">Contact Us</a>
-
-        </div>
-
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-
-          <div class="switch-icon moon-icon">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-
-          </div>
-
-          <div class="switch-icon sun-icon">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-
-          </div>
-
-          <div class="switch-thumb"></div>
-
-        </button>
-        <button id="nav-toggle" aria-label="Toggle navigation">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-
-
-      </div>
-
-    </div>
-
-  </nav>
-
-
-
-  <section class="page-hero logo-hero">
-
-    <div id="logo-hero-canvas" class="hero-background"></div>
-
-    <div class="page-hero-content">
-
-      <h1>Professional Logo Designing</h1>
-
-      <p class="hero-subtitle">Golden Advertising & Publicity</p>
-
-      <div class="hero-contacts" style="margin-top: 8px; margin-bottom: 6px;">
-
-        <a href="#" class="cta-button cta-button--clean" data-enquiry-trigger="true"><i class="fa-solid fa-paper-plane"></i><span class="btn-text">Quick Enquiry</span></a>
-
-        <a href="mailto:contact@goldenadvertising.in" class="cta-button cta-button--clean"><i class="fa-solid fa-envelope"></i><span class="btn-text">contact@goldenadvertising.in</span></a>
-
-        <a href="tel:+918220672333" class="cta-button cta-button--clean"><i class="fa-solid fa-phone"></i><span class="btn-text">82206 72333</span></a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <section class="features-section bg-black" style="padding-top: 6rem;">
-
-    <div class="container">
-
-      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
-
-        <div style="font-size: 1.05rem; line-height: 1.9;">
-
-          <h3 style="font-size: 2rem; margin-bottom: 10px;">Professional Logo Designers</h3>
-
-          <p style="margin-bottom: 1rem;">
-
-            Golden Advertising and Publicity are famous logo designers in chennai. We offers recognition to your business and is utilized to reflect your business in various mediums. GAP have corporate logo designers to share with our inventive group which includes individuals from various foundations.
-
-          </p>
-
-          <p>
-
-            Logo Designing is the beginning purpose of any business. It is the most difficult and challenging part of the developing process.
-
-          </p>
-
-        </div>
-
-        <div class="image-card tilt anim-card logo-illustration" style="display:flex; align-items:center; justify-content:center; max-width: 360px; margin-left: auto;">
-
-          <svg viewBox="0 0 420 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="max-height: 260px;">
-
-            <rect x="30" y="30" width="360" height="240" rx="12" fill="rgba(255,255,255,0.05)" stroke="#D4AF37" stroke-width="2"/>
-
-            <g class="grid">
-
-              <line x1="60" y1="70" x2="360" y2="70" stroke="#333"/>
-
-              <line x1="60" y1="110" x2="360" y2="110" stroke="#333"/>
-
-              <line x1="60" y1="150" x2="360" y2="150" stroke="#333"/>
-
-              <line x1="60" y1="190" x2="360" y2="190" stroke="#333"/>
-
-              <line x1="100" y1="60" x2="100" y2="240" stroke="#333"/>
-
-              <line x1="160" y1="60" x2="160" y2="240" stroke="#333"/>
-
-              <line x1="220" y1="60" x2="220" y2="240" stroke="#333"/>
-
-              <line x1="280" y1="60" x2="280" y2="240" stroke="#333"/>
-
-            </g>
-
-            <circle class="logo-mark" cx="170" cy="140" r="35" fill="none" stroke="#D4AF37" stroke-width="3"/>
-
-            <path class="pen" d="M 250 200 L 295 220 L 285 230 L 240 210 Z" fill="#D4AF37" opacity="0.85"/>
-
-            <rect class="progress-bg" x="60" y="220" width="300" height="10" rx="5" fill="#333"/>
-
-            <rect class="progress-fill" x="60" y="220" width="0" height="10" rx="5" fill="#D4AF37"/>
-
-          </svg>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <section id="logo-process" class="features-section bg-black" style="padding-top: 2rem;">
-
-    <div class="container">
-
-      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
-
-        <div style="font-size: 1.05rem; line-height: 1.9;">
-
-          <h2 style="margin-bottom: 1.5rem; font-size: 2.2rem;">Our Logo Design Process</h2>
-
-          <p style="margin-bottom: 1rem;">
-
-            Every logo project begins with understanding your brand story, audience, and competitive space. This discovery phase helps us define a clear direction before any sketch is created.
-
-          </p>
-
-          <p style="margin-bottom: 1rem;">
-
-            From there, we explore multiple concepts, refine the strongest directions, and test how they work across real-world applications like social media, signage, and packaging.
-
-          </p>
-
-          <p>
-
-            The final delivery includes logo variations, color and typography guidance, and ready-to-use files so your identity stays consistent across every touchpoint.
-
-          </p>
-
-        </div>
-
-        <div class="image-card tilt anim-card logo-process-illustration" style="display:flex; align-items:center; justify-content:center; max-width: 360px; margin-left: auto;">
-
-          <svg viewBox="0 0 420 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-
-            <rect x="30" y="30" width="360" height="220" rx="16" fill="rgba(255,255,255,0.03)" stroke="#D4AF37" stroke-width="2"/>
-
-            <g class="steps">
-
-              <circle class="step-dot" cx="80" cy="110" r="7" fill="#D4AF37"/>
-
-              <circle class="step-dot" cx="180" cy="110" r="7" fill="#D4AF37"/>
-
-              <circle class="step-dot" cx="280" cy="110" r="7" fill="#D4AF37"/>
-
-              <line x1="87" y1="110" x2="173" y2="110" stroke="#D4AF37" stroke-width="2"/>
-
-              <line x1="187" y1="110" x2="273" y2="110" stroke="#D4AF37" stroke-width="2"/>
-
-            </g>
-
-            <g class="logo-tiles">
-
-              <rect x="70" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
-
-              <rect x="175" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
-
-              <rect x="280" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
-
-            </g>
-
-            <g class="final-mark" transform="translate(210,70)">
-
-              <circle cx="0" cy="0" r="26" fill="none" stroke="#D4AF37" stroke-width="3"/>
-
-              <path d="M -10 4 L -3 12 L 12 -4" stroke="#D4AF37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-
-            </g>
-
-          </svg>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-content">
-
-        <div class="footer-brand">
-
-          <a href="./index.html" class="logo-brand footer-logo" aria-label="Golden Advertising & Publicity">
-
-            <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1208" height="705" title="Golden Advertising & Publicity" loading="lazy">
-
-          </a>
-
-          <p style="margin-top: 1rem; max-width: 300px;">Elevating brands through strategic design and innovative digital solutions.</p>
-
-          <div class="footer-socials" aria-label="Social links">
-
-            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
-
-            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span class="sr-only">Twitter</span></a>
-
-            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
-
-            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
-
-          </div>
-
-        </div>
-
-        <div class="footer-links">
-
-          <h4>Quick Links</h4>
-
-          <ul>
-
-            <li><a href="./about.html">About</a></li>
-
-            <li><a href="./services.html">Services</a></li>
-
-            <li><a href="./studies.html">Case Study</a></li>
-
-            <li><a href="./contact.html">Contact</a></li>
-
-          </ul>
-
-        </div>
-
-        <div class="contact-info">
-
-          <h4>Contact</h4>
-
-          <div class="contact-item">
-
-            <i class="fa-solid fa-location-dot"></i>
-
-            <div>
-
-              <p>No.38, 1st Floor</p>
-
-              <p>4th Main Road, Besant Nagar</p>
-
-              <p>Chennai, Tamilnadu-600090</p>
-
-            </div>
-
-          </div>
-
-          <div class="contact-item">
-
-            <i class="fa-solid fa-phone"></i>
-
-            <p><a href="tel:9840261727" class="text-gold">9840261727</a></p>
-
-          </div>
-
-          <div class="contact-item">
-
-            <i class="fa-solid fa-envelope"></i>
-
-            <p><a href="mailto:contact@goldenadvertising.in" class="text-gold">contact@goldenadvertising.in</a></p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="copyright">
-
-        &copy; 2026 Golden Advertising & Publicity. All rights reserved.
-
-      </div>
-
-    </div>
-
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-  <script src="./main.js"></script>
-
-</body>
-
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+﻿﻿<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+
+
+  <meta charset="utf-8">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <link rel="icon" type="image/png" href="./assets/golden_logo.png">
+
+
+
+  <title>Logo Designing | Golden Advertising & Publicity</title>
+
+
+
+  <meta name="description" content="Professional logo design services in Chennai crafting memorable, versatile brand identities for businesses." />
+
+
+
+  <meta property="og:title" content="Logo Designing | Golden Advertising & Publicity" />
+
+
+
+  <meta property="og:description" content="Get custom logo designs that reflect your brand story, values and market positioning." />
+
+
+
+  <meta property="og:type" content="website" />
+
+
+
+  <meta property="og:image" content="./assets/golden_logo.png" />
+
+
+
+  
+
+
+
+  <meta property="og:url" content="https://goldenadvertising.in/logo-design.html" />
+
+
+
+  <link rel="canonical" href="https://goldenadvertising.in/logo-design.html" />
+
+
+
+  <script>
+
+
+
+    (function () {
+
+
+
+      var root = document.documentElement;
+
+
+
+      var theme = 'dark';
+
+
+
+      try {
+
+
+
+        var saved = localStorage.getItem('gap-theme-v2');
+
+
+
+        if (saved === 'light' || saved === 'dark') {
+
+
+
+          theme = saved;
+
+
+
+        }
+
+
+
+      } catch (e) { }
+
+
+
+      root.setAttribute('data-theme', theme);
+
+
+
+      // Anti-FOUC: Disable transitions during load
+
+
+
+      var style = document.createElement('style');
+
+
+
+      style.textContent = '*, *::before, *::after { transition: none !important; }';
+
+
+
+      document.head.appendChild(style);
+
+
+
+      window.addEventListener('load', function() { setTimeout(function(){ style.remove() }, 100); });
+
+
+
+    })();
+
+
+
+  </script>
+
+
+
+  <style>
+
+
+
+    html, body { background-color: #0A0A0A; color: #FFFFFF; }
+
+
+
+    [data-theme="light"], [data-theme="light"] body { background-color: #FFFFFF; color: #0D0D0D; }
+
+
+
+  </style>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="./style.css">
+
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+  <!-- Preloader -->
+
+
+
+  <div id="preloader">
+
+
+
+    <div class="loader-content">
+
+
+
+      <div class="loader-text">GAP</div>
+
+
+
+      <div class="loader-spinner"></div>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <nav>
+
+
+
+    <div class="container nav-wrapper">
+
+
+
+      <a href="./index.html" class="logo-brand">
+
+
+
+        <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1208" height="705" title="Golden Advertising & Publicity" loading="eager">
+
+
+
+      </a>
+
+
+
+      <div class="nav-actions">
+
+
+
+        <div class="nav-links">
+
+
+
+          <a href="./index.html" class="nav-link">Home</a>
+
+
+
+          <a href="./about.html" class="nav-link">About Us</a>
+
+
+
+          <a href="./services.html" class="nav-link">Services</a>
+
+
+
+          <a href="./studies.html" class="nav-link">Case Study</a>
+
+
+
+          <a href="./contact.html" class="nav-link">Contact Us</a>
+
+
+
+        </div>
+
+
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+
+
+
+          <div class="switch-icon moon-icon">
+
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+
+
+
+          </div>
+
+
+
+          <div class="switch-icon sun-icon">
+
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+
+
+
+          </div>
+
+
+
+          <div class="switch-thumb"></div>
+
+
+
+        </button>
+
+        <button id="nav-toggle" aria-label="Toggle navigation">
+
+          <span class="hamburger-line"></span>
+
+          <span class="hamburger-line"></span>
+
+          <span class="hamburger-line"></span>
+
+        </button>
+
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </nav>
+
+
+
+
+
+
+
+  <section class="page-hero logo-hero">
+
+
+
+    <div id="logo-hero-canvas" class="hero-background"></div>
+
+
+
+    <div class="page-hero-content">
+
+
+
+      <h1>Professional Logo Designing</h1>
+
+
+
+      <p class="hero-subtitle">Golden Advertising & Publicity</p>
+
+
+
+      <div class="hero-contacts" style="margin-top: 8px; margin-bottom: 6px;">
+
+
+
+        <a href="#" class="cta-button cta-button--clean" data-enquiry-trigger="true"><i class="fa-solid fa-paper-plane"></i><span class="btn-text">Quick Enquiry</span></a>
+
+
+
+        <a href="mailto:contact@goldenadvertising.in" class="cta-button cta-button--clean"><i class="fa-solid fa-envelope"></i><span class="btn-text">contact@goldenadvertising.in</span></a>
+
+
+
+        <a href="tel:+918220672333" class="cta-button cta-button--clean"><i class="fa-solid fa-phone"></i><span class="btn-text">82206 72333</span></a>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </section>
+
+
+
+
+
+
+
+  <section class="features-section bg-black" style="padding-top: 6rem;">
+
+
+
+    <div class="container">
+
+
+
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
+
+
+
+        <div style="font-size: 1.05rem; line-height: 1.9;">
+
+
+
+          <h3 style="font-size: 2rem; margin-bottom: 10px;">Professional Logo Designers</h3>
+
+
+
+          <p style="margin-bottom: 1rem;">
+
+
+
+            Golden Advertising and Publicity are famous logo designers in chennai. We offers recognition to your business and is utilized to reflect your business in various mediums. GAP have corporate logo designers to share with our inventive group which includes individuals from various foundations.
+
+
+
+          </p>
+
+
+
+          <p>
+
+
+
+            Logo Designing is the beginning purpose of any business. It is the most difficult and challenging part of the developing process.
+
+
+
+          </p>
+
+
+
+        </div>
+
+
+
+        <div class="image-card tilt anim-card logo-illustration" style="display:flex; align-items:center; justify-content:center; max-width: 360px; margin-left: auto;">
+
+
+
+          <svg viewBox="0 0 420 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="max-height: 260px;">
+
+
+
+            <rect x="30" y="30" width="360" height="240" rx="12" fill="rgba(255,255,255,0.05)" stroke="#D4AF37" stroke-width="2"/>
+
+
+
+            <g class="grid">
+
+
+
+              <line x1="60" y1="70" x2="360" y2="70" stroke="#333"/>
+
+
+
+              <line x1="60" y1="110" x2="360" y2="110" stroke="#333"/>
+
+
+
+              <line x1="60" y1="150" x2="360" y2="150" stroke="#333"/>
+
+
+
+              <line x1="60" y1="190" x2="360" y2="190" stroke="#333"/>
+
+
+
+              <line x1="100" y1="60" x2="100" y2="240" stroke="#333"/>
+
+
+
+              <line x1="160" y1="60" x2="160" y2="240" stroke="#333"/>
+
+
+
+              <line x1="220" y1="60" x2="220" y2="240" stroke="#333"/>
+
+
+
+              <line x1="280" y1="60" x2="280" y2="240" stroke="#333"/>
+
+
+
+            </g>
+
+
+
+            <circle class="logo-mark" cx="170" cy="140" r="35" fill="none" stroke="#D4AF37" stroke-width="3"/>
+
+
+
+            <path class="pen" d="M 250 200 L 295 220 L 285 230 L 240 210 Z" fill="#D4AF37" opacity="0.85"/>
+
+
+
+            <rect class="progress-bg" x="60" y="220" width="300" height="10" rx="5" fill="#333"/>
+
+
+
+            <rect class="progress-fill" x="60" y="220" width="0" height="10" rx="5" fill="#D4AF37"/>
+
+
+
+          </svg>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </section>
+
+
+
+
+
+
+
+  <section id="logo-process" class="features-section bg-black" style="padding-top: 2rem;">
+
+
+
+    <div class="container">
+
+
+
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items:center;">
+
+
+
+        <div style="font-size: 1.05rem; line-height: 1.9;">
+
+
+
+          <h2 style="margin-bottom: 1.5rem; font-size: 2.2rem;">Our Logo Design Process</h2>
+
+
+
+          <p style="margin-bottom: 1rem;">
+
+
+
+            Every logo project begins with understanding your brand story, audience, and competitive space. This discovery phase helps us define a clear direction before any sketch is created.
+
+
+
+          </p>
+
+
+
+          <p style="margin-bottom: 1rem;">
+
+
+
+            From there, we explore multiple concepts, refine the strongest directions, and test how they work across real-world applications like social media, signage, and packaging.
+
+
+
+          </p>
+
+
+
+          <p>
+
+
+
+            The final delivery includes logo variations, color and typography guidance, and ready-to-use files so your identity stays consistent across every touchpoint.
+
+
+
+          </p>
+
+
+
+        </div>
+
+
+
+        <div class="image-card tilt anim-card logo-process-illustration" style="display:flex; align-items:center; justify-content:center; max-width: 360px; margin-left: auto;">
+
+
+
+          <svg viewBox="0 0 420 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+
+
+            <rect x="30" y="30" width="360" height="220" rx="16" fill="rgba(255,255,255,0.03)" stroke="#D4AF37" stroke-width="2"/>
+
+
+
+            <g class="steps">
+
+
+
+              <circle class="step-dot" cx="80" cy="110" r="7" fill="#D4AF37"/>
+
+
+
+              <circle class="step-dot" cx="180" cy="110" r="7" fill="#D4AF37"/>
+
+
+
+              <circle class="step-dot" cx="280" cy="110" r="7" fill="#D4AF37"/>
+
+
+
+              <line x1="87" y1="110" x2="173" y2="110" stroke="#D4AF37" stroke-width="2"/>
+
+
+
+              <line x1="187" y1="110" x2="273" y2="110" stroke="#D4AF37" stroke-width="2"/>
+
+
+
+            </g>
+
+
+
+            <g class="logo-tiles">
+
+
+
+              <rect x="70" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
+
+
+
+              <rect x="175" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
+
+
+
+              <rect x="280" y="150" width="70" height="40" rx="8" fill="#111" stroke="#555"/>
+
+
+
+            </g>
+
+
+
+            <g class="final-mark" transform="translate(210,70)">
+
+
+
+              <circle cx="0" cy="0" r="26" fill="none" stroke="#D4AF37" stroke-width="3"/>
+
+
+
+              <path d="M -10 4 L -3 12 L 12 -4" stroke="#D4AF37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+
+
+            </g>
+
+
+
+          </svg>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </section>
+
+
+
+
+
+
+
+  <footer>
+
+
+
+    <div class="container">
+
+
+
+      <div class="footer-content">
+
+
+
+        <div class="footer-brand">
+
+
+
+          <a href="./index.html" class="logo-brand footer-logo" aria-label="Golden Advertising & Publicity">
+
+
+
+            <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1208" height="705" title="Golden Advertising & Publicity" loading="lazy">
+
+
+
+          </a>
+
+
+
+          <p style="margin-top: 1rem; max-width: 300px;">Elevating brands through strategic design and innovative digital solutions.</p>
+
+
+
+          <div class="footer-socials" aria-label="Social links">
+
+
+
+            <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+
+
+
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span class="sr-only">Twitter</span></a>
+
+
+
+            <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
+
+
+
+            <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+
+
+          <h4>Quick Links</h4>
+
+
+
+          <ul>
+
+
+
+            <li><a href="./about.html">About</a></li>
+
+
+
+            <li><a href="./services.html">Services</a></li>
+
+
+
+            <li><a href="./studies.html">Case Study</a></li>
+
+
+
+            <li><a href="./contact.html">Contact</a></li>
+
+
+
+          </ul>
+
+
+
+        </div>
+
+
+
+        <div class="contact-info">
+
+
+
+          <h4>Contact</h4>
+
+
+
+          <div class="contact-item">
+
+
+
+            <i class="fa-solid fa-location-dot"></i>
+
+
+
+            <div>
+
+
+
+              <p>No.38, 1st Floor</p>
+
+
+
+              <p>4th Main Road, Besant Nagar</p>
+
+
+
+              <p>Chennai, Tamilnadu-600090</p>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <div class="contact-item">
+
+
+
+            <i class="fa-solid fa-phone"></i>
+
+
+
+            <p><a href="tel:9840261727" class="text-gold">9840261727</a></p>
+
+
+
+          </div>
+
+
+
+          <div class="contact-item">
+
+
+
+            <i class="fa-solid fa-envelope"></i>
+
+
+
+            <p><a href="mailto:contact@goldenadvertising.in" class="text-gold">contact@goldenadvertising.in</a></p>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <div class="copyright">
+
+
+
+        &copy; 2026 Golden Advertising & Publicity. All rights reserved.
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </footer>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+
+
+  <script src="./main.js"></script>
+
+
+
+</body>
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
