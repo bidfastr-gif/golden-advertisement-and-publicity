@@ -117,18 +117,55 @@ gsap.defaults({
     const nav = document.querySelector('nav');
     const navToggle = document.getElementById('nav-toggle');
     const links = document.querySelectorAll('.nav-links .nav-link');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
     if (!nav || !navToggle) return;
+
     const closeMenu = () => {
         nav.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
+        // Close all dropdowns when menu closes
+        dropdowns.forEach(d => d.classList.remove('active'));
     };
+
     navToggle.addEventListener('click', () => {
         const isOpen = nav.classList.toggle('open');
         navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-    links.forEach(a => a.addEventListener('click', closeMenu));
+
+    links.forEach(link => {
+        // Check if this link controls a dropdown
+        if (link.closest('.dropdown')) {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dropdown = link.closest('.dropdown');
+                    // Close other dropdowns
+                    dropdowns.forEach(d => {
+                        if (d !== dropdown) d.classList.remove('active');
+                    });
+                    dropdown.classList.toggle('active');
+                } else {
+                    // On desktop, allow navigation
+                    // No action needed
+                }
+            });
+        } else {
+            link.addEventListener('click', closeMenu);
+        }
+    });
+
+    // Close menu when clicking links inside dropdown
+    const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) closeMenu();
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 })();
 
