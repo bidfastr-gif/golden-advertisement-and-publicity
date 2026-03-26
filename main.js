@@ -1,6 +1,9 @@
 // Imports removed in favor of CDN links in index.html for vanilla usage
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
+// Global GSAP Performance Optimizations
+gsap.config({ force3D: true, nullTargetWarn: false });
+gsap.ticker.lagSmoothing(1000, 16); // More frequent smoothing tasks
 
     // Theme Toggle (Persistent across pages, mobile-friendly)
     ; (() => {
@@ -524,10 +527,40 @@ const safeFrom = (selector, vars) => {
                 overwrite: true
             };
             const config = Object.assign({}, defaults, vars || {});
+            // Strip nested scrollTrigger to avoid double initialization
+            if (config.scrollTrigger) delete config.scrollTrigger;
             gsap.from(batch, config);
         },
-        start: 'top 85%'
+        // Use user-provided trigger config if available
+        start: (vars && vars.scrollTrigger && vars.scrollTrigger.start) || 'top 85%',
+        once: true
     });
+};
+
+// Phase 3: safeRepeat Helper for CPU Efficiency
+// Automatically plays infinite animations only when in viewport
+const safeRepeat = (selector, vars, triggerSelector) => {
+    const el = document.querySelector(selector);
+    if (!el) return null;
+    
+    const anim = gsap.to(selector, { 
+        ...vars, 
+        repeat: -1, 
+        paused: true,
+        overwrite: 'auto'
+    });
+    
+    ScrollTrigger.create({
+        trigger: triggerSelector || selector,
+        start: 'top 110%',
+        end: 'bottom -10%',
+        onEnter: () => anim.play(),
+        onLeave: () => anim.pause(),
+        onEnterBack: () => anim.play(),
+        onLeaveBack: () => anim.pause()
+    });
+    
+    return anim;
 };
 
 const initTicker = (selector, duration = 40) => {
@@ -774,7 +807,8 @@ const apply3DScrollEffect = (selector, stagger = 0.1) => {
                 overwrite: true
             }
         ),
-        start: 'top 95%'
+        start: 'top 95%',
+        once: true
     });
 
     elements.forEach(el => {
@@ -823,7 +857,7 @@ fetch('what-we-offer.html')
             scrollTrigger: {
                 trigger: section,
                 start: 'top 80%',
-                toggleActions: 'play none none none'
+                once: true
             }
         });
 
@@ -1367,35 +1401,18 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     const newsSvg1 = document.querySelector('.newspaper-illustration svg');
     const newsSvg2 = document.querySelector('.newspaper-illustration-2 svg');
     if (newsSvg1) {
-        gsap.to('.newspaper-illustration .progress-fill', {
-            attr: { width: 300 },
-            duration: 2.2,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        });
+        safeRepeat('.newspaper-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
+        
         gsap.fromTo('.newspaper-illustration .paper-layout rect', { opacity: 0.5 }, {
             opacity: 0.9,
             duration: 1.2,
             stagger: 0.2,
-            ease: 'power1.out'
+            ease: 'power1.out',
+            scrollTrigger: { trigger: '.newspaper-illustration', start: 'top 85%', once: true }
         });
-        gsap.to('.newspaper-illustration .ads line', {
-            x: 4,
-            duration: 1.6,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            stagger: 0.1
-        });
-        gsap.to('.newspaper-illustration .ads circle', {
-            scale: 1.05,
-            transformOrigin: '50% 50%',
-            duration: 1.4,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut'
-        });
+
+        safeRepeat('.newspaper-illustration .ads line', { x: 4, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.newspaper-illustration');
+        safeRepeat('.newspaper-illustration .ads circle', { scale: 1.05, transformOrigin: '50% 50%', duration: 1.4, yoyo: true, ease: 'sine.inOut' }, '.newspaper-illustration');
         safeFrom('.newspaper-illustration svg', {
             scrollTrigger: { trigger: '.newspaper-illustration', start: 'top 85%' },
             y: 20,
@@ -1405,21 +1422,8 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
         });
     }
     if (newsSvg2) {
-        gsap.to('.newspaper-illustration-2 .progress-fill-2', {
-            attr: { width: 300 },
-            duration: 2.2,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        });
-        gsap.to('.newspaper-illustration-2 .billboard line', {
-            x: 3,
-            duration: 1.6,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            stagger: 0.1
-        });
+        safeRepeat('.newspaper-illustration-2 .progress-fill-2', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
+        safeRepeat('.newspaper-illustration-2 .billboard line', { x: 3, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.newspaper-illustration-2');
         safeFrom('.newspaper-illustration-2 svg', {
             scrollTrigger: { trigger: '.newspaper-illustration-2', start: 'top 85%' },
             y: 20,
@@ -1432,42 +1436,15 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const fmSvg = document.querySelector('.fm-illustration svg');
     if (!fmSvg) return;
-    gsap.to('.fm-illustration .progress-fill', {
-        attr: { width: 300 },
-        duration: 2.2,
-        ease: 'power1.inOut',
-        repeat: -1,
-        yoyo: true
-    });
-    gsap.to('.fm-illustration .eq-bars rect', {
-        scaleY: 1.3,
-        transformOrigin: '50% 100%',
-        duration: 0.8,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut',
-        stagger: 0.1
-    });
-    gsap.to('.fm-illustration .radio-dial', {
-        rotate: 18,
-        transformOrigin: '50% 50%',
-        duration: 1.6,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut'
-    });
+    safeRepeat('.fm-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
+    safeRepeat('.fm-illustration .eq-bars rect', { scaleY: 1.3, transformOrigin: '50% 100%', duration: 0.8, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.fm-illustration');
+    safeRepeat('.fm-illustration .radio-dial', { rotate: 18, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' }, '.fm-illustration');
     const waves = document.querySelectorAll('.fm-illustration .wave');
     waves.forEach((w, i) => {
         const len = w.getTotalLength ? w.getTotalLength() : 200;
         w.style.strokeDasharray = `${len}`;
         w.style.strokeDashoffset = `${len}`;
-        gsap.to(w, {
-            strokeDashoffset: 0,
-            duration: 2 + i * 0.3,
-            repeat: -1,
-            yoyo: true,
-            ease: 'power1.inOut'
-        });
+        safeRepeat(w, { strokeDashoffset: 0, duration: 2 + i * 0.3, yoyo: true, ease: 'power1.inOut' }, '.fm-illustration');
     });
     safeFrom('.fm-illustration svg', {
         scrollTrigger: { trigger: '.fm-illustration', start: 'top 85%' },
@@ -1527,13 +1504,7 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const brochureSvg = document.querySelector('.brochure-illustration svg');
     if (brochureSvg) {
-        gsap.to('.brochure-illustration .progress-fill', {
-            attr: { width: 300 },
-            duration: 2.2,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        });
+        safeRepeat('.brochure-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
         gsap.fromTo('.brochure-illustration .brochure-pages rect', {
             opacity: 0.4
         }, {
@@ -1542,22 +1513,8 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
             stagger: 0.2,
             ease: 'power1.out'
         });
-        gsap.to('.brochure-illustration .brochure-content line', {
-            x: 4,
-            duration: 1.6,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            stagger: 0.1
-        });
-        gsap.to('.brochure-illustration .brochure-content rect', {
-            scale: 1.03,
-            transformOrigin: '50% 50%',
-            duration: 1.6,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut'
-        });
+        safeRepeat('.brochure-illustration .brochure-content line', { x: 4, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.brochure-illustration');
+        safeRepeat('.brochure-illustration .brochure-content rect', { scale: 1.03, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' }, '.brochure-illustration');
         safeFrom('.brochure-illustration svg', {
             scrollTrigger: {
                 trigger: '.brochure-illustration',
@@ -1573,28 +1530,8 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const processSvg = document.querySelector('.brochure-process-illustration svg');
     if (!processSvg) return;
-    gsap.fromTo('.brochure-process-illustration .step-card', {
-        y: 8,
-        opacity: 0.6
-    }, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.12
-    });
-    gsap.fromTo('.brochure-process-illustration .flow-arrow', {
-        opacity: 0.4
-    }, {
-        opacity: 1,
-        duration: 1.4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.2
-    });
+    safeRepeat('.brochure-process-illustration .step-card', { y: 0, opacity: 1, duration: 1.2, ease: 'sine.inOut', yoyo: true, stagger: 0.12 }, '.brochure-process-illustration');
+    safeRepeat('.brochure-process-illustration .flow-arrow', { opacity: 1, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.2 }, '.brochure-process-illustration');
     safeFrom('.brochure-process-illustration svg', {
         scrollTrigger: {
             trigger: '.brochure-process-illustration',
@@ -1630,35 +1567,10 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const ecomSvg = document.querySelector('.ecom-illustration svg');
     if (ecomSvg) {
-        gsap.to('.ecom-illustration .cart', {
-            x: 20,
-            duration: 2,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut'
-        });
-        gsap.to('.ecom-illustration .progress-fill', {
-            attr: { width: 280 },
-            duration: 2.2,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        });
-        gsap.to('.ecom-illustration .progress-fill-2', {
-            attr: { width: 220 },
-            duration: 2.0,
-            ease: 'power1.inOut',
-            repeat: -1,
-            yoyo: true
-        });
-        gsap.to('.ecom-illustration .boxes rect', {
-            y: '-=5',
-            duration: 1.6,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            stagger: 0.2
-        });
+        safeRepeat('.ecom-illustration .cart', { x: 20, duration: 2, yoyo: true, ease: 'sine.inOut' });
+        safeRepeat('.ecom-illustration .progress-fill', { attr: { width: 280 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
+        safeRepeat('.ecom-illustration .progress-fill-2', { attr: { width: 220 }, duration: 2.0, ease: 'power1.inOut', yoyo: true });
+        safeRepeat('.ecom-illustration .boxes rect', { y: '-=5', duration: 1.6, yoyo: true, stagger: 0.2, ease: 'sine.inOut' }, '.ecom-illustration');
         safeFrom('.ecom-illustration svg', {
             scrollTrigger: {
                 trigger: '.ecom-illustration',
@@ -1675,24 +1587,8 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const offerSvg = document.querySelector('.ecom-offer-illustration svg');
     if (!offerSvg) return;
-    gsap.fromTo('.ecom-offer-illustration .offer-bar-fill', {
-        attr: { width: 0 }
-    }, {
-        attr: { width: 220 },
-        duration: 2.0,
-        ease: 'power1.inOut',
-        repeat: -1,
-        yoyo: true,
-        stagger: 0.2
-    });
-    gsap.to('.ecom-offer-illustration .offer-dot', {
-        y: -4,
-        duration: 1.4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.15
-    });
+    safeRepeat('.ecom-offer-illustration .offer-bar-fill', { attr: { width: 220 }, duration: 2.0, ease: 'power1.inOut', yoyo: true, stagger: 0.2 }, '.ecom-offer-illustration');
+    safeRepeat('.ecom-offer-illustration .offer-dot', { y: -4, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.15 }, '.ecom-offer-illustration');
     safeFrom('.ecom-offer-illustration svg', {
         scrollTrigger: {
             trigger: '.ecom-offer-illustration',
@@ -1708,37 +1604,9 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const logoSvg = document.querySelector('.logo-illustration svg');
     if (!logoSvg) return;
-    gsap.to('.logo-illustration .logo-mark', {
-        scale: 1.08,
-        transformOrigin: '50% 50%',
-        duration: 1.6,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut'
-    });
-    gsap.to('.logo-illustration .progress-fill', {
-        attr: { width: 300 },
-        duration: 2.4,
-        ease: 'power1.inOut',
-        repeat: -1,
-        yoyo: true
-    });
-    gsap.fromTo('.logo-illustration .grid line', {
-        opacity: 0
-    }, {
-        opacity: 0.6,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: 'power1.out'
-    });
-    gsap.to('.logo-illustration .pen', {
-        x: 6,
-        y: 4,
-        duration: 1.8,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut'
-    });
+    safeRepeat('.logo-illustration .logo-mark', { scale: 1.08, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' });
+    safeRepeat('.logo-illustration .progress-fill', { attr: { width: 300 }, duration: 2.4, ease: 'power1.inOut', yoyo: true });
+    safeRepeat('.logo-illustration .pen', { x: 6, y: 4, duration: 1.8, yoyo: true, ease: 'sine.inOut' });
     safeFrom('.logo-illustration svg', {
         scrollTrigger: {
             trigger: '.logo-illustration',
@@ -1753,38 +1621,9 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const processSvg = document.querySelector('.logo-process-illustration svg');
     if (!processSvg) return;
-    gsap.fromTo('.logo-process-illustration .step-dot', {
-        scale: 0.8,
-        opacity: 0.5
-    }, {
-        scale: 1.1,
-        opacity: 1,
-        duration: 1.4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.15
-    });
-    gsap.fromTo('.logo-process-illustration .logo-tiles rect', {
-        y: 6,
-        opacity: 0.6
-    }, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.12
-    });
-    gsap.to('.logo-process-illustration .final-mark', {
-        scale: 1.06,
-        duration: 1.6,
-        transformOrigin: '50% 50%',
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut'
-    });
+    safeRepeat('.logo-process-illustration .step-dot', { scale: 1.1, opacity: 1, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.15 }, '.logo-process-illustration');
+    safeRepeat('.logo-process-illustration .logo-tiles rect', { y: 0, opacity: 1, duration: 1.2, ease: 'sine.inOut', yoyo: true, stagger: 0.12 }, '.logo-process-illustration');
+    safeRepeat('.logo-process-illustration .final-mark', { scale: 1.06, duration: 1.6, transformOrigin: '50% 50%', yoyo: true, ease: 'sine.inOut' }, '.logo-process-illustration');
     safeFrom('.logo-process-illustration svg', {
         scrollTrigger: {
             trigger: '.logo-process-illustration',
@@ -2064,15 +1903,15 @@ initTestimonialCarousel();
 
         ScrollTrigger.batch(projectCards, {
             onEnter: batch => gsap.to(batch, {
-                opacity: 1,
                 y: 0,
-                stagger: 0.15,
+                opacity: 1,
                 duration: 1.2,
+                stagger: 0.2,
                 ease: 'power4.out',
                 overwrite: true
             }),
-            start: 'top 85%',
-            once: true // Only animate once
+            start: 'top 80%',
+            once: true
         });
     }
 
