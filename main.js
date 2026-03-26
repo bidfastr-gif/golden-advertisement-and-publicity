@@ -1,9 +1,6 @@
 // Imports removed in favor of CDN links in index.html for vanilla usage
 
-gsap.registerPlugin(ScrollTrigger);
-// Global GSAP Performance Optimizations
-gsap.config({ force3D: true, nullTargetWarn: false });
-gsap.ticker.lagSmoothing(1000, 16); // More frequent smoothing tasks
+gsap.registerPlugin(ScrollTrigger)
 
     // Theme Toggle (Persistent across pages, mobile-friendly)
     ; (() => {
@@ -46,16 +43,7 @@ const lenis = new Lenis({
 })
 
 // Sync ScrollTrigger with Lenis
-let scrollTimeout;
-lenis.on('scroll', () => {
-    // Throttled update to reduce main-thread load
-    if (!scrollTimeout) {
-        scrollTimeout = setTimeout(() => {
-            ScrollTrigger.update();
-            scrollTimeout = null;
-        }, 16); // ~60fps throttle
-    }
-});
+lenis.on('scroll', ScrollTrigger.update);
 
 // Add Lenis to GSAP Ticker for perfect synchronization
 gsap.ticker.add((time) => {
@@ -202,18 +190,29 @@ const showSuccessPopup = (message) => {
     }, 2200);
 };
 
-// Chatbot initialization deferred to reduce TBT
-setTimeout(() => {
-    (() => {
+(() => {
     const makeEl = (tag, cls) => {
         const el = document.createElement(tag);
         if (cls) el.className = cls;
         return el;
     };
+    const darkAvatarSrc = './assets/alien_chatbot_icon.png';
+    const lightAvatarSrc = './assets/Light_chatbot.png';
     const widget = makeEl('div', 'chat-widget');
     const toggle = makeEl('button', 'chat-toggle');
-    toggle.setAttribute('aria-label', 'Open Chatbot');
-    toggle.innerHTML = `<svg width="40" height="40" stroke="currentColor" fill="none" class="avatar-svg"><use href="#icon-alien-chat"/></svg>`;
+    const avatar = document.createElement('img');
+    avatar.className = 'avatar-img';
+    const updateAvatarForTheme = (theme) => {
+        const t = theme || document.documentElement.getAttribute('data-theme') || 'dark';
+        avatar.src = t === 'light' ? lightAvatarSrc : darkAvatarSrc;
+    };
+    updateAvatarForTheme();
+    avatar.alt = 'Chatbot';
+    avatar.title = 'Chatbot';
+    avatar.loading = 'lazy';
+    avatar.width = 579;
+    avatar.height = 712;
+    toggle.appendChild(avatar);
     const panel = makeEl('div', 'chat-panel');
     const header = makeEl('div', 'chat-header');
     const title = makeEl('div', 'chat-title');
@@ -508,71 +507,55 @@ setTimeout(() => {
         if (e.key === 'Enter') onUser(input.value);
     });
     setTimeout(startPeek, 600);
-    })();
-}, 1500);
+})();
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
-// Optimized Reveal Helpers
 const setupReveal = (selector) => {
-    const elements = gsap.utils.toArray(selector);
-    if (elements.length === 0) return;
+    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!elements || elements.length === 0) return;
     elements.forEach(el => el.classList.add('reveal'));
-    
-    ScrollTrigger.batch(elements, {
-        onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true, onComplete: () => batch.forEach(el => el.classList.add('is-visible')) }),
-        start: 'top 85%'
-    });
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    elements.forEach(el => io.observe(el));
 };
 
 const safeFrom = (selector, vars) => {
-    const elements = gsap.utils.toArray(selector);
-    if (elements.length === 0) return;
-    
-    ScrollTrigger.batch(elements, {
-        onEnter: batch => {
-            const defaults = {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                stagger: 0.1,
-                overwrite: true
-            };
-            const config = Object.assign({}, defaults, vars || {});
-            if (config.scrollTrigger) delete config.scrollTrigger;
-            gsap.from(batch, config);
-        },
-        start: (vars && vars.scrollTrigger && vars.scrollTrigger.start) || 'top 85%',
-        once: true,
-        // Proactively kill to free up memory
-        onRefresh: self => self.progress === 1 && self.kill()
+    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!els || els.length === 0) return;
+    els.forEach((el) => {
+        const defaults = {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            force3D: true,
+            scrollTrigger: { trigger: el, start: 'top 85%' }
+        };
+        const config = Object.assign({}, defaults, vars || {});
+        gsap.from(el, config);
     });
 };
 
-// Phase 3: safeRepeat Helper for CPU Efficiency
-// Automatically plays infinite animations only when in viewport
-const safeRepeat = (selector, vars, triggerSelector) => {
-    const el = document.querySelector(selector);
-    if (!el) return null;
-    
-    const anim = gsap.to(selector, { 
-        ...vars, 
-        repeat: -1, 
-        paused: true,
-        overwrite: 'auto'
+const safeTo = (selector, vars) => {
+    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!els || els.length === 0) return;
+    els.forEach((el) => {
+        const defaults = {
+            xPercent: -30,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' }
+        };
+        const config = Object.assign({}, defaults, vars || {});
+        gsap.to(el, config);
     });
-    
-    ScrollTrigger.create({
-        trigger: triggerSelector || selector,
-        start: 'top 110%',
-        end: 'bottom -10%',
-        onEnter: () => anim.play(),
-        onLeave: () => anim.pause(),
-        onEnterBack: () => anim.play(),
-        onLeaveBack: () => anim.pause()
-    });
-    
-    return anim;
 };
 
 const initTicker = (selector, duration = 40) => {
@@ -593,140 +576,166 @@ window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (loaderContent && preloader) {
         tl.to(loaderContent, {
-            y: -50, opacity: 0, duration: 0.5, ease: 'power2.inOut', delay: 0.2
-        }).to(preloader, {
-            y: '-100%', duration: 0.8, ease: 'power4.inOut',
-            onComplete: () => {
-                preloader.classList.add('loaded');
-                if (typeof lenis !== 'undefined') lenis.resize();
-                startHeroAnimations();
-            }
-        }, "-=0.1");
+            y: -50,
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.inOut',
+            delay: 0.2
+        })
+            .to(preloader, {
+                y: '-100%',
+                duration: 0.8,
+                ease: 'power4.inOut',
+                onComplete: () => {
+                    preloader.classList.add('loaded');
+                    // Ensure Lenis is notified of the height change if any
+                    if (typeof lenis !== 'undefined') lenis.resize();
+                }
+            }, "-=0.1");
     }
-});
 
-function startHeroAnimations() {
-    if (window.heroAnimationsStarted) return;
-    window.heroAnimationsStarted = true;
-    
-    const tl = gsap.timeline();
-    tl.from('nav', { y: -80, opacity: 0, duration: 0.3, ease: 'power2.out' });
+    // Safety fallback: If preloader is still there after 5 seconds, hide it
+    // Safety fallback: If preloader is still there after 5 seconds, hide it
+    setTimeout(() => {
+        if (preloader && !preloader.classList.contains('loaded')) {
+            gsap.to(preloader, {
+                y: '-100%',
+                duration: 0.8,
+                ease: 'power4.inOut',
+                onComplete: () => {
+                    preloader.classList.add('loaded');
+                    if (typeof lenis !== 'undefined') lenis.resize();
+                }
+            });
+        }
+    }, 5000);
+
+    tl.from('nav', {
+        y: -80,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.out'
+    });
 
     const heroTitleSpans = document.querySelectorAll('.hero-title span');
     if (heroTitleSpans.length > 0) {
         tl.from(heroTitleSpans, {
-            y: '100%', opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power4.out'
+            y: '100%',
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: 'power4.out'
         }, "-=0.3");
     }
 
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
         tl.to(heroSubtitle, {
-            y: 0, opacity: 0.8, duration: 0.5, ease: 'power2.out'
+            y: 0,
+            opacity: 0.8,
+            duration: 0.5,
+            ease: 'power2.out'
         }, "-=0.5");
     }
-}
-
-// Safety fallback: Ensure page reveals even if 'load' event hangs
-setTimeout(() => {
-    const p = document.getElementById('preloader');
-    if (p && !p.classList.contains('loaded')) {
-        gsap.to(p, {
-            y: '-100%', duration: 0.8, ease: 'power4.inOut',
-            onComplete: () => {
-                p.classList.add('loaded');
-                if (typeof lenis !== 'undefined') lenis.resize();
-                startHeroAnimations();
-            }
-        });
-    }
-}, 3000);
+});
 
 
-// Optimized Three.js Background Animation with IntersectionObserver
+// Three.js Background Animation
 const initThreeJS = (containerId = 'hero-canvas') => {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    let scene, camera, renderer, particlesMesh, material, clock;
-    let requestID;
-    let mouseX = 0, mouseY = 0;
-    let initialized = false;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-    const init = () => {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-        container.appendChild(renderer.domElement);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    container.appendChild(renderer.domElement);
 
-        const particlesGeometry = new THREE.BufferGeometry();
-        const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const isMobile = window.innerWidth < 768;
-        // Reduced particle counts for lower CPU usage (40-60% reduction)
-        const particlesCount = prefersReduce ? (isMobile ? 80 : 150) : (isMobile ? 220 : 550);
-        const posArray = new Float32Array(particlesCount * 3);
-        for (let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 10;
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    // Particles Grid
+    const particlesGeometry = new THREE.BufferGeometry();
+    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.innerWidth < 768;
+    const particlesCount = prefersReduce
+        ? (isMobile ? 120 : 200)
+        : (isMobile ? 400 : 900);
 
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        material = new THREE.PointsMaterial({
-            size: 0.015,
-            color: isLight ? 0x0D0D0D : 0xD4AF37,
-            transparent: true,
-            opacity: 0.8,
-        });
+    const posArray = new Float32Array(particlesCount * 3);
 
-        particlesMesh = new THREE.Points(particlesGeometry, material);
-        scene.add(particlesMesh);
-        camera.position.z = 2;
-        clock = new THREE.Clock();
+    for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 10;
+    }
 
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('resize', onResize);
-        window.addEventListener('gap-theme-change', onThemeChange);
-        initialized = true;
-    };
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    const onMouseMove = (event) => {
+    // Particle Material (theme-aware)
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const material = new THREE.PointsMaterial({
+        size: 0.015,
+        color: isLight ? 0x0D0D0D : 0xD4AF37,
+        transparent: true,
+        opacity: 0.8,
+    });
+
+    const particlesMesh = new THREE.Points(particlesGeometry, material);
+    scene.add(particlesMesh);
+
+    camera.position.z = 2;
+
+    // Animation Loop
+    const clock = new THREE.Clock();
+    let mouseX = 0;
+    let mouseY = 0;
+
+    window.addEventListener('mousemove', (event) => {
         mouseX = event.clientX / window.innerWidth - 0.5;
         mouseY = event.clientY / window.innerHeight - 0.5;
-    };
+    });
 
-    const onResize = () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    };
-
-    const onThemeChange = (e) => {
-        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
-        material.color.set(t === 'light' ? 0x0D0D0D : 0xD4AF37);
-    };
+    let running = true;
+    document.addEventListener('visibilitychange', () => {
+        running = !document.hidden;
+    });
 
     const tick = () => {
         const elapsedTime = clock.getElapsedTime();
-        const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        particlesMesh.rotation.y = elapsedTime * (prefersReduce ? 0.025 : 0.05);
-        particlesMesh.rotation.x = mouseY * 0.08;
-        particlesMesh.rotation.y += mouseX * 0.08;
-        renderer.render(scene, camera);
-        requestID = requestAnimationFrame(tick);
-    };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (!initialized) init();
-                tick();
-            } else {
-                cancelAnimationFrame(requestID);
-            }
-        });
-    }, { threshold: 0.1 });
+        // Wave motion
+        const baseSpeed = prefersReduce ? 0.025 : 0.05;
+        if (running) {
+            particlesMesh.rotation.y = elapsedTime * baseSpeed;
+            particlesMesh.rotation.x = mouseY * 0.08;
+            particlesMesh.rotation.y += mouseX * 0.08;
+            renderer.render(scene, camera);
+        }
 
-    observer.observe(container);
+        window.requestAnimationFrame(tick);
+    }
+
+    tick();
+
+    // Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // React to theme changes
+    window.addEventListener('gap-theme-change', (e) => {
+        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
+        const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
+        try {
+            material.color.set(nextColor);
+            material.needsUpdate = true;
+        } catch (_) { }
+    });
 };
 
 initThreeJS('hero-canvas');
@@ -746,75 +755,78 @@ initThreeJS('case-study-hero-canvas');
 initThreeJS('contact-hero-canvas');
 
 // Scroll Animations
-// Optimized Scroll Animations using Batching
-const splitTypes = gsap.utils.toArray('[data-reveal-text]');
-if (splitTypes.length > 0) {
-    ScrollTrigger.batch(splitTypes, {
-        onEnter: batch => gsap.from(batch, {
-            y: 40,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out',
-            overwrite: true
-        }),
-        start: 'top 85%',
-        once: true,
-        onRefresh: self => self.progress === 1 && self.kill()
-    });
-}
+const splitTypes = document.querySelectorAll('[data-reveal-text]')
+
+splitTypes.forEach((char, i) => {
+    // Determine triggers for general sections
+    gsap.from(char, {
+        scrollTrigger: {
+            trigger: char,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: false,
+            markers: false
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+    })
+})
 
 // Counter Animation
-// Optimized Counter Animation using GSAP
 const counters = document.querySelectorAll('.stat-number');
 counters.forEach(counter => {
-    const target = +counter.getAttribute('data-count');
-    const obj = { value: 0 };
-    
+    const updateCount = () => {
+        const target = +counter.getAttribute('data-count');
+        const count = +counter.innerText;
+        const inc = target / 200;
+
+        if (count < target) {
+            counter.innerText = Math.ceil(count + inc);
+            setTimeout(updateCount, 20);
+        } else {
+            counter.innerText = target;
+        }
+    };
+
     ScrollTrigger.create({
         trigger: counter,
-        start: "top 90%",
-        onEnter: () => {
-            gsap.to(obj, {
-                value: target,
-                duration: 2,
-                ease: "power2.out",
-                onUpdate: () => {
-                    counter.innerText = Math.ceil(obj.value);
-                }
-            });
-        },
-        once: true
+        start: "top 85%",
+        onEnter: () => updateCount()
     });
 });
 
 // Reusable 3D Scroll Effect Function
-// Optimized 3D Scroll Effect using Batching
-const apply3DScrollEffect = (selector, stagger = 0.1) => {
-    const elements = gsap.utils.toArray(selector);
-    if (elements.length === 0) return;
+const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
+    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+    if (!elements || elements.length === 0) return;
 
-    ScrollTrigger.batch(elements, {
-        onEnter: batch => gsap.fromTo(batch,
-            { y: 20, opacity: 0, scale: 0.98 },
+    elements.forEach((el, i) => {
+        const delay = stagger ? i * stagger : 0;
+
+        gsap.fromTo(el,
+            { y: 22, opacity: 0, scale: 0.985, force3D: true },
             {
-                y: 0,
+                y: -8,
                 opacity: 1,
                 scale: 1,
-                duration: 0.8,
-                stagger: stagger,
                 ease: 'power3.out',
-                overwrite: true
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 95%',
+                    end: 'top 40%',
+                    scrub: 0.6,
+                    invalidateOnRefresh: true
+                },
+                delay
             }
-        ),
-        start: 'top 95%',
-        once: true,
-        onRefresh: self => self.progress === 1 && self.kill()
-    });
+        );
 
-    elements.forEach(el => {
-        el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.2, ease: 'power2.out' }));
-        el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
+        if (withHover) {
+            el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.18, ease: 'power2.out' }));
+            el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
+        }
     });
 };
 
@@ -858,7 +870,7 @@ fetch('what-we-offer.html')
             scrollTrigger: {
                 trigger: section,
                 start: 'top 80%',
-                once: true
+                toggleActions: 'play none none none'
             }
         });
 
@@ -1402,18 +1414,35 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     const newsSvg1 = document.querySelector('.newspaper-illustration svg');
     const newsSvg2 = document.querySelector('.newspaper-illustration-2 svg');
     if (newsSvg1) {
-        safeRepeat('.newspaper-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
-        
+        gsap.to('.newspaper-illustration .progress-fill', {
+            attr: { width: 300 },
+            duration: 2.2,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
         gsap.fromTo('.newspaper-illustration .paper-layout rect', { opacity: 0.5 }, {
             opacity: 0.9,
             duration: 1.2,
             stagger: 0.2,
-            ease: 'power1.out',
-            scrollTrigger: { trigger: '.newspaper-illustration', start: 'top 85%', once: true }
+            ease: 'power1.out'
         });
-
-        safeRepeat('.newspaper-illustration .ads line', { x: 4, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.newspaper-illustration');
-        safeRepeat('.newspaper-illustration .ads circle', { scale: 1.05, transformOrigin: '50% 50%', duration: 1.4, yoyo: true, ease: 'sine.inOut' }, '.newspaper-illustration');
+        gsap.to('.newspaper-illustration .ads line', {
+            x: 4,
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            stagger: 0.1
+        });
+        gsap.to('.newspaper-illustration .ads circle', {
+            scale: 1.05,
+            transformOrigin: '50% 50%',
+            duration: 1.4,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
         safeFrom('.newspaper-illustration svg', {
             scrollTrigger: { trigger: '.newspaper-illustration', start: 'top 85%' },
             y: 20,
@@ -1423,8 +1452,21 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
         });
     }
     if (newsSvg2) {
-        safeRepeat('.newspaper-illustration-2 .progress-fill-2', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
-        safeRepeat('.newspaper-illustration-2 .billboard line', { x: 3, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.newspaper-illustration-2');
+        gsap.to('.newspaper-illustration-2 .progress-fill-2', {
+            attr: { width: 300 },
+            duration: 2.2,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
+        gsap.to('.newspaper-illustration-2 .billboard line', {
+            x: 3,
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            stagger: 0.1
+        });
         safeFrom('.newspaper-illustration-2 svg', {
             scrollTrigger: { trigger: '.newspaper-illustration-2', start: 'top 85%' },
             y: 20,
@@ -1437,15 +1479,42 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const fmSvg = document.querySelector('.fm-illustration svg');
     if (!fmSvg) return;
-    safeRepeat('.fm-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
-    safeRepeat('.fm-illustration .eq-bars rect', { scaleY: 1.3, transformOrigin: '50% 100%', duration: 0.8, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.fm-illustration');
-    safeRepeat('.fm-illustration .radio-dial', { rotate: 18, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' }, '.fm-illustration');
+    gsap.to('.fm-illustration .progress-fill', {
+        attr: { width: 300 },
+        duration: 2.2,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true
+    });
+    gsap.to('.fm-illustration .eq-bars rect', {
+        scaleY: 1.3,
+        transformOrigin: '50% 100%',
+        duration: 0.8,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+        stagger: 0.1
+    });
+    gsap.to('.fm-illustration .radio-dial', {
+        rotate: 18,
+        transformOrigin: '50% 50%',
+        duration: 1.6,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
     const waves = document.querySelectorAll('.fm-illustration .wave');
     waves.forEach((w, i) => {
         const len = w.getTotalLength ? w.getTotalLength() : 200;
         w.style.strokeDasharray = `${len}`;
         w.style.strokeDashoffset = `${len}`;
-        safeRepeat(w, { strokeDashoffset: 0, duration: 2 + i * 0.3, yoyo: true, ease: 'power1.inOut' }, '.fm-illustration');
+        gsap.to(w, {
+            strokeDashoffset: 0,
+            duration: 2 + i * 0.3,
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+        });
     });
     safeFrom('.fm-illustration svg', {
         scrollTrigger: { trigger: '.fm-illustration', start: 'top 85%' },
@@ -1505,7 +1574,13 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const brochureSvg = document.querySelector('.brochure-illustration svg');
     if (brochureSvg) {
-        safeRepeat('.brochure-illustration .progress-fill', { attr: { width: 300 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
+        gsap.to('.brochure-illustration .progress-fill', {
+            attr: { width: 300 },
+            duration: 2.2,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
         gsap.fromTo('.brochure-illustration .brochure-pages rect', {
             opacity: 0.4
         }, {
@@ -1514,8 +1589,22 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
             stagger: 0.2,
             ease: 'power1.out'
         });
-        safeRepeat('.brochure-illustration .brochure-content line', { x: 4, duration: 1.6, yoyo: true, stagger: 0.1, ease: 'sine.inOut' }, '.brochure-illustration');
-        safeRepeat('.brochure-illustration .brochure-content rect', { scale: 1.03, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' }, '.brochure-illustration');
+        gsap.to('.brochure-illustration .brochure-content line', {
+            x: 4,
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            stagger: 0.1
+        });
+        gsap.to('.brochure-illustration .brochure-content rect', {
+            scale: 1.03,
+            transformOrigin: '50% 50%',
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
         safeFrom('.brochure-illustration svg', {
             scrollTrigger: {
                 trigger: '.brochure-illustration',
@@ -1531,8 +1620,28 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const processSvg = document.querySelector('.brochure-process-illustration svg');
     if (!processSvg) return;
-    safeRepeat('.brochure-process-illustration .step-card', { y: 0, opacity: 1, duration: 1.2, ease: 'sine.inOut', yoyo: true, stagger: 0.12 }, '.brochure-process-illustration');
-    safeRepeat('.brochure-process-illustration .flow-arrow', { opacity: 1, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.2 }, '.brochure-process-illustration');
+    gsap.fromTo('.brochure-process-illustration .step-card', {
+        y: 8,
+        opacity: 0.6
+    }, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.12
+    });
+    gsap.fromTo('.brochure-process-illustration .flow-arrow', {
+        opacity: 0.4
+    }, {
+        opacity: 1,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.2
+    });
     safeFrom('.brochure-process-illustration svg', {
         scrollTrigger: {
             trigger: '.brochure-process-illustration',
@@ -1568,10 +1677,35 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const ecomSvg = document.querySelector('.ecom-illustration svg');
     if (ecomSvg) {
-        safeRepeat('.ecom-illustration .cart', { x: 20, duration: 2, yoyo: true, ease: 'sine.inOut' });
-        safeRepeat('.ecom-illustration .progress-fill', { attr: { width: 280 }, duration: 2.2, ease: 'power1.inOut', yoyo: true });
-        safeRepeat('.ecom-illustration .progress-fill-2', { attr: { width: 220 }, duration: 2.0, ease: 'power1.inOut', yoyo: true });
-        safeRepeat('.ecom-illustration .boxes rect', { y: '-=5', duration: 1.6, yoyo: true, stagger: 0.2, ease: 'sine.inOut' }, '.ecom-illustration');
+        gsap.to('.ecom-illustration .cart', {
+            x: 20,
+            duration: 2,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
+        gsap.to('.ecom-illustration .progress-fill', {
+            attr: { width: 280 },
+            duration: 2.2,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
+        gsap.to('.ecom-illustration .progress-fill-2', {
+            attr: { width: 220 },
+            duration: 2.0,
+            ease: 'power1.inOut',
+            repeat: -1,
+            yoyo: true
+        });
+        gsap.to('.ecom-illustration .boxes rect', {
+            y: '-=5',
+            duration: 1.6,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            stagger: 0.2
+        });
         safeFrom('.ecom-illustration svg', {
             scrollTrigger: {
                 trigger: '.ecom-illustration',
@@ -1588,8 +1722,24 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const offerSvg = document.querySelector('.ecom-offer-illustration svg');
     if (!offerSvg) return;
-    safeRepeat('.ecom-offer-illustration .offer-bar-fill', { attr: { width: 220 }, duration: 2.0, ease: 'power1.inOut', yoyo: true, stagger: 0.2 }, '.ecom-offer-illustration');
-    safeRepeat('.ecom-offer-illustration .offer-dot', { y: -4, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.15 }, '.ecom-offer-illustration');
+    gsap.fromTo('.ecom-offer-illustration .offer-bar-fill', {
+        attr: { width: 0 }
+    }, {
+        attr: { width: 220 },
+        duration: 2.0,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.2
+    });
+    gsap.to('.ecom-offer-illustration .offer-dot', {
+        y: -4,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.15
+    });
     safeFrom('.ecom-offer-illustration svg', {
         scrollTrigger: {
             trigger: '.ecom-offer-illustration',
@@ -1605,9 +1755,37 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const logoSvg = document.querySelector('.logo-illustration svg');
     if (!logoSvg) return;
-    safeRepeat('.logo-illustration .logo-mark', { scale: 1.08, transformOrigin: '50% 50%', duration: 1.6, yoyo: true, ease: 'sine.inOut' });
-    safeRepeat('.logo-illustration .progress-fill', { attr: { width: 300 }, duration: 2.4, ease: 'power1.inOut', yoyo: true });
-    safeRepeat('.logo-illustration .pen', { x: 6, y: 4, duration: 1.8, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.logo-illustration .logo-mark', {
+        scale: 1.08,
+        transformOrigin: '50% 50%',
+        duration: 1.6,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
+    gsap.to('.logo-illustration .progress-fill', {
+        attr: { width: 300 },
+        duration: 2.4,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true
+    });
+    gsap.fromTo('.logo-illustration .grid line', {
+        opacity: 0
+    }, {
+        opacity: 0.6,
+        duration: 0.8,
+        stagger: 0.08,
+        ease: 'power1.out'
+    });
+    gsap.to('.logo-illustration .pen', {
+        x: 6,
+        y: 4,
+        duration: 1.8,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
     safeFrom('.logo-illustration svg', {
         scrollTrigger: {
             trigger: '.logo-illustration',
@@ -1622,9 +1800,38 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 ; (() => {
     const processSvg = document.querySelector('.logo-process-illustration svg');
     if (!processSvg) return;
-    safeRepeat('.logo-process-illustration .step-dot', { scale: 1.1, opacity: 1, duration: 1.4, ease: 'sine.inOut', yoyo: true, stagger: 0.15 }, '.logo-process-illustration');
-    safeRepeat('.logo-process-illustration .logo-tiles rect', { y: 0, opacity: 1, duration: 1.2, ease: 'sine.inOut', yoyo: true, stagger: 0.12 }, '.logo-process-illustration');
-    safeRepeat('.logo-process-illustration .final-mark', { scale: 1.06, duration: 1.6, transformOrigin: '50% 50%', yoyo: true, ease: 'sine.inOut' }, '.logo-process-illustration');
+    gsap.fromTo('.logo-process-illustration .step-dot', {
+        scale: 0.8,
+        opacity: 0.5
+    }, {
+        scale: 1.1,
+        opacity: 1,
+        duration: 1.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.15
+    });
+    gsap.fromTo('.logo-process-illustration .logo-tiles rect', {
+        y: 6,
+        opacity: 0.6
+    }, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.12
+    });
+    gsap.to('.logo-process-illustration .final-mark', {
+        scale: 1.06,
+        duration: 1.6,
+        transformOrigin: '50% 50%',
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
     safeFrom('.logo-process-illustration svg', {
         scrollTrigger: {
             trigger: '.logo-process-illustration',
@@ -1681,14 +1888,21 @@ apply3DScrollEffect('.anim-card');
 apply3DScrollEffect('.testimonial-card');
 // Partners and Contact sections
 // Skip 3D effect on partners to keep ticker smooth
-// Keeping 3D effect limited to primary cards to save CPU
-// apply3DScrollEffect('#contact p', 0, false);
-// apply3DScrollEffect('h1:not(.logo-name)', 0, false);
-// apply3DScrollEffect('h2', 0, false);
-// apply3DScrollEffect('h3:not(.service-title)', 0, false);
-// apply3DScrollEffect('h4', 0, false);
-// apply3DScrollEffect('p:not(.logo-tagline):not(.hero-subtitle)', 0, false);
-// apply3DScrollEffect('li', 0, false);
+apply3DScrollEffect('#contact p', 0, false);
+
+// Apply 3D effect to text elements across the project (without hover scale)
+apply3DScrollEffect('h1:not(.logo-name)', 0, false);
+apply3DScrollEffect('h2', 0, false);
+apply3DScrollEffect('h3:not(.service-title):not(.package-card h3):not(.team-card h3):not(.case-study-card h3):not(.blog-card h3):not(.feature-card h3)', 0, false);
+apply3DScrollEffect('h4', 0, false);
+apply3DScrollEffect('.section-label', 0, false);
+apply3DScrollEffect('.who-text', 0, false);
+apply3DScrollEffect('.footer-desc', 0, false);
+apply3DScrollEffect('.contact-item p', 0, false);
+apply3DScrollEffect('.copyright', 0, false);
+apply3DScrollEffect('.hero-tags span', 0.05, false);
+apply3DScrollEffect('p:not(.logo-tagline):not(.hero-subtitle)', 0, false);
+apply3DScrollEffect('li', 0, false);
 
 safeFrom('.about-hero .hero-tags', {
     scrollTrigger: {
@@ -1904,16 +2118,15 @@ initTestimonialCarousel();
 
         ScrollTrigger.batch(projectCards, {
             onEnter: batch => gsap.to(batch, {
-                y: 0,
                 opacity: 1,
+                y: 0,
+                stagger: 0.15,
                 duration: 1.2,
-                stagger: 0.2,
                 ease: 'power4.out',
                 overwrite: true
             }),
-            start: 'top 80%',
-            once: true,
-            onRefresh: self => self.progress === 1 && self.kill()
+            start: 'top 85%',
+            once: true // Only animate once
         });
     }
 
