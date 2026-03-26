@@ -210,8 +210,8 @@ const showSuccessPopup = (message) => {
     avatar.alt = 'Chatbot';
     avatar.title = 'Chatbot';
     avatar.loading = 'lazy';
-    avatar.width = 579;
-    avatar.height = 712;
+    avatar.width = 60;
+    avatar.height = 74;
     toggle.appendChild(avatar);
     const panel = makeEl('div', 'chat-panel');
     const header = makeEl('div', 'chat-header');
@@ -510,51 +510,36 @@ const showSuccessPopup = (message) => {
 })();
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
+// Optimized Reveal Helpers
 const setupReveal = (selector) => {
-    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!elements || elements.length === 0) return;
+    const elements = gsap.utils.toArray(selector);
+    if (elements.length === 0) return;
     elements.forEach(el => el.classList.add('reveal'));
-    const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-    elements.forEach(el => io.observe(el));
-};
-
-const safeFrom = (selector, vars) => {
-    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!els || els.length === 0) return;
-    els.forEach((el) => {
-        const defaults = {
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            force3D: true,
-            scrollTrigger: { trigger: el, start: 'top 85%' }
-        };
-        const config = Object.assign({}, defaults, vars || {});
-        gsap.from(el, config);
+    
+    ScrollTrigger.batch(elements, {
+        onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true, onComplete: () => batch.forEach(el => el.classList.add('is-visible')) }),
+        start: 'top 85%'
     });
 };
 
-const safeTo = (selector, vars) => {
-    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!els || els.length === 0) return;
-    els.forEach((el) => {
-        const defaults = {
-            xPercent: -30,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 90%' }
-        };
-        const config = Object.assign({}, defaults, vars || {});
-        gsap.to(el, config);
+const safeFrom = (selector, vars) => {
+    const elements = gsap.utils.toArray(selector);
+    if (elements.length === 0) return;
+    
+    ScrollTrigger.batch(elements, {
+        onEnter: batch => {
+            const defaults = {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.1,
+                overwrite: true
+            };
+            const config = Object.assign({}, defaults, vars || {});
+            gsap.from(batch, config);
+        },
+        start: 'top 85%'
     });
 };
 
@@ -742,24 +727,21 @@ initThreeJS('case-study-hero-canvas');
 initThreeJS('contact-hero-canvas');
 
 // Scroll Animations
-const splitTypes = document.querySelectorAll('[data-reveal-text]')
-
-splitTypes.forEach((char, i) => {
-    // Determine triggers for general sections
-    gsap.from(char, {
-        scrollTrigger: {
-            trigger: char,
-            start: 'top 80%',
-            end: 'top 20%',
-            scrub: false,
-            markers: false
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-    })
-})
+// Optimized Scroll Animations using Batching
+const splitTypes = gsap.utils.toArray('[data-reveal-text]');
+if (splitTypes.length > 0) {
+    ScrollTrigger.batch(splitTypes, {
+        onEnter: batch => gsap.from(batch, {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            overwrite: true
+        }),
+        start: 'top 85%'
+    });
+}
 
 // Counter Animation
 // Optimized Counter Animation using GSAP
@@ -786,35 +768,30 @@ counters.forEach(counter => {
 });
 
 // Reusable 3D Scroll Effect Function
-const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
-    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!elements || elements.length === 0) return;
+// Optimized 3D Scroll Effect using Batching
+const apply3DScrollEffect = (selector, stagger = 0.1) => {
+    const elements = gsap.utils.toArray(selector);
+    if (elements.length === 0) return;
 
-    elements.forEach((el, i) => {
-        const delay = stagger ? i * stagger : 0;
-
-        gsap.fromTo(el,
-            { y: 22, opacity: 0, scale: 0.985, force3D: true },
+    ScrollTrigger.batch(elements, {
+        onEnter: batch => gsap.fromTo(batch,
+            { y: 20, opacity: 0, scale: 0.98 },
             {
-                y: -8,
+                y: 0,
                 opacity: 1,
                 scale: 1,
+                duration: 0.8,
+                stagger: stagger,
                 ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 95%',
-                    end: 'top 40%',
-                    scrub: 0.6,
-                    invalidateOnRefresh: true
-                },
-                delay
+                overwrite: true
             }
-        );
+        ),
+        start: 'top 95%'
+    });
 
-        if (withHover) {
-            el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.18, ease: 'power2.out' }));
-            el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
-        }
+    elements.forEach(el => {
+        el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.2, ease: 'power2.out' }));
+        el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
     });
 };
 
