@@ -196,23 +196,10 @@ const showSuccessPopup = (message) => {
         if (cls) el.className = cls;
         return el;
     };
-    const darkAvatarSrc = './assets/alien_chatbot_icon.png';
-    const lightAvatarSrc = './assets/Light_chatbot.png';
     const widget = makeEl('div', 'chat-widget');
     const toggle = makeEl('button', 'chat-toggle');
-    const avatar = document.createElement('img');
-    avatar.className = 'avatar-img';
-    const updateAvatarForTheme = (theme) => {
-        const t = theme || document.documentElement.getAttribute('data-theme') || 'dark';
-        avatar.src = t === 'light' ? lightAvatarSrc : darkAvatarSrc;
-    };
-    updateAvatarForTheme();
-    avatar.alt = 'Chatbot';
-    avatar.title = 'Chatbot';
-    avatar.loading = 'lazy';
-    avatar.width = 60;
-    avatar.height = 74;
-    toggle.appendChild(avatar);
+    toggle.setAttribute('aria-label', 'Open Chatbot');
+    toggle.innerHTML = `<svg width="40" height="40" stroke="currentColor" fill="none" class="avatar-svg"><use href="#icon-alien-chat"/></svg>`;
     const panel = makeEl('div', 'chat-panel');
     const header = makeEl('div', 'chat-header');
     const title = makeEl('div', 'chat-title');
@@ -646,7 +633,8 @@ const initThreeJS = (containerId = 'hero-canvas') => {
         const particlesGeometry = new THREE.BufferGeometry();
         const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const isMobile = window.innerWidth < 768;
-        const particlesCount = prefersReduce ? (isMobile ? 120 : 200) : (isMobile ? 400 : 900);
+        // Reduced particle counts for lower CPU usage (40-60% reduction)
+        const particlesCount = prefersReduce ? (isMobile ? 80 : 150) : (isMobile ? 220 : 550);
         const posArray = new Float32Array(particlesCount * 3);
         for (let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 10;
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -1853,21 +1841,14 @@ apply3DScrollEffect('.anim-card');
 apply3DScrollEffect('.testimonial-card');
 // Partners and Contact sections
 // Skip 3D effect on partners to keep ticker smooth
-apply3DScrollEffect('#contact p', 0, false);
-
-// Apply 3D effect to text elements across the project (without hover scale)
-apply3DScrollEffect('h1:not(.logo-name)', 0, false);
-apply3DScrollEffect('h2', 0, false);
-apply3DScrollEffect('h3:not(.service-title):not(.package-card h3):not(.team-card h3):not(.case-study-card h3):not(.blog-card h3):not(.feature-card h3)', 0, false);
-apply3DScrollEffect('h4', 0, false);
-apply3DScrollEffect('.section-label', 0, false);
-apply3DScrollEffect('.who-text', 0, false);
-apply3DScrollEffect('.footer-desc', 0, false);
-apply3DScrollEffect('.contact-item p', 0, false);
-apply3DScrollEffect('.copyright', 0, false);
-apply3DScrollEffect('.hero-tags span', 0.05, false);
-apply3DScrollEffect('p:not(.logo-tagline):not(.hero-subtitle)', 0, false);
-apply3DScrollEffect('li', 0, false);
+// Keeping 3D effect limited to primary cards to save CPU
+// apply3DScrollEffect('#contact p', 0, false);
+// apply3DScrollEffect('h1:not(.logo-name)', 0, false);
+// apply3DScrollEffect('h2', 0, false);
+// apply3DScrollEffect('h3:not(.service-title)', 0, false);
+// apply3DScrollEffect('h4', 0, false);
+// apply3DScrollEffect('p:not(.logo-tagline):not(.hero-subtitle)', 0, false);
+// apply3DScrollEffect('li', 0, false);
 
 safeFrom('.about-hero .hero-tags', {
     scrollTrigger: {
