@@ -202,7 +202,9 @@ const showSuccessPopup = (message) => {
     }, 2200);
 };
 
-(() => {
+// Chatbot initialization deferred to reduce TBT
+setTimeout(() => {
+    (() => {
     const makeEl = (tag, cls) => {
         const el = document.createElement(tag);
         if (cls) el.className = cls;
@@ -506,7 +508,8 @@ const showSuccessPopup = (message) => {
         if (e.key === 'Enter') onUser(input.value);
     });
     setTimeout(startPeek, 600);
-})();
+    })();
+}, 1500);
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
 // Optimized Reveal Helpers
