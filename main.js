@@ -134,26 +134,7 @@ gsap.defaults({
     });
 
     links.forEach(link => {
-        // Check if this link controls a dropdown
-        if (link.closest('.dropdown')) {
-            link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const dropdown = link.closest('.dropdown');
-                    // Close other dropdowns
-                    dropdowns.forEach(d => {
-                        if (d !== dropdown) d.classList.remove('active');
-                    });
-                    dropdown.classList.toggle('active');
-                } else {
-                    // On desktop, allow navigation
-                    // No action needed
-                }
-            });
-        } else {
-            link.addEventListener('click', closeMenu);
-        }
+        link.addEventListener('click', closeMenu);
     });
 
     // Close menu when clicking links inside dropdown
@@ -341,7 +322,7 @@ const showSuccessPopup = (message) => {
             return 'We offer branding, websites, SEO, social media, PPC, brochure, newspaper and FM ads.';
         }
         if (/(contact|phone|email)/.test(t)) {
-            return 'You can call +91 98402 61727 or email contact@goldenadvertising.in.';
+            return 'You can call +91 82206 72333 or email contact@goldenadvertising.in.';
         }
         if (/(project|start|begin)/.test(t)) {
             return 'Great! Share your goal and deadline. We will respond quickly.';
@@ -659,102 +640,89 @@ window.addEventListener('load', () => {
 });
 
 
-// Three.js Background Animation
+// Optimized Three.js Background Animation with IntersectionObserver
 const initThreeJS = (containerId = 'hero-canvas') => {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        1000
-    );
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    let scene, camera, renderer, particlesMesh, material, clock;
+    let requestID;
+    let mouseX = 0, mouseY = 0;
+    let initialized = false;
 
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    container.appendChild(renderer.domElement);
+    const init = () => {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+        container.appendChild(renderer.domElement);
 
-    // Particles Grid
-    const particlesGeometry = new THREE.BufferGeometry();
-    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.innerWidth < 768;
-    const particlesCount = prefersReduce
-        ? (isMobile ? 120 : 200)
-        : (isMobile ? 400 : 900);
+        const particlesGeometry = new THREE.BufferGeometry();
+        const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const isMobile = window.innerWidth < 768;
+        const particlesCount = prefersReduce ? (isMobile ? 120 : 200) : (isMobile ? 400 : 900);
+        const posArray = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 10;
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    const posArray = new Float32Array(particlesCount * 3);
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        material = new THREE.PointsMaterial({
+            size: 0.015,
+            color: isLight ? 0x0D0D0D : 0xD4AF37,
+            transparent: true,
+            opacity: 0.8,
+        });
 
-    for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
-    }
+        particlesMesh = new THREE.Points(particlesGeometry, material);
+        scene.add(particlesMesh);
+        camera.position.z = 2;
+        clock = new THREE.Clock();
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('resize', onResize);
+        window.addEventListener('gap-theme-change', onThemeChange);
+        initialized = true;
+    };
 
-    // Particle Material (theme-aware)
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const material = new THREE.PointsMaterial({
-        size: 0.015,
-        color: isLight ? 0x0D0D0D : 0xD4AF37,
-        transparent: true,
-        opacity: 0.8,
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, material);
-    scene.add(particlesMesh);
-
-    camera.position.z = 2;
-
-    // Animation Loop
-    const clock = new THREE.Clock();
-    let mouseX = 0;
-    let mouseY = 0;
-
-    window.addEventListener('mousemove', (event) => {
+    const onMouseMove = (event) => {
         mouseX = event.clientX / window.innerWidth - 0.5;
         mouseY = event.clientY / window.innerHeight - 0.5;
-    });
+    };
 
-    let running = true;
-    document.addEventListener('visibilitychange', () => {
-        running = !document.hidden;
-    });
-
-    const tick = () => {
-        const elapsedTime = clock.getElapsedTime();
-
-        // Wave motion
-        const baseSpeed = prefersReduce ? 0.025 : 0.05;
-        if (running) {
-            particlesMesh.rotation.y = elapsedTime * baseSpeed;
-            particlesMesh.rotation.x = mouseY * 0.08;
-            particlesMesh.rotation.y += mouseX * 0.08;
-            renderer.render(scene, camera);
-        }
-
-        window.requestAnimationFrame(tick);
-    }
-
-    tick();
-
-    // Resize
-    window.addEventListener('resize', () => {
+    const onResize = () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
-    });
+    };
 
-    // React to theme changes
-    window.addEventListener('gap-theme-change', (e) => {
+    const onThemeChange = (e) => {
         const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
-        const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
-        try {
-            material.color.set(nextColor);
-            material.needsUpdate = true;
-        } catch (_) { }
-    });
+        material.color.set(t === 'light' ? 0x0D0D0D : 0xD4AF37);
+    };
+
+    const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+        const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        particlesMesh.rotation.y = elapsedTime * (prefersReduce ? 0.025 : 0.05);
+        particlesMesh.rotation.x = mouseY * 0.08;
+        particlesMesh.rotation.y += mouseX * 0.08;
+        renderer.render(scene, camera);
+        requestID = requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (!initialized) init();
+                tick();
+            } else {
+                cancelAnimationFrame(requestID);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(container);
 };
 
 initThreeJS('hero-canvas');
@@ -794,25 +762,26 @@ splitTypes.forEach((char, i) => {
 })
 
 // Counter Animation
+// Optimized Counter Animation using GSAP
 const counters = document.querySelectorAll('.stat-number');
 counters.forEach(counter => {
-    const updateCount = () => {
-        const target = +counter.getAttribute('data-count');
-        const count = +counter.innerText;
-        const inc = target / 200;
-
-        if (count < target) {
-            counter.innerText = Math.ceil(count + inc);
-            setTimeout(updateCount, 20);
-        } else {
-            counter.innerText = target;
-        }
-    };
-
+    const target = +counter.getAttribute('data-count');
+    const obj = { value: 0 };
+    
     ScrollTrigger.create({
         trigger: counter,
-        start: "top 85%",
-        onEnter: () => updateCount()
+        start: "top 90%",
+        onEnter: () => {
+            gsap.to(obj, {
+                value: target,
+                duration: 2,
+                ease: "power2.out",
+                onUpdate: () => {
+                    counter.innerText = Math.ceil(obj.value);
+                }
+            });
+        },
+        once: true
     });
 });
 
@@ -1898,7 +1867,10 @@ apply3DScrollEffect('.feature-card');
 apply3DScrollEffect('.contact-card');
 apply3DScrollEffect('.contact-form-card');
 // apply3DScrollEffect('.workflow-step'); removed for unified entrance animation
-apply3DScrollEffect('.image-card');
+// Disabling hover scale for project marquee images per user request
+apply3DScrollEffect('.projects-marquee .image-card', 0, false);
+apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
+
 apply3DScrollEffect('.stat-item');
 apply3DScrollEffect('.anim-card');
 apply3DScrollEffect('.testimonial-card');

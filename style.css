@@ -236,6 +236,29 @@ body {
 
 
 
+/* Light theme: expertise cards headings (Local Authority, Data Driven) */
+
+/* Expertise cards headings (Local Authority, Data Driven) - Dark theme gradient */
+.features-section h4 {
+  background: var(--color-gold-gradient) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Light theme override: solid gold instead of gradient */
+[data-theme="light"] .features-section h4 {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: var(--color-gold-primary) !important;
+  -webkit-text-fill-color: var(--color-gold-primary) !important;
+}
+
+
+
+
 /* Light theme hero headers: white background across pages */
 
 [data-theme="light"] .hero,
@@ -2010,13 +2033,16 @@ footer .service-menu-link:hover {
 
 
 
-.projects-marquee .image-card:hover img {
-
+/* .projects-marquee .image-card:hover img {
   transform: scale(1.05);
-
   filter: brightness(1.1);
+} */
 
+.projects-marquee .image-card:hover img {
+  transform: none !important;
+  filter: none !important;
 }
+
 
 
 
@@ -2907,13 +2933,9 @@ footer .service-menu-link:hover {
 
 
 .package-grid {
-
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
-
 }
 
 
@@ -3067,37 +3089,25 @@ footer .service-menu-link:hover {
 
 
 .adv-grid {
-
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.5rem;
-
 }
 
 
 
 .image-grid {
-
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.5rem;
-
 }
 
 
 
 .services-grid {
-
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
-
 }
 
 
@@ -3464,6 +3474,30 @@ footer .service-menu-link:hover {
   font-weight: 800;
 
   font-family: var(--font-heading);
+
+}
+
+
+
+/* Dark theme: keep number visible with gold gradient on hover */
+
+.workflow-step:hover .step-circle {
+
+  background: var(--color-gold-gradient);
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  color: transparent;
+
+  -webkit-text-fill-color: transparent;
+
+  box-shadow: none;
+
+  background-color: transparent;
+
+  border: 2px solid var(--color-gold-primary);
 
 }
 
@@ -5265,11 +5299,9 @@ footer .contact-info .contact-item div p {
 
 
 @media (max-width: 768px) {
-
   .hero-title {
-
-    font-size: 3.5rem;
-
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    line-height: 1.15;
   }
 
 
@@ -5303,33 +5335,19 @@ footer .contact-info .contact-item div p {
 }
 
 @media (max-width: 420px) {
-
   .hero {
-
     height: auto;
-
     min-height: 100vh;
-
     min-height: 100svh;
-
-    padding-top: calc(6.5rem + env(safe-area-inset-top));
-
-    padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
-
+    padding-top: calc(8rem + env(safe-area-inset-top));
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
     align-items: flex-start;
-
   }
 
-
-
   .hero-title {
-
-    font-size: clamp(2.3rem, 10vw, 3.1rem);
-
-    line-height: 1.05;
-
-    margin-bottom: 1.25rem;
-
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
   }
 
 
@@ -5397,13 +5415,28 @@ footer .contact-info .contact-item div p {
 
 
 .page-hero h1 {
-
-  font-size: clamp(3.5rem, 7vw, 7rem);
-
+  font-size: clamp(2.2rem, 8vw, 5rem);
   color: var(--color-white);
-
   margin-bottom: 1rem;
+  padding: 0 1rem;
+}
 
+@media (max-width: 768px) {
+  .page-hero {
+    height: auto;
+    min-height: 40vh;
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-hero {
+    padding-top: 8rem;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 10vw, 2.5rem);
+  }
 }
 
 
@@ -5881,13 +5914,9 @@ footer .contact-info .contact-item div p {
 
 
 .team-grid {
-
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 2rem;
-
 }
 
 
@@ -6206,7 +6235,7 @@ footer .contact-info .contact-item div p {
 
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
 
   gap: 2rem;
 
@@ -6309,15 +6338,11 @@ footer .contact-info .contact-item div p {
 
 
 .hero-tags {
-
   display: inline-flex;
-
+  flex-wrap: wrap;
   gap: 0.75rem;
-
   align-items: center;
-
   justify-content: center;
-
   margin-top: 0.25rem;
 
   font-family: var(--font-heading);
@@ -6649,7 +6674,7 @@ footer .contact-info .contact-item div p {
 
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
 
   gap: 2rem;
 
@@ -7192,7 +7217,12 @@ footer .contact-info .contact-item div p {
 }
 
 [data-theme="light"] .workflow-step:hover .step-circle {
-  color: #ffffff;
+  background: transparent;
+  background-color: transparent;
+  border: 2px solid var(--color-gold-primary);
+  color: var(--color-gold-primary) !important;
+  -webkit-text-fill-color: var(--color-gold-primary);
+  box-shadow: none;
 }
 
 [data-theme="light"] .package-card {
@@ -7459,27 +7489,7 @@ footer .contact-info .contact-item div p {
   }
 
   .dropdown-content {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    min-width: auto;
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    padding: 0;
-    margin-top: 10px;
-    display: none;
-    opacity: 1;
-    visibility: visible;
-    border-radius: 8px;
-  }
-
-  .dropdown.active .dropdown-content {
-    display: flex;
-    transform: none;
-    animation: slideDown 0.3s ease forwards;
+    display: none !important;
   }
 
   .dropdown-content a {
@@ -7507,5 +7517,17 @@ footer .contact-info .contact-item div p {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.grid-2-col {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid-2-col {
+    grid-template-columns: 1fr !important;
   }
 }

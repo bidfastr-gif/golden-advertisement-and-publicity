@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# 301 Redirects for SEO Migration (Old SEO URLs to New Clean URLs)
+RewriteRule ^google-paid-ppc-ads-services-in-chennai\.html$ /ppc [R=301,L]
+RewriteRule ^top-social-media-marketing-companies-in-chennai\.html$ /social-media [R=301,L]
+
+# Extensionless URL Rule (Allows /ppc to load ppc.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
