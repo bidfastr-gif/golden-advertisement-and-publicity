@@ -46,7 +46,16 @@ const lenis = new Lenis({
 })
 
 // Sync ScrollTrigger with Lenis
-lenis.on('scroll', ScrollTrigger.update);
+let scrollTimeout;
+lenis.on('scroll', () => {
+    // Throttled update to reduce main-thread load
+    if (!scrollTimeout) {
+        scrollTimeout = setTimeout(() => {
+            ScrollTrigger.update();
+            scrollTimeout = null;
+        }, 16); // ~60fps throttle
+    }
+});
 
 // Add Lenis to GSAP Ticker for perfect synchronization
 gsap.ticker.add((time) => {
@@ -527,13 +536,13 @@ const safeFrom = (selector, vars) => {
                 overwrite: true
             };
             const config = Object.assign({}, defaults, vars || {});
-            // Strip nested scrollTrigger to avoid double initialization
             if (config.scrollTrigger) delete config.scrollTrigger;
             gsap.from(batch, config);
         },
-        // Use user-provided trigger config if available
         start: (vars && vars.scrollTrigger && vars.scrollTrigger.start) || 'top 85%',
-        once: true
+        once: true,
+        // Proactively kill to free up memory
+        onRefresh: self => self.progress === 1 && self.kill()
     });
 };
 
@@ -760,7 +769,9 @@ if (splitTypes.length > 0) {
             ease: 'power3.out',
             overwrite: true
         }),
-        start: 'top 85%'
+        start: 'top 85%',
+        once: true,
+        onRefresh: self => self.progress === 1 && self.kill()
     });
 }
 
@@ -808,7 +819,8 @@ const apply3DScrollEffect = (selector, stagger = 0.1) => {
             }
         ),
         start: 'top 95%',
-        once: true
+        once: true,
+        onRefresh: self => self.progress === 1 && self.kill()
     });
 
     elements.forEach(el => {
@@ -1911,7 +1923,8 @@ initTestimonialCarousel();
                 overwrite: true
             }),
             start: 'top 80%',
-            once: true
+            once: true,
+            onRefresh: self => self.progress === 1 && self.kill()
         });
     }
 
