@@ -593,68 +593,54 @@ window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (loaderContent && preloader) {
         tl.to(loaderContent, {
-            y: -50,
-            opacity: 0,
-            duration: 0.5,
-            ease: 'power2.inOut',
-            delay: 0.2
-        })
-            .to(preloader, {
-                y: '-100%',
-                duration: 0.8,
-                ease: 'power4.inOut',
-                onComplete: () => {
-                    preloader.classList.add('loaded');
-                    // Ensure Lenis is notified of the height change if any
-                    if (typeof lenis !== 'undefined') lenis.resize();
-                }
-            }, "-=0.1");
+            y: -50, opacity: 0, duration: 0.5, ease: 'power2.inOut', delay: 0.2
+        }).to(preloader, {
+            y: '-100%', duration: 0.8, ease: 'power4.inOut',
+            onComplete: () => {
+                preloader.classList.add('loaded');
+                if (typeof lenis !== 'undefined') lenis.resize();
+                startHeroAnimations();
+            }
+        }, "-=0.1");
     }
+});
 
-    // Safety fallback: If preloader is still there after 5 seconds, hide it
-    // Safety fallback: If preloader is still there after 5 seconds, hide it
-    setTimeout(() => {
-        if (preloader && !preloader.classList.contains('loaded')) {
-            gsap.to(preloader, {
-                y: '-100%',
-                duration: 0.8,
-                ease: 'power4.inOut',
-                onComplete: () => {
-                    preloader.classList.add('loaded');
-                    if (typeof lenis !== 'undefined') lenis.resize();
-                }
-            });
-        }
-    }, 5000);
-
-    tl.from('nav', {
-        y: -80,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.out'
-    });
+function startHeroAnimations() {
+    if (window.heroAnimationsStarted) return;
+    window.heroAnimationsStarted = true;
+    
+    const tl = gsap.timeline();
+    tl.from('nav', { y: -80, opacity: 0, duration: 0.3, ease: 'power2.out' });
 
     const heroTitleSpans = document.querySelectorAll('.hero-title span');
     if (heroTitleSpans.length > 0) {
         tl.from(heroTitleSpans, {
-            y: '100%',
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: 'power4.out'
+            y: '100%', opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power4.out'
         }, "-=0.3");
     }
 
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
         tl.to(heroSubtitle, {
-            y: 0,
-            opacity: 0.8,
-            duration: 0.5,
-            ease: 'power2.out'
+            y: 0, opacity: 0.8, duration: 0.5, ease: 'power2.out'
         }, "-=0.5");
     }
-});
+}
+
+// Safety fallback: Ensure page reveals even if 'load' event hangs
+setTimeout(() => {
+    const p = document.getElementById('preloader');
+    if (p && !p.classList.contains('loaded')) {
+        gsap.to(p, {
+            y: '-100%', duration: 0.8, ease: 'power4.inOut',
+            onComplete: () => {
+                p.classList.add('loaded');
+                if (typeof lenis !== 'undefined') lenis.resize();
+                startHeroAnimations();
+            }
+        });
+    }
+}, 3000);
 
 
 // Optimized Three.js Background Animation with IntersectionObserver
