@@ -190,7 +190,7 @@ const showSuccessPopup = (message) => {
     }, 2200);
 };
 
-(() => {
+const initChatbot = () => {
     const makeEl = (tag, cls) => {
         const el = document.createElement(tag);
         if (cls) el.className = cls;
@@ -507,7 +507,12 @@ const showSuccessPopup = (message) => {
         if (e.key === 'Enter') onUser(input.value);
     });
     setTimeout(startPeek, 600);
-})();
+};
+
+// Delay Chatbot until initial load is complete
+window.addEventListener('load', () => {
+    setTimeout(initChatbot, 2000);
+});
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
 const setupReveal = (selector) => {
@@ -698,22 +703,30 @@ const initThreeJS = (containerId = 'hero-canvas') => {
         mouseY = event.clientY / window.innerHeight - 0.5;
     });
 
-    let running = true;
-    document.addEventListener('visibilitychange', () => {
-        running = !document.hidden;
-    });
+    let running = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            running = entry.isIntersecting && !document.hidden;
+            if (running) {
+                // Ensure loop is running
+                if (renderer.render) tick();
+            }
+        });
+    }, { threshold: 0.1 });
+    observer.observe(container);
 
     const tick = () => {
+        if (!running) return; // Optimization: stop loop if not visible
+
         const elapsedTime = clock.getElapsedTime();
 
         // Wave motion
         const baseSpeed = prefersReduce ? 0.025 : 0.05;
-        if (running) {
-            particlesMesh.rotation.y = elapsedTime * baseSpeed;
-            particlesMesh.rotation.x = mouseY * 0.08;
-            particlesMesh.rotation.y += mouseX * 0.08;
-            renderer.render(scene, camera);
-        }
+        
+        particlesMesh.rotation.y = elapsedTime * baseSpeed;
+        particlesMesh.rotation.x = mouseY * 0.08;
+        particlesMesh.rotation.y += mouseX * 0.08;
+        renderer.render(scene, camera);
 
         window.requestAnimationFrame(tick);
     }
@@ -831,26 +844,31 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
 };
 
 // Load Services Section and Initialize Swiper
-fetch('what-we-offer.html')
-    .then(response => response.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const servicesSection = doc.getElementById('services');
-        if (servicesSection) {
-            const container = document.getElementById('services-container');
-            if (container) {
-                container.innerHTML = servicesSection.outerHTML;
-
-                // Use CSS ticker instead of Swiper for continuous marquee
-                // Add a small delay to ensure DOM is ready and layout is calculated
-                setTimeout(() => {
-                    initTicker('.services-swiper', 40);
-                }, 300);
-            }
+const servicesContainer = document.getElementById('services-container');
+if (servicesContainer) {
+    const fetchObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            fetch('what-we-offer.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const servicesSection = doc.getElementById('services');
+                    if (servicesSection) {
+                        servicesContainer.innerHTML = servicesSection.outerHTML;
+                        // Use CSS ticker instead of Swiper for continuous marquee
+                        // Add a small delay to ensure DOM is ready and layout is calculated
+                        setTimeout(() => {
+                            initTicker('.services-swiper', 40);
+                        }, 300);
+                    }
+                })
+                .catch(err => console.error('Failed to load services:', err));
+            fetchObserver.disconnect();
         }
-    })
-    .catch(err => console.error('Failed to load services:', err));
+    }, { rootMargin: '200px' });
+    fetchObserver.observe(servicesContainer);
+}
 
 (() => {
     initTicker('.projects-swiper', 40);

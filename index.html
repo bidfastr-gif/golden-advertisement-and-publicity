@@ -142,24 +142,45 @@
 
 
   <style>
-    html,
-    body {
+    :root {
+      --color-gold-primary: #D4AF37;
+      --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%);
+      --color-black-rich: #0A0A0A;
+      --color-white: #FFFFFF;
+    }
+    html, body {
       background-color: #0A0A0A;
       color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
     }
-
-
-
-    [data-theme="light"],
-    [data-theme="light"] body {
+    [data-theme="light"], [data-theme="light"] body {
       background-color: #FFFFFF;
       color: #0D0D0D;
+    }
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #0A0A0A;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .loader-text {
+      font-size: 3rem;
+      font-weight: 700;
+      background: var(--color-gold-gradient);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 
 
 
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="./style.css">
 
 
 
@@ -173,7 +194,7 @@
 
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
 
 
 
@@ -261,7 +282,7 @@
 
 
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
 
@@ -347,7 +368,7 @@
 
       <a href="./index.html" class="logo-brand">
 
-        <img decoding="async" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img">
+        <img decoding="async" fetchpriority="high" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img">
 
       </a>
 
@@ -624,8 +645,8 @@
           </div>
         </div>
         <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
-          <img decoding="async" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80"
-            alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" loading="lazy" width="1200" height="800">
+          <img decoding="async" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" fetchpriority="high"
+            alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="1200" height="800">
         </div>
       </div>
     </div>
@@ -1419,7 +1440,7 @@
 
 
 
-            <img decoding="async" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img">
+            <img decoding="async" fetchpriority="high" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img">
 
 
 
@@ -1629,7 +1650,7 @@
 
 
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
 
@@ -1646,3 +1667,4 @@
 
 
 </html>
+
