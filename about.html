@@ -151,7 +151,46 @@
 
 
 
-  <link rel="stylesheet" media="print" onload="this.media='all'" href="./style.css">
+  <style id="critical-css">
+    :root {
+      --color-gold-primary: #D4AF37;
+      --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%);
+      --color-gold-light: #F4E4BC;
+      --color-gold-dark: #8A6E1F;
+      --color-black-rich: #0A0A0A;
+      --color-black-soft: #141414;
+      --color-white: #FFFFFF;
+      --color-glass-surface: rgba(255, 255, 255, 0.05);
+      --color-glass-border: rgba(255, 255, 255, 0.2);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: auto; }
+    body { font-family: var(--font-body); background-color: var(--color-black-rich); color: var(--color-white); overflow-x: hidden; -webkit-font-smoothing: antialiased; position: relative; width: 100%; }
+    h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.02em; }
+    p { line-height: 1.6; opacity: 0.8; max-width: 65ch; }
+    .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+    .text-gold { background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-black-rich); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1.5rem; }
+    .loader-text { font-family: var(--font-heading); font-size: 3rem; font-weight: 700; background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+    .loader-spinner { width: 40px; height: 40px; border: 3px solid rgba(212, 175, 55, 0.2); border-radius: 50%; border-top-color: var(--color-gold-primary); animation: spin 1s ease-in-out infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    nav { position: fixed; top: 0; width: 100%; padding: 0.45rem 0; z-index: 100; background: #13120F; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    nav .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+    .logo-img { height: 4.5rem; width: auto; object-fit: contain; }
+    .nav-links { display: flex; gap: 3rem; }
+    .nav-link { position: relative; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; color: var(--color-white); }
+    .page-hero { padding: 10rem 0 5rem; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    .page-hero-content { position: relative; z-index: 2; }
+    [data-theme="light"] { --color-black-rich: #FFFFFF; --color-white: #0D0D0D; }
+    [data-theme="light"] nav { background: #13120F; }
+  </style>
+  <link rel="preload" href="./style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="./style.css"></noscript>
+
 
 
 
@@ -159,33 +198,34 @@
 
 
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com"><link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 
 
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet" media="print" onload="this.media='all'">
+    rel="stylesheet">
 
 
 
-  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Font Awesome removed for performance; icons replaced with SVGs -->
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 
 
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
 
 
@@ -245,7 +285,7 @@
 
 
 
-        <img decoding="async" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1536"
+        <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1536"
           height="1024" title="Golden Advertising & Publicity" loading="eager">
 
 
@@ -598,7 +638,8 @@
 
 
 
-          <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" style="width:24px; height:24px;"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></div>
+
 
 
 
@@ -626,23 +667,24 @@
 
 
 
-                <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><i
-                    class="fa-brands fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+                <a href="https://www.facebook.com/goldenadvertisingandpublicity" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" style="width:16px; height:16px;"><path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14V299.3H80z"/></svg><span class="sr-only">Facebook</span></a>
 
 
 
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i><span
+
+                <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" style="width:16px; height:16px;"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg><span
                     class="sr-only">Twitter</span></a>
 
 
 
-                <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><i
-                    class="fa-brands fa-linkedin-in"></i><span class="sr-only">LinkedIn</span></a>
+
+                <a href="https://www.linkedin.com/company/golden-advertising-publicity" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" style="width:16px; height:16px;"><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg><span class="sr-only">LinkedIn</span></a>
 
 
 
-                <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><i
-                    class="fa-brands fa-instagram"></i><span class="sr-only">Instagram</span></a>
+
+                <a href="https://www.instagram.com/goldenadvertisingpublicity/" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" style="width:16px; height:16px;"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9s-58-34.5-93.9-36.2c-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.5 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2s34.5-58 36.2-93.9c2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg><span class="sr-only">Instagram</span></a>
+
 
 
 
@@ -1357,7 +1399,7 @@
 
 
 
-            <img decoding="async" src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1536"
+            <img src="./assets/golden_logo.png" alt="Golden Advertising & Publicity" class="logo-img" width="1536"
               height="1024" title="Golden Advertising & Publicity" loading="lazy">
 
 
@@ -1484,11 +1526,11 @@
 
 
 
-              <p>No.38, 1st Floor,</p>
+              <p>No.38, 1st Floor</p>
 
 
 
-              <p>4th Main Road, Besant Nagar,</p>
+              <p>4th Main Road, Besant Nagar</p>
 
 
 
@@ -1564,7 +1606,7 @@
 
 
 
-  <script src="./main.js" defer></script>
+  <script src="./main.js"></script>
 
 
 
@@ -1573,4 +1615,3 @@
 
 
 </html>
-
