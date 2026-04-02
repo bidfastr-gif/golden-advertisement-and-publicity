@@ -754,21 +754,27 @@ const initThreeJS = (containerId = 'hero-canvas') => {
     });
 };
 
-initThreeJS('hero-canvas');
-initThreeJS('about-hero-canvas');
-initThreeJS('services-hero-canvas');
-initThreeJS('seo-hero-canvas');
-initThreeJS('smm-hero-canvas');
-initThreeJS('ppc-hero-canvas');
-initThreeJS('webdev-hero-canvas');
-initThreeJS('web-process-anim');
-initThreeJS('ecommerce-hero-canvas');
-initThreeJS('logo-hero-canvas');
-initThreeJS('brochure-hero-canvas');
-initThreeJS('newspaper-hero-canvas');
-initThreeJS('fm-hero-canvas');
-initThreeJS('case-study-hero-canvas');
-initThreeJS('contact-hero-canvas');
+// Defer all Three.js canvas initializations until after the browser
+// has finished its paint cycle to avoid forced synchronous layout (reflow).
+// Reading clientWidth/clientHeight immediately after DOM changes triggers
+// expensive reflows — batching them in rAF eliminates this penalty.
+requestAnimationFrame(() => {
+    initThreeJS('hero-canvas');
+    initThreeJS('about-hero-canvas');
+    initThreeJS('services-hero-canvas');
+    initThreeJS('seo-hero-canvas');
+    initThreeJS('smm-hero-canvas');
+    initThreeJS('ppc-hero-canvas');
+    initThreeJS('webdev-hero-canvas');
+    initThreeJS('web-process-anim');
+    initThreeJS('ecommerce-hero-canvas');
+    initThreeJS('logo-hero-canvas');
+    initThreeJS('brochure-hero-canvas');
+    initThreeJS('newspaper-hero-canvas');
+    initThreeJS('fm-hero-canvas');
+    initThreeJS('case-study-hero-canvas');
+    initThreeJS('contact-hero-canvas');
+});
 
 // Scroll Animations
 const splitTypes = document.querySelectorAll('[data-reveal-text]')
