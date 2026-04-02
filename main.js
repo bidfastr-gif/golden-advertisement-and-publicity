@@ -211,8 +211,8 @@ const showSuccessPopup = (message) => {
         if (cls) el.className = cls;
         return el;
     };
-    const darkAvatarSrc = './assets/alien_chatbot_icon.png';
-    const lightAvatarSrc = './assets/Light_chatbot.png';
+    const darkAvatarSrc = './assets/alien_chatbot_icon.webp';
+    const lightAvatarSrc = './assets/Light_chatbot.webp';
     const widget = makeEl('div', 'chat-widget');
     const toggle = makeEl('button', 'chat-toggle');
     const avatar = document.createElement('img');
