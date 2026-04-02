@@ -590,6 +590,14 @@ const initTicker = (selector, duration = 40) => {
 // dismissing as soon as HTML is parsed — not after all scripts/images
 // finish downloading. This directly reduces LCP element render delay.
 document.addEventListener('DOMContentLoaded', () => {
+    // Set hero title initial state programmatically so the CSS doesn't hide the LCP element.
+    // This allows the browser to measure LCP as soon as the preloader dismisses,
+    // while still preserving the entrance animation visually.
+    const heroTitleSpansFast = document.querySelectorAll('.hero-title span');
+    if (heroTitleSpansFast.length > 0) {
+        gsap.set(heroTitleSpansFast, { y: '100%', opacity: 0 });
+    }
+
     const tl = gsap.timeline();
     const loaderContent = document.querySelector('.loader-content') || document.querySelector('.loader-text');
     const preloader = document.getElementById('preloader');
