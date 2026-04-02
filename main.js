@@ -111,6 +111,21 @@ gsap.defaults({
     // BUT: If the user navigates back, the browser might restore state.
     // To be safe, we can ensure it's hidden on load.
     gsap.set(transitionEl, { y: '100%' });
+
+    // Handle BFCache (Back/Forward Cache)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            // Reset transition element
+            gsap.set(transitionEl, { y: '100%', clearProps: "transform" });
+            
+            // Ensure preloader is fully hidden
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('loaded');
+                gsap.set(preloader, { y: '-100%', opacity: 0 });
+            }
+        }
+    });
 })();
 
 (() => {
