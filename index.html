@@ -2,29 +2,157 @@
 <html lang="en">
 
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <!-- Preload Critical Assets -->
   <link rel="preload" href="style.css" as="style">
+  <!-- Preload Font Awesome woff2 files directly to break the critical chain:
+       Without this: HTML → all.min.css (389ms) → woff2 (987ms) = 3-level chain
+       With this:    HTML → woff2 (parallel with CSS) = 2-level chain, saves ~389ms -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
   <style id="critical-css">
+    /* Font-Display Swap Override for FontAwesome */
+    @font-face {
+      font-family: 'Font Awesome 6 Free';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2) format("woff2");
+    }
 
-/* Font-Display Swap Override for FontAwesome */
-@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2) format("woff2"); }
-@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2) format("woff2"); }
-@font-face { font-family: 'Font Awesome 6 Brands'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2) format("woff2"); }
+    @font-face {
+      font-family: 'Font Awesome 6 Free';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2) format("woff2");
+    }
 
-    :root { --color-gold-primary: #D4AF37; --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%); --color-gold-light: #F4E4BC; --color-gold-dark: #8A6E1F; --color-black-rich: #0A0A0A; --color-black-soft: #141414; --color-white: #FFFFFF; --color-glass-surface: rgba(255, 255, 255, 0.05); --color-glass-border: rgba(255, 255, 255, 0.2); --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1); }
-    *,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: var(--font-body); background-color: var(--color-black-rich); color: var(--color-white); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    @keyframes preloaderDismiss { to { transform: translateY(-100%); pointer-events: none; } }
-    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-black-rich); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1.5rem; animation: preloaderDismiss 0.5s ease-in-out 1.2s forwards; }
-    #preloader.loaded { pointer-events: none; animation: none; transform: translateY(-100%); }
-    .loader-text { font-family: var(--font-heading); font-size: 3rem; font-weight: 700; background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
-    nav { position: fixed; top: 0; width: 100%; padding: 0.45rem 0; z-index: 100; background: #13120F; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-    .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-    .hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; overflow: hidden; }
-    .hero-content { position: relative; z-index: 2; mix-blend-mode: difference; }
-    .hero-title { font-size: clamp(2.5rem, 6vw, 7rem); line-height: 1.1; margin-bottom: 2rem; overflow: hidden; }
-    .hero-title span { display: block; }
+    @font-face {
+      font-family: 'Font Awesome 6 Brands';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2) format("woff2");
+    }
+
+    :root {
+      --color-gold-primary: #D4AF37;
+      --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%);
+      --color-gold-light: #F4E4BC;
+      --color-gold-dark: #8A6E1F;
+      --color-black-rich: #0A0A0A;
+      --color-black-soft: #141414;
+      --color-white: #FFFFFF;
+      --color-glass-surface: rgba(255, 255, 255, 0.05);
+      --color-glass-border: rgba(255, 255, 255, 0.2);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-black-rich);
+      color: var(--color-white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes preloaderDismiss {
+      to {
+        transform: translateY(-100%);
+        pointer-events: none;
+      }
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--color-black-rich);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      animation: preloaderDismiss 0.5s ease-in-out 1.2s forwards;
+    }
+
+    #preloader.loaded {
+      pointer-events: none;
+      animation: none;
+      transform: translateY(-100%);
+    }
+
+    .loader-text {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 700;
+      background: var(--color-gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 0.45rem 0;
+      z-index: 100;
+      background: #13120F;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      mix-blend-mode: difference;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 7rem);
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .hero-title span {
+      display: block;
+    }
   </style>
 
 
@@ -188,9 +316,12 @@
 
 
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
+    media="print" onload="this.media='all'">
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap">
   </noscript>
 
 
@@ -279,8 +410,11 @@
 
 
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /></noscript>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print"
+    onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  </noscript>
 
 
 
@@ -366,8 +500,8 @@
 
       <a href="./index.html" class="logo-brand">
 
-            <img src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1238"
-              height="675" title="Golden Advertising & Publicity" loading="eager">
+        <img src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1238"
+          height="675" title="Golden Advertising & Publicity" loading="eager">
 
       </a>
 
@@ -487,910 +621,46 @@
 
 
 
-  <!-- Hero Section -->
+    <!-- Hero Section -->
 
 
 
-  <section class="hero">
+    <section class="hero">
 
 
 
-    <div class="hero-background" id="hero-canvas"></div>
+      <div class="hero-background" id="hero-canvas"></div>
 
 
 
-    <div class="container hero-content">
+      <div class="container hero-content">
 
 
 
-      <h1 class="hero-title">
+        <h1 class="hero-title">
 
 
 
-        <span class="line">Top Digital Marketing</span>
+          <span class="line">Top Digital Marketing</span>
 
 
 
-        <span class="line text-gold">Agency in Chennai</span>
+          <span class="line text-gold">Agency in Chennai</span>
 
 
 
-        <span class="line">Golden Advertising</span>
 
 
 
-      </h1>
+        </h1>
 
 
 
-      <p class="hero-subtitle">
+        <p class="hero-subtitle">
 
 
 
-        A 360&deg; Marketing Solution for all your Business Needs.
-
-
-
-      </p>
-
-
-
-      <div class="hero-ctas">
-
-
-
-        <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us
-
-
-
-            Today!</span></a>
-
-
-
-        <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
-
-
-
-          <a href="tel:+918220672333" style="display: block; margin-bottom: 0.5rem;">
-
-
-
-            <span class="text-gold" style="margin-right: 10px;"><i class="fa-solid fa-phone"></i></span> +91 82206 72333
-
-
-
-          </a>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-    </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-  <!-- Infinite Marquee Section -->
-
-
-
-  <section class="marquee-section">
-
-
-
-    <div class="marquee-content">
-
-
-
-      <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
-
-
-
-      <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
-
-
-
-    </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-  <!-- Detailed About Section for SEO -->
-  <section class="features-section bg-black" style="padding: 6rem 0;">
-    <div class="container">
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-        <div>
-          <span class="section-label">Our Expertise</span>
-          <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Why partner with the <span class="text-gold">Best Digital
-              Marketing Agency in Chennai?</span></h2>
-          <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
-            In today's fast-paced digital economy, your brand needs more than just a website. You need a strategic
-            partner that understands the nuances of the <strong>Chennai market</strong>. Golden Advertising & Publicity
-            (GAP) brings over a decade of experience in delivering <strong>360-degree marketing solutions</strong> that
-            drive measurable results.
-          </p>
-          <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
-            From <strong>hyperlocal SEO</strong> that captures neighborhood intent to high-impact <strong>social media
-              campaigns</strong> that build community, our approach is data-driven and results-oriented. We don't just
-            create ads; we build lasting brand identities that resonate with your target audience.
-          </p>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
-            <div
-              style="padding: 1rem; background: rgba(255,255,255,0.03); border-left: 3px solid var(--color-gold-primary);">
-              <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">Local Authority</h4>
-              <p style="font-size: 0.9rem; opacity: 0.7;">Deep roots in Chennai's business landscape.</p>
-            </div>
-            <div
-              style="padding: 1rem; background: rgba(255,255,255,0.03); border-left: 3px solid var(--color-gold-primary);">
-              <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">Data Driven</h4>
-              <p style="font-size: 0.9rem; opacity: 0.7;">Advanced analytics for every campaign.</p>
-            </div>
-          </div>
-        </div>
-        <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
-          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=50&q=20"
-            alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="1200" height="800" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="features-section workflow-section bg-black">
-
-
-
-    <div class="container">
-
-
-
-
-
-      <h2 style="margin-bottom: 2rem; font-size: 2.2rem; text-align:center;">How Does GAP <span
-          class="text-gold">Work</span></h2>
-
-
-
-      <div class="workflow-steps">
-
-
-
-        <div class="workflow-step">
-
-
-
-          <div class="step-circle">1</div>
-
-
-
-          <div class="step-content">
-
-
-
-            <h3 class="service-title">Planning</h3>
-
-
-
-            <p class="service-desc">Get your unique plan tailored to your goals.</p>
-
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-        <div class="workflow-connector"></div>
-
-
-
-        <div class="workflow-step">
-
-
-
-          <div class="step-circle">2</div>
-
-
-
-          <div class="step-content">
-
-
-
-            <h3 class="service-title">Development</h3>
-
-
-
-            <p class="service-desc">We build according to the strategy and plan.</p>
-
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-        <div class="workflow-connector"></div>
-
-
-
-        <div class="workflow-step">
-
-
-
-          <div class="step-circle">3</div>
-
-
-
-          <div class="step-content">
-
-
-
-            <h3 class="service-title">Launching</h3>
-
-
-
-            <p class="service-desc">We deliver on time and measure performance.</p>
-
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-  <section class="marquee-section stats-banner">
-
-
-
-    <div class="marquee-content" aria-label="Company stats marquee">
-
-
-
-      <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
-        Retention</span>
-
-
-
-      <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
-        Retention</span>
-
-
-
-      <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
-        Retention</span>
-
-
-
-    </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-  <section class="features-section bg-black projects-section" style="padding: 6rem 0;">
-
-
-
-    <div class="container">
-
-
-
-      <div class="projects-top"
-        style="display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 2rem;">
-
-
-
-        <h2 style="font-size: 2.4rem;">Our <span class="text-gold">Projects</span></h2>
-
-
-
-        <a href="./services.html" class="cta-button cta-button--light"><span class="btn-text">Explore All</span></a>
-
-
-
-      </div>
-
-
-
-    </div>
-
-
-
-    <div class="projects-marquee">
-
-
-
-      <!-- Row 1: Scrolling Left -->
-
-
-
-      <div class="marquee-row scroll-left">
-
-
-
-        <div class="marquee-content">
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Professional Brand Identity Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/2.webp" alt="Creative Restaurant Menu Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/3.webp" alt="Outdoor Signboard and LED Signage"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/4.webp" alt="Corporate Brochure and Catalog Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/5.webp" alt="Modern Responsive Web Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/6.webp" alt="Promotional Poster and Event Branding"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/7.webp" alt="Branding" width="362" height="453"
-              title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/8.webp" alt="Restaurant" width="362" height="453"
-              title=" " loading="lazy" decoding="async"></div>
-
-
-
-        </div>
-
-
-
-        <!-- Duplicate for Loop -->
-
-
-
-        <div class="marquee-content" aria-hidden="true">
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Branding" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/2.webp" alt="Restaurant" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/3.webp" alt="Signboard" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/4.webp" alt="Brochure" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/5.webp" alt="Web Design" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/6.webp" alt="Poster" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/7.webp" alt="Branding" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/8.webp" alt="Restaurant" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-
-
-      <!-- Row 2: Scrolling Right -->
-
-
-
-      <div class="marquee-row scroll-right">
-
-
-
-        <div class="marquee-content">
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Illuminated LED Signage for Retail"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/10.webp" alt="Premium Business Brochure Printing"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/11.webp" alt="Custom eCommerce Platform Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/12.webp" alt="Creative Event Poster and Graphics"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/13.webp" alt="Complete Corporate Brand Identity"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/14.webp" alt="Restaurant Interior and Menu Branding"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/15.webp" alt="Outdoor Hoarding and Billboard Design"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/16.webp" alt="Product Catalog and Sales Brochure"
-              width="362" height="453" title=" " loading="lazy" decoding="async"></div>
-
-
-
-        </div>
-
-
-
-        <!-- Duplicate for Loop -->
-
-
-
-        <div class="marquee-content" aria-hidden="true">
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Signboard" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/10.webp" alt="Brochure" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/11.webp" alt="Web Design" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/12.webp" alt="Poster" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/13.webp" alt="Branding" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/14.webp" alt="Restaurant" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/15.webp" alt="Signboard" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-          <div class="image-card tilt"><img src="./assets/projects/16.webp" alt="Brochure" width="362" height="453"
-              title=" " loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-    </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-
-
-
-
-  <!-- Services Section (Loaded dynamically) -->
-
-
-
-  <div id="services-container"></div>
-
-
-
-
-
-
-
-  <!-- Our Partners -->
-
-
-
-  <section class="features-section bg-black partners-section" style="padding: 6rem 0;">
-
-
-
-    <div class="container">
-
-
-
-      <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our
-
-
-
-        Clients</div>
-
-
-
-      <h2 style="text-align:center; margin-bottom: 2.5rem; font-size: 2.6rem;">Customers who <span
-          class="text-gold">love us</span></h2>
-
-
-
-    </div>
-
-
-
-    <div class="swiper partners-swiper">
-
-
-
-      <div class="swiper-wrapper">
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1" width="160" height="60"
-              title="Partner 1" loading="lazy" decoding="async"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2" width="160" height="60"
-              title="Partner 2" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3" width="160" height="60"
-              title="Partner 3" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4" width="160" height="60"
-              title="Partner 4" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5" width="160" height="60"
-              title="Partner 5" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6" width="160" height="60"
-              title="Partner 6" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7" width="160" height="60"
-              title="Partner 7" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8" width="160" height="60"
-              title="Partner 8" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9" width="160" height="60"
-              title="Partner 9" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10" width="160" height="60"
-              title="Partner 10" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-        <div class="swiper-slide">
-
-
-
-          <div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11" width="160" height="60"
-              title="Partner 11" loading="lazy"></div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-    </div>
-
-
-
-  </section>
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- FAQ Section for SEO & Text Density -->
-  <section class="features-section bg-black" style="padding: 6rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 4rem;">
-        <span class="section-label">Common Questions</span>
-        <h2 style="font-size: 2.5rem;">Digital Marketing <span class="text-gold">FAQs</span></h2>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr)); gap: 3rem;">
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">What is a 360-degree
-            marketing approach?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">A 360-degree marketing approach means we cover every touchpoint of
-            your customer journey. This includes branding, website design, SEO, social media, and traditional offline
-            advertising like newspaper and FM ads. By integrating all channels, we ensure your brand message remains
-            consistent and powerful everywhere.</p>
-        </div>
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">Why is SEO important for
-            businesses in Chennai?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">Chennai is a highly competitive local market. Hyperlocal SEO helps
-            your business appear in front of customers exactly when they are searching for "near me" services in areas
-            like Besant Nagar, OMR, or T. Nagar. It drives high-intent organic traffic that is more likely to convert
-            into long-term clients.</p>
-        </div>
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">How long does it take to
-            see results from Digital Marketing?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">Web development and branding have immediate visual results. Digital
-            marketing efforts like SEO typically take 3 to 6 months to show significant organic growth, while PPC and
-            Social Media Advertising can drive traffic and leads almost instantly once campaigns are live.</p>
-        </div>
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">Does my business need a
-            custom website or a template?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">While templates are faster, a custom website developed by our
-            experts in Chennai ensures your site is unique, optimized for speed, and designed specifically to meet your
-            business goals. Custom sites offer better SEO flexibility and a premium user experience that template sites
-            often lack.</p>
-        </div>
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">What social media
-            platforms should my brand be on?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">It depends on your audience. For B2B companies, LinkedIn and
-            Facebook are often strong. For retail and visual brands, Instagram and YouTube are essential. As your social
-            media marketing partner, we help you identify where your customers spend their time and create content
-            specifically for those platforms.</p>
-        </div>
-        <div class="faq-item">
-          <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">How do you measure
-            campaign success?</h3>
-          <p style="opacity: 0.8; line-height: 1.7;">We use advanced data analytics to track key performance indicators
-            (KPIs) such as website traffic, lead conversion rates, social media engagement, and overall ROI. We provide
-            regular reports so you can see exactly how your investment is helping your business grow in the Chennai
-            digital landscape.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-
-
-
-  <section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
-
-
-
-    <div class="container">
-
-
-
-      <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-
-
-
-        <span class="section-label">Get In Touch</span>
-
-
-
-        <h2 style="font-size: 4rem; margin-bottom: 2rem;">Ready to <span class="text-gold">Glow?</span></h2>
-
-
-
-        <p style="margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
-
-
-
-          Let's create something exceptional together. Reach out to us for a consultation.
+          A 360&deg; Marketing Solution for all your Business Needs.
 
 
 
@@ -1398,8 +668,40 @@
 
 
 
-        <a href="#contact" class="cta-button cta-button--outline" data-enquiry-trigger><span class="btn-text">Start a
-            Project</span></a>
+        <div class="hero-ctas">
+
+
+
+          <a href="#contact" class="cta-button" data-enquiry-trigger><span class="btn-text">Start Your Project With Us
+
+
+
+              Today!</span></a>
+
+
+
+          <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
+
+
+
+            <a href="tel:+918220672333" style="display: block; margin-bottom: 0.5rem;">
+
+
+
+              <span class="text-gold" style="margin-right: 10px;"><i class="fa-solid fa-phone"></i></span> +91 82206
+              72333
+
+
+
+            </a>
+
+
+
+          </div>
+
+
+
+        </div>
 
 
 
@@ -1407,7 +709,856 @@
 
 
 
-    </div>
+    </section>
+
+
+
+
+
+
+
+    <!-- Infinite Marquee Section -->
+
+
+
+    <section class="marquee-section">
+
+
+
+      <div class="marquee-content">
+
+
+
+        <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
+
+
+
+        <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- Detailed About Section for SEO -->
+    <section class="features-section bg-black" style="padding: 6rem 0;">
+      <div class="container">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+          <div>
+            <span class="section-label">Our Expertise</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Why partner with the <span class="text-gold">Best
+                Digital
+                Marketing Agency in Chennai?</span></h2>
+            <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+              In today's fast-paced digital economy, your brand needs more than just a website. You need a strategic
+              partner that understands the nuances of the <strong>Chennai market</strong>. Golden Advertising &
+              Publicity
+              (GAP) brings over a decade of experience in delivering <strong>360-degree marketing solutions</strong>
+              that
+              drive measurable results.
+            </p>
+            <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+              From <strong>hyperlocal SEO</strong> that captures neighborhood intent to high-impact <strong>social media
+                campaigns</strong> that build community, our approach is data-driven and results-oriented. We don't just
+              create ads; we build lasting brand identities that resonate with your target audience.
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+              <div
+                style="padding: 1rem; background: rgba(255,255,255,0.03); border-left: 3px solid var(--color-gold-primary);">
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">Local Authority</h4>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Deep roots in Chennai's business landscape.</p>
+              </div>
+              <div
+                style="padding: 1rem; background: rgba(255,255,255,0.03); border-left: 3px solid var(--color-gold-primary);">
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">Data Driven</h4>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Advanced analytics for every campaign.</p>
+              </div>
+            </div>
+          </div>
+          <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=50&q=20"
+              alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="1200"
+              height="800" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section workflow-section bg-black">
+
+
+
+      <div class="container">
+
+
+
+
+
+        <h2 style="margin-bottom: 2rem; font-size: 2.2rem; text-align:center;">How Does GAP <span
+            class="text-gold">Work</span></h2>
+
+
+
+        <div class="workflow-steps">
+
+
+
+          <div class="workflow-step">
+
+
+
+            <div class="step-circle">1</div>
+
+
+
+            <div class="step-content">
+
+
+
+              <h3 class="service-title">Planning</h3>
+
+
+
+              <p class="service-desc">Get your unique plan tailored to your goals.</p>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <div class="workflow-connector"></div>
+
+
+
+          <div class="workflow-step">
+
+
+
+            <div class="step-circle">2</div>
+
+
+
+            <div class="step-content">
+
+
+
+              <h3 class="service-title">Development</h3>
+
+
+
+              <p class="service-desc">We build according to the strategy and plan.</p>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <div class="workflow-connector"></div>
+
+
+
+          <div class="workflow-step">
+
+
+
+            <div class="step-circle">3</div>
+
+
+
+            <div class="step-content">
+
+
+
+              <h3 class="service-title">Launching</h3>
+
+
+
+              <p class="service-desc">We deliver on time and measure performance.</p>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <section class="marquee-section stats-banner">
+
+
+
+      <div class="marquee-content" aria-label="Company stats marquee">
+
+
+
+        <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
+          Retention</span>
+
+
+
+        <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
+          Retention</span>
+
+
+
+        <span class="marquee-item">10+ Years of Experience &bull; 564+ Projects Completed &bull; 98% Client
+          Retention</span>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <section class="features-section bg-black projects-section" style="padding: 6rem 0;">
+
+
+
+      <div class="container">
+
+
+
+        <div class="projects-top"
+          style="display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 2rem;">
+
+
+
+          <h2 style="font-size: 2.4rem;">Our <span class="text-gold">Projects</span></h2>
+
+
+
+          <a href="./services.html" class="cta-button cta-button--light"><span class="btn-text">Explore All</span></a>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <div class="projects-marquee">
+
+
+
+        <!-- Row 1: Scrolling Left -->
+
+
+
+        <div class="marquee-row scroll-left">
+
+
+
+          <div class="marquee-content">
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Professional Brand Identity Design"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/2.webp" alt="Creative Restaurant Menu Design"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/3.webp" alt="Outdoor Signboard and LED Signage"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/4.webp" alt="Corporate Brochure and Catalog Design"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/5.webp" alt="Modern Responsive Web Design"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/6.webp" alt="Promotional Poster and Event Branding"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/7.webp" alt="Branding" width="362" height="453"
+                title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/8.webp" alt="Restaurant" width="362" height="453"
+                title=" " loading="lazy" decoding="async"></div>
+
+
+
+          </div>
+
+
+
+          <!-- Duplicate for Loop -->
+
+
+
+          <div class="marquee-content" aria-hidden="true">
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Branding" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/2.webp" alt="Restaurant" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/3.webp" alt="Signboard" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/4.webp" alt="Brochure" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/5.webp" alt="Web Design" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/6.webp" alt="Poster" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/7.webp" alt="Branding" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/8.webp" alt="Restaurant" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Row 2: Scrolling Right -->
+
+
+
+        <div class="marquee-row scroll-right">
+
+
+
+          <div class="marquee-content">
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Illuminated LED Signage for Retail"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/10.webp" alt="Premium Business Brochure Printing"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/11.webp" alt="Custom eCommerce Platform Design"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/12.webp" alt="Creative Event Poster and Graphics"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/13.webp" alt="Complete Corporate Brand Identity"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/14.webp"
+                alt="Restaurant Interior and Menu Branding" width="362" height="453" title=" " loading="lazy"
+                decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/15.webp"
+                alt="Outdoor Hoarding and Billboard Design" width="362" height="453" title=" " loading="lazy"
+                decoding="async"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/16.webp" alt="Product Catalog and Sales Brochure"
+                width="362" height="453" title=" " loading="lazy" decoding="async"></div>
+
+
+
+          </div>
+
+
+
+          <!-- Duplicate for Loop -->
+
+
+
+          <div class="marquee-content" aria-hidden="true">
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Signboard" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/10.webp" alt="Brochure" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/11.webp" alt="Web Design" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/12.webp" alt="Poster" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/13.webp" alt="Branding" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/14.webp" alt="Restaurant" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/15.webp" alt="Signboard" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+            <div class="image-card tilt"><img src="./assets/projects/16.webp" alt="Brochure" width="362" height="453"
+                title=" " loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Services Section (Loaded dynamically) -->
+
+
+
+    <div id="services-container"></div>
+
+
+
+
+
+
+
+    <!-- Our Partners -->
+
+
+
+    <section class="features-section bg-black partners-section" style="padding: 6rem 0;">
+
+
+
+      <div class="container">
+
+
+
+        <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our
+
+
+
+          Clients</div>
+
+
+
+        <h2 style="text-align:center; margin-bottom: 2.5rem; font-size: 2.6rem;">Customers who <span
+            class="text-gold">love us</span></h2>
+
+
+
+      </div>
+
+
+
+      <div class="swiper partners-swiper">
+
+
+
+        <div class="swiper-wrapper">
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c1.png" alt="Partner 1" width="160" height="60"
+                title="Partner 1" loading="lazy" decoding="async"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c2.png" alt="Partner 2" width="160" height="60"
+                title="Partner 2" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c3.png" alt="Partner 3" width="160" height="60"
+                title="Partner 3" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c4.png" alt="Partner 4" width="160" height="60"
+                title="Partner 4" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c5.png" alt="Partner 5" width="160" height="60"
+                title="Partner 5" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c6.png" alt="Partner 6" width="160" height="60"
+                title="Partner 6" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c7.png" alt="Partner 7" width="160" height="60"
+                title="Partner 7" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c8.png" alt="Partner 8" width="160" height="60"
+                title="Partner 8" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c9.png" alt="Partner 9" width="160" height="60"
+                title="Partner 9" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c10.png" alt="Partner 10" width="160" height="60"
+                title="Partner 10" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="partner-logo"><img src="./assets/partners/c11.png" alt="Partner 11" width="160" height="60"
+                title="Partner 11" loading="lazy"></div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- FAQ Section for SEO & Text Density -->
+    <section class="features-section bg-black" style="padding: 6rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+          <span class="section-label">Common Questions</span>
+          <h2 style="font-size: 2.5rem;">Digital Marketing <span class="text-gold">FAQs</span></h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr)); gap: 3rem;">
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">What is a 360-degree
+              marketing approach?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">A 360-degree marketing approach means we cover every touchpoint
+              of
+              your customer journey. This includes branding, website design, SEO, social media, and traditional offline
+              advertising like newspaper and FM ads. By integrating all channels, we ensure your brand message remains
+              consistent and powerful everywhere.</p>
+          </div>
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">Why is SEO important
+              for
+              businesses in Chennai?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">Chennai is a highly competitive local market. Hyperlocal SEO
+              helps
+              your business appear in front of customers exactly when they are searching for "near me" services in areas
+              like Besant Nagar, OMR, or T. Nagar. It drives high-intent organic traffic that is more likely to convert
+              into long-term clients.</p>
+          </div>
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">How long does it take
+              to
+              see results from Digital Marketing?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">Web development and branding have immediate visual results.
+              Digital
+              marketing efforts like SEO typically take 3 to 6 months to show significant organic growth, while PPC and
+              Social Media Advertising can drive traffic and leads almost instantly once campaigns are live.</p>
+          </div>
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">Does my business need
+              a
+              custom website or a template?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">While templates are faster, a custom website developed by our
+              experts in Chennai ensures your site is unique, optimized for speed, and designed specifically to meet
+              your
+              business goals. Custom sites offer better SEO flexibility and a premium user experience that template
+              sites
+              often lack.</p>
+          </div>
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">What social media
+              platforms should my brand be on?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">It depends on your audience. For B2B companies, LinkedIn and
+              Facebook are often strong. For retail and visual brands, Instagram and YouTube are essential. As your
+              social
+              media marketing partner, we help you identify where your customers spend their time and create content
+              specifically for those platforms.</p>
+          </div>
+          <div class="faq-item">
+            <h3 style="color: var(--color-gold-primary); font-size: 1.2rem; margin-bottom: 1rem;">How do you measure
+              campaign success?</h3>
+            <p style="opacity: 0.8; line-height: 1.7;">We use advanced data analytics to track key performance
+              indicators
+              (KPIs) such as website traffic, lead conversion rates, social media engagement, and overall ROI. We
+              provide
+              regular reports so you can see exactly how your investment is helping your business grow in the Chennai
+              digital landscape.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+
+
+
+    <section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
+
+
+
+      <div class="container">
+
+
+
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+
+
+
+          <span class="section-label">Get In Touch</span>
+
+
+
+          <h2 style="font-size: 4rem; margin-bottom: 2rem;">Ready to <span class="text-gold">Glow?</span></h2>
+
+
+
+          <p style="margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
+
+
+
+            Let's create something exceptional together. Reach out to us for a consultation.
+
+
+
+          </p>
+
+
+
+          <a href="#contact" class="cta-button cta-button--outline" data-enquiry-trigger><span class="btn-text">Start a
+              Project</span></a>
+
+
+
+        </div>
+
+
+
+      </div>
 
 
 
