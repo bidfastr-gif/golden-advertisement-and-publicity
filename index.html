@@ -8,6 +8,12 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" as="style">
 
   <style id="critical-css">
+
+/* Font-Display Swap Override for FontAwesome */
+@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2) format("woff2"); }
+@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2) format("woff2"); }
+@font-face { font-family: 'Font Awesome 6 Brands'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2) format("woff2"); }
+
     :root { --color-gold-primary: #D4AF37; --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%); --color-gold-light: #F4E4BC; --color-gold-dark: #8A6E1F; --color-black-rich: #0A0A0A; --color-black-soft: #141414; --color-white: #FFFFFF; --color-glass-surface: rgba(255, 255, 255, 0.05); --color-glass-border: rgba(255, 255, 255, 0.2); --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1); }
     *,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--font-body); background-color: var(--color-black-rich); color: var(--color-white); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
