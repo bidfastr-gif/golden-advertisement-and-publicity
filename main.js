@@ -586,37 +586,37 @@ const initTicker = (selector, duration = 40) => {
     wrapper.style.setProperty('--ticker-duration', `${duration}s`);
     wrapper.classList.add('is-ticker');
 };
-window.addEventListener('load', () => {
+// Use DOMContentLoaded instead of window.load so the preloader starts
+// dismissing as soon as HTML is parsed — not after all scripts/images
+// finish downloading. This directly reduces LCP element render delay.
+document.addEventListener('DOMContentLoaded', () => {
     const tl = gsap.timeline();
     const loaderContent = document.querySelector('.loader-content') || document.querySelector('.loader-text');
     const preloader = document.getElementById('preloader');
     if (loaderContent && preloader) {
         tl.to(loaderContent, {
-            y: -50,
+            y: -30,
             opacity: 0,
-            duration: 0.5,
-            ease: 'power2.inOut',
-            delay: 0.2
+            duration: 0.3,
+            ease: 'power2.inOut'
         })
             .to(preloader, {
                 y: '-100%',
-                duration: 0.8,
+                duration: 0.5,
                 ease: 'power4.inOut',
                 onComplete: () => {
                     preloader.classList.add('loaded');
-                    // Ensure Lenis is notified of the height change if any
                     if (typeof lenis !== 'undefined') lenis.resize();
                 }
-            }, "-=0.1");
+            }, "-=0.05");
     }
 
-    // Safety fallback: If preloader is still there after 5 seconds, hide it
-    // Safety fallback: If preloader is still there after 5 seconds, hide it
+    // Safety fallback: reduce to 2s so preloader never blocks LCP beyond that
     setTimeout(() => {
         if (preloader && !preloader.classList.contains('loaded')) {
             gsap.to(preloader, {
                 y: '-100%',
-                duration: 0.8,
+                duration: 0.4,
                 ease: 'power4.inOut',
                 onComplete: () => {
                     preloader.classList.add('loaded');
@@ -624,7 +624,7 @@ window.addEventListener('load', () => {
                 }
             });
         }
-    }, 5000);
+    }, 2000);
 
     tl.from('nav', {
         y: -80,
