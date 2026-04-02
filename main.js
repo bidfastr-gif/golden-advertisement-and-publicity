@@ -210,8 +210,9 @@ const showSuccessPopup = (message) => {
     avatar.alt = 'Chatbot';
     avatar.title = 'Chatbot';
     avatar.loading = 'lazy';
-    avatar.width = 579;
-    avatar.height = 712;
+    avatar.decoding = 'async';
+    avatar.width = 140;
+    avatar.height = 172;
     toggle.appendChild(avatar);
     const panel = makeEl('div', 'chat-panel');
     const header = makeEl('div', 'chat-header');
