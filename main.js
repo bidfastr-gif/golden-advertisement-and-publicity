@@ -621,18 +621,6 @@ const safeTo = (selector, vars) => {
     });
 };
 
-const initTicker = (selector, duration = 40) => {
-    const el = document.querySelector(selector);
-    if (!el) return;
-    const wrapper = el.querySelector('.swiper-wrapper');
-    if (!wrapper) return;
-    if (!wrapper.dataset.tickerCloned) {
-        wrapper.innerHTML += wrapper.innerHTML;
-        wrapper.dataset.tickerCloned = 'true';
-    }
-    wrapper.style.setProperty('--ticker-duration', `${duration}s`);
-    wrapper.classList.add('is-ticker');
-};
 // Use DOMContentLoaded instead of window.load so the preloader starts
 // dismissing as soon as HTML is parsed — not after all scripts/images
 // finish downloading. This directly reduces LCP element render delay.
@@ -695,12 +683,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
-        tl.to(heroSubtitle, {
-            y: 0,
-            opacity: 0.8,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, "-=0.7");
+        tl.fromTo(heroSubtitle, 
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 0.8,
+                duration: 0.5,
+                ease: 'power2.out',
+                clearProps: "all"
+            }, 
+            "-=0.7"
+        );
     }
 });
 
@@ -927,23 +920,61 @@ fetch('what-we-offer.html')
             if (container) {
                 container.innerHTML = servicesSection.outerHTML;
 
-                // Use CSS ticker instead of Swiper for continuous marquee
-                // Add a small delay to ensure DOM is ready and layout is calculated
-                setTimeout(() => {
-                    initTicker('.services-swiper', 40);
-                }, 300);
+                // Initialize Swiper for Services
+                new Swiper('.services-swiper', {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    loop: true,
+                    speed: 1000,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    breakpoints: {
+                        640: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 }
+                    }
+                });
             }
         }
     })
     .catch(err => console.error('Failed to load services:', err));
 
+
 (() => {
-    initTicker('.projects-swiper', 40);
+    // Initialize Swiper for Projects
+    new Swiper('.projects-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            768: { slidesPerView: 2 },
+            1200: { slidesPerView: 3 }
+        }
+    });
 })();
 
 (() => {
-    initTicker('.partners-swiper', 40);
+    // Initialize Swiper for Partners
+    new Swiper('.partners-swiper', {
+        slidesPerView: 2,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            640: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 }
+        }
+    });
 })();
+
 
 // Unified Workflow Section Animation
 (() => {
@@ -1003,7 +1034,7 @@ fetch('what-we-offer.html')
     });
 })();
 
-safeFrom('.hero .hero-subtitle');
+// hero-subtitle is animated by the main timeline, so we don't apply safeFrom here
 
 
 safeFrom('.about-hero .page-hero-content h1', {
