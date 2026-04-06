@@ -2,14 +2,13 @@
 <html lang="en">
 
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <!-- Preload Critical Assets -->
   <link rel="preload" href="style.css" as="style">
   <!-- Preload Font Awesome woff2 files directly to break the critical chain:
        Without this: HTML → all.min.css (389ms) → woff2 (987ms) = 3-level chain
        With this:    HTML → woff2 (parallel with CSS) = 2-level chain, saves ~389ms -->
+    <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
@@ -305,24 +304,7 @@
 
 
   <link rel="stylesheet" href="./style.css">
-
-
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
-
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
-    media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap">
-  </noscript>
+  <link rel="stylesheet" href="./assets/fonts.css">
 
 
 
