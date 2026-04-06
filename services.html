@@ -14,15 +14,15 @@
   <link rel="preload" href="style.css" as="style">
   <!-- Preload Font Awesome woff2 files directly to break the critical chain:
        HTML → woff2 (parallel with CSS) = 2-level chain, significantly reduces font load delay -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <style id="critical-css">
 
 /* Font-Display Swap Override for FontAwesome */
-@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-regular-400.woff2) format("woff2"); }
-@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 900; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2) format("woff2"); }
-@font-face { font-family: 'Font Awesome 6 Brands'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2) format("woff2"); }
+@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 400; font-display: swap; src: url(./assets/webfonts/fa-regular-400.woff2) format("woff2"); }
+@font-face { font-family: 'Font Awesome 6 Free'; font-style: normal; font-weight: 900; font-display: swap; src: url(./assets/webfonts/fa-solid-900.woff2) format("woff2"); }
+@font-face { font-family: 'Font Awesome 6 Brands'; font-style: normal; font-weight: 400; font-display: swap; src: url(./assets/webfonts/fa-brands-400.woff2) format("woff2"); }
 
     :root { --color-gold-primary: #D4AF37; --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%); --color-gold-light: #F4E4BC; --color-gold-dark: #8A6E1F; --color-black-rich: #0A0A0A; --color-black-soft: #141414; --color-white: #FFFFFF; --color-glass-surface: rgba(255, 255, 255, 0.05); --color-glass-border: rgba(255, 255, 255, 0.2); --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1); }
     *,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -893,23 +893,23 @@
 
 
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="./assets/vendor/three.min.js"></script>
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="./assets/vendor/gsap.min.js"></script>
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="./assets/vendor/ScrollTrigger.min.js"></script>
 
 
 
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="./assets/vendor/lenis.min.js"></script>
 
 
 
