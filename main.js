@@ -1970,7 +1970,7 @@ yieldTask(() => {
         apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
         
         yieldTask(() => {
-            apply3DScrollEffect('h1:not(.logo-name), h2', 0, false);
+            apply3DScrollEffect('h1:not(.logo-name), h2:not(.workflow-section h2)', 0, false);
             apply3DScrollEffect('.who-text', 0, false);
         });
     });
