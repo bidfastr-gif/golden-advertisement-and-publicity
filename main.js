@@ -2,6 +2,12 @@
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Performance Optimization: Minimize ScrollTrigger refresh frequency
+// Only refresh on essential visibility or loading changes to avoid common layout thrashing.
+ScrollTrigger.config({
+    autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
+});
+
     // Theme Toggle (Persistent across pages, mobile-friendly)
     ; (() => {
         const root = document.documentElement;
@@ -45,17 +51,22 @@ const lenis = new Lenis({
 // Sync ScrollTrigger with Lenis
 lenis.on('scroll', ScrollTrigger.update);
 
-// Add Lenis to GSAP Ticker for perfect synchronization
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000); // Convert to milliseconds
-});
+// Optimized Frame Synchronization Loop
+// Using a dedicated requestAnimationFrame loop for Lenis ensures 
+// precise sub-pixel smoothing without being throttled by GSAP's internal lag smoothing in heavy scenes.
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 gsap.ticker.lagSmoothing(500, 33);
 
 // Set default GSAP ease for all animations
 gsap.defaults({
     ease: "power3.out",
-    duration: 1.2
+    duration: 1.2,
+    force3D: true // Ensure GPU acceleration by default
 });
 
 // Page Transition Logic
@@ -551,9 +562,18 @@ const safeFrom = (selector, vars) => {
             duration: 0.8,
             ease: 'power3.out',
             force3D: true,
-            scrollTrigger: { trigger: el, start: 'top 85%' }
+            scrollTrigger: { 
+                trigger: el, 
+                start: 'top 85%',
+                once: true, // Entrance animations should only run once
+                fastScrollEnd: true // Prevent visual pop-in glitches
+            }
         };
         const config = Object.assign({}, defaults, vars || {});
+        // If a custom scrollTrigger is passed, merge defaults into it
+        if (vars && vars.scrollTrigger) {
+            config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
+        }
         gsap.from(el, config);
     });
 };
@@ -567,9 +587,18 @@ const safeTo = (selector, vars) => {
             opacity: 0,
             duration: 1,
             ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 90%' }
+            force3D: true,
+            scrollTrigger: { 
+                trigger: el, 
+                start: 'top 90%',
+                once: true,
+                fastScrollEnd: true
+            }
         };
         const config = Object.assign({}, defaults, vars || {});
+        if (vars && vars.scrollTrigger) {
+            config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
+        }
         gsap.to(el, config);
     });
 };
@@ -809,26 +838,26 @@ splitTypes.forEach((char, i) => {
     })
 })
 
-// Counter Animation
+// Optimized Counter Animation using GSAP
 const counters = document.querySelectorAll('.stat-number');
 counters.forEach(counter => {
-    const updateCount = () => {
-        const target = +counter.getAttribute('data-count');
-        const count = +counter.innerText;
-        const inc = target / 200;
-
-        if (count < target) {
-            counter.innerText = Math.ceil(count + inc);
-            setTimeout(updateCount, 20);
-        } else {
-            counter.innerText = target;
+    const targetValue = +counter.getAttribute('data-count');
+    const obj = { value: 0 };
+    
+    // Performance Optimization: Use a single GSAP tween instead of recursive setTimeouts
+    // This allows GSAP to handle the frame-pacing and synchronization.
+    gsap.to(obj, {
+        value: targetValue,
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: counter,
+            start: "top 85%",
+            once: true // Only count up once
+        },
+        onUpdate: () => {
+            counter.innerText = Math.ceil(obj.value);
         }
-    };
-
-    ScrollTrigger.create({
-        trigger: counter,
-        start: "top 85%",
-        onEnter: () => updateCount()
     });
 });
 
@@ -852,15 +881,19 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
                     start: 'top 95%',
                     end: 'top 40%',
                     scrub: 0.6,
-                    invalidateOnRefresh: true
+                    invalidateOnRefresh: true,
+                    fastScrollEnd: true // Prevent glitches during fast scrolling
                 },
                 delay
             }
         );
 
         if (withHover) {
-            el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.18, ease: 'power2.out' }));
-            el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1.0, duration: 0.2, ease: 'power2.out' }));
+            // Performance Optimization: Use quickSetter for hover animations
+            // This bypasses GSAP's property parser for sub-frame updates.
+            const setScale = gsap.quickSetter(el, "scale");
+            el.addEventListener('mouseenter', () => setScale(1.02));
+            el.addEventListener('mouseleave', () => setScale(1.0));
         }
     });
 };
@@ -1693,17 +1726,23 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     if (cards.length === 0) return;
     cards.forEach(card => {
         let bounds;
+        // Optimization: Use quickSetters for buttery smooth 60fps+ updates
+        const setRotateX = gsap.quickSetter(card, "rotateX", "deg");
+        const setRotateY = gsap.quickSetter(card, "rotateY", "deg");
+
         const calc = (e) => {
             if (!bounds) bounds = card.getBoundingClientRect();
             const x = e.clientX - bounds.left - bounds.width / 2;
             const y = e.clientY - bounds.top - bounds.height / 2;
             const rx = (-y / bounds.height) * 10;
             const ry = (x / bounds.width) * 10;
-            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+            
+            setRotateX(rx);
+            setRotateY(ry);
         };
         card.addEventListener('mousemove', calc);
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'rotateX(0) rotateY(0)';
+            gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' });
             bounds = undefined;
         });
     });
@@ -1982,10 +2021,13 @@ const initTestimonialCarousel = () => {
     let gap = getGap();
     let cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
 
+    // Use quickSetter for high-frequency translateX updates
+    const setX = gsap.quickSetter(track, "x", "px");
+
     const tick = () => {
         const delta = gsap.ticker.deltaRatio();
         x -= speed * delta;
-        track.style.transform = `translateX(${x}px)`;
+        setX(x);
         
         // Use cached cardWidth and gap
         if (-x >= cardWidth + gap) {
@@ -1994,14 +2036,13 @@ const initTestimonialCarousel = () => {
             x += cardWidth + gap;
             
             // Re-read cardWidth only when a card is moved (less frequent than every frame)
-            // or just rely on the resize handler if cards are uniform.
             cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
         }
     };
 
     ScrollTrigger.create({
         trigger: carousel,
-        start: 'top 90%',
+        start: 'top 100%', // Trigger sooner to prevent visual pop-in
         onEnter: () => {
             if (!running) {
                 gsap.ticker.add(tick);
@@ -2013,7 +2054,8 @@ const initTestimonialCarousel = () => {
                 gsap.ticker.remove(tick);
                 running = false;
             }
-        }
+        },
+        fastScrollEnd: true
     });
 
     window.addEventListener('resize', () => {
