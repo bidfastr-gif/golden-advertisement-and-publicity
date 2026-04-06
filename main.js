@@ -65,8 +65,7 @@ gsap.ticker.lagSmoothing(500, 33);
 // Set default GSAP ease for all animations
 gsap.defaults({
     ease: "power3.out",
-    duration: 1.2,
-    force3D: true // Ensure GPU acceleration by default
+    duration: 1.2
 });
 
 // Page Transition Logic
