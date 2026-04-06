@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .to(preloader, {
                 y: '-100%',
-                duration: 0.5,
+                duration: 0.4,
                 ease: 'power4.inOut',
                 onComplete: () => {
                     preloader.classList.add('loaded');
@@ -661,16 +661,16 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 0,
         duration: 0.3,
         ease: 'power2.out'
-    });
+    }, "-=0.6");
 
     const heroTitleSpans = document.querySelectorAll('.hero-title span');
     if (heroTitleSpans.length > 0) {
         // Use fromTo (not from) so GSAP has explicit start AND end states.
-        // This prevents conflicts when inline styles were already modified.
+        // Parallelizing this with the preloader dismissal drastically reduces LCP render delay.
         tl.fromTo(heroTitleSpans,
             { y: '100%', opacity: 0 },
-            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out' },
-            "-=0.3"
+            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out', clearProps: "all" },
+            "-=0.7"
         );
     }
 
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
             opacity: 0.8,
             duration: 0.5,
             ease: 'power2.out'
-        }, "-=0.5");
+        }, "-=0.7");
     }
 });
 
