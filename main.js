@@ -1,4 +1,11 @@
 // Imports removed in favor of CDN links in index.html for vanilla usage
+const yieldTask = (fn) => {
+    if (window.requestIdleCallback) {
+        requestIdleCallback(() => fn(), { timeout: 2000 });
+    } else {
+        setTimeout(fn, 1);
+    }
+};
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -810,46 +817,45 @@ const startThreeJS = (container) => {
     canvases.forEach(c => initThreeJS(c));
 })();
 
-// Scroll Animations
-const splitTypes = document.querySelectorAll('[data-reveal-text]')
+// Scroll Animations Optimized with yielding
+yieldTask(() => {
+    const splitTypes = document.querySelectorAll('[data-reveal-text]');
+    splitTypes.forEach((char, i) => {
+        // Determine triggers for general sections
+        gsap.from(char, {
+            scrollTrigger: {
+                trigger: char,
+                start: 'top 80%',
+                end: 'top 20%',
+                scrub: false,
+                markers: false
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+    });
 
-splitTypes.forEach((char, i) => {
-    // Determine triggers for general sections
-    gsap.from(char, {
-        scrollTrigger: {
-            trigger: char,
-            start: 'top 80%',
-            end: 'top 20%',
-            scrub: false,
-            markers: false
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-    })
-})
-
-// Optimized Counter Animation using GSAP
-const counters = document.querySelectorAll('.stat-number');
-counters.forEach(counter => {
-    const targetValue = +counter.getAttribute('data-count');
-    const obj = { value: 0 };
-    
-    // Performance Optimization: Use a single GSAP tween instead of recursive setTimeouts
-    // This allows GSAP to handle the frame-pacing and synchronization.
-    gsap.to(obj, {
-        value: targetValue,
-        duration: 2,
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: counter,
-            start: "top 85%",
-            once: true // Only count up once
-        },
-        onUpdate: () => {
-            counter.innerText = Math.ceil(obj.value);
-        }
+    // Optimized Counter Animation using GSAP
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+        const targetValue = +counter.getAttribute('data-count');
+        const obj = { value: 0 };
+        
+        gsap.to(obj, {
+            value: targetValue,
+            duration: 2,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: counter,
+                start: "top 85%",
+                once: true 
+            },
+            onUpdate: () => {
+                counter.innerText = Math.ceil(obj.value);
+            }
+        });
     });
 });
 
@@ -1935,13 +1941,21 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
     gsap.to(cursor, { opacity: 0.2, repeat: -1, yoyo: true, duration: 0.4 });
 })();
 
-// Apply 3D effect to all card types across the project
-// High-Impact 3D Scroll Effects (Optimized Selectors)
-// We only apply this to major UI cards and main headings to minimize ScrollTrigger overhead.
-apply3DScrollEffect('.package-card, .adv-card, .service-card, .case-study-card, .blog-card, .feature-card, .contact-card, .contact-form-card, .stat-item, .anim-card, .testimonial-card');
-apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
-apply3DScrollEffect('h1:not(.logo-name), h2', 0, false);
-apply3DScrollEffect('.who-text', 0, false);
+// Apply 3D effect to all card types across the project via Stage-based yielding
+yieldTask(() => {
+    // High-Impact 3D Scroll Effects (Optimized Selectors)
+    // We only apply this to major UI cards and main headings to minimize ScrollTrigger overhead.
+    apply3DScrollEffect('.package-card, .adv-card, .service-card, .case-study-card, .blog-card, .feature-card, .contact-card, .contact-form-card, .stat-item, .anim-card, .testimonial-card');
+    
+    yieldTask(() => {
+        apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
+        
+        yieldTask(() => {
+            apply3DScrollEffect('h1:not(.logo-name), h2', 0, false);
+            apply3DScrollEffect('.who-text', 0, false);
+        });
+    });
+});
 
 safeFrom('.about-hero .hero-tags', {
     scrollTrigger: {
@@ -2029,7 +2043,9 @@ const initTestimonialCarousel = () => {
     });
 };
 
-initTestimonialCarousel();
+yieldTask(() => {
+    initTestimonialCarousel();
+});
 
 ; (() => {
     const mount = () => {
@@ -2131,73 +2147,64 @@ initTestimonialCarousel();
     });
 })();
 
-; (() => {
-    // Home Page Specific Scroll Animations
+yieldTask(() => {
+    ; (() => {
+        // Home Page Specific Scroll Animations Optimized with Stage-based yielding
+        const wrapChars = (element) => {
+            element.style.display = 'inline-block';
+            element.style.overflow = 'hidden';
+            element.style.verticalAlign = 'top';
+            const text = element.textContent;
+            element.innerHTML = '';
+            [...text].forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.display = 'inline-block';
+                span.style.transform = 'translateY(100%)';
+                span.style.opacity = '0';
+                element.appendChild(span);
+            });
+        };
 
-    // Helper to wrap characters for split text
-    const wrapChars = (element) => {
-        element.style.display = 'inline-block';
-        element.style.overflow = 'hidden';
-        element.style.verticalAlign = 'top';
-        const text = element.textContent;
-        element.innerHTML = '';
-        [...text].forEach(char => {
-            const span = document.createElement('span');
-            span.textContent = char === ' ' ? '\u00A0' : char;
-            span.style.display = 'inline-block';
-            span.style.transform = 'translateY(100%)';
-            span.style.opacity = '0';
-            element.appendChild(span);
+        safeFrom('.stats-banner', {
+            scrollTrigger: { trigger: '.stats-banner', start: 'top 90%' },
+            y: 30, opacity: 0, duration: 1, ease: 'power3.out'
         });
-    };
 
-    // Workflow section animation handled by unified logic below
-
-    // Workflow Steps Animation handled by apply3DScrollEffect() in main scope
-
-    // Stats Banner - Rolling Numbers & Fade
-    safeFrom('.stats-banner', {
-        scrollTrigger: { trigger: '.stats-banner', start: 'top 90%' },
-        y: 30, opacity: 0, duration: 1, ease: 'power3.out'
-    });
-
-    // Projects Section - Parallax & Reveal
-    safeFrom('.projects-section .cta-button', {
-        scrollTrigger: { trigger: '.projects-section', start: 'top 80%' },
-        x: 20, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out'
-    });
-
-    // Enhanced Project Card Animation - Staggered Reveal
-    const projectCards = document.querySelectorAll('.projects-grid .image-card');
-    if (projectCards.length > 0) {
-        gsap.set(projectCards, { y: 100, opacity: 0 }); // Initial state
-
-        ScrollTrigger.batch(projectCards, {
-            onEnter: batch => gsap.to(batch, {
-                opacity: 1,
-                y: 0,
-                stagger: 0.15,
-                duration: 1.2,
-                ease: 'power4.out',
-                overwrite: true
-            }),
-            start: 'top 85%',
-            once: true // Only animate once
+        safeFrom('.projects-section .cta-button', {
+            scrollTrigger: { trigger: '.projects-section', start: 'top 80%' },
+            x: 20, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out'
         });
-    }
 
-    // Partners Section - Staggered Logo Reveal
-    safeFrom('.partners-swiper', {
-        scrollTrigger: { trigger: '.partners-section', start: 'top 80%' },
-        y: 30, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out'
-    });
+        const projectCards = document.querySelectorAll('.projects-grid .image-card');
+        if (projectCards.length > 0) {
+            gsap.set(projectCards, { y: 100, opacity: 0 }); 
 
-    // Contact Section CTA Reveal
-    const contactBtn = document.querySelector('#contact .cta-button');
-    if (contactBtn) {
-        safeFrom('#contact .cta-button', {
-            scrollTrigger: { trigger: '#contact', start: 'top 80%' },
-            y: 20, opacity: 0, duration: 0.8, delay: 0.3, ease: 'power3.out'
+            ScrollTrigger.batch(projectCards, {
+                onEnter: batch => gsap.to(batch, {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 1.2,
+                    ease: 'power4.out',
+                    overwrite: true
+                }),
+                start: 'top 85%',
+                once: true 
+            });
+        }
+
+        safeFrom('.partners-swiper', {
+            scrollTrigger: { trigger: '.partners-section', start: 'top 80%' },
+            y: 30, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out'
         });
-    }
-})();
+
+        const contactBtn = document.querySelector('#contact .cta-button');
+        if (contactBtn) {
+            safeFrom('#contact .cta-button', {
+                scrollTrigger: { trigger: '#contact', start: 'top 80%' },
+                y: 20, opacity: 0, duration: 0.8, delay: 0.3, ease: 'power3.out'
+            });
+        }
+    })();
+});
