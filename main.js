@@ -215,325 +215,337 @@ const showSuccessPopup = (message) => {
     }, 2200);
 };
 
-(() => {
-    const makeEl = (tag, cls) => {
-        const el = document.createElement(tag);
-        if (cls) el.className = cls;
-        return el;
-    };
-    const darkAvatarSrc = './assets/alien_chatbot_icon.webp';
-    const lightAvatarSrc = './assets/Light_chatbot.webp';
-    const widget = makeEl('div', 'chat-widget');
-    const toggle = makeEl('button', 'chat-toggle');
-    const avatar = document.createElement('img');
-    avatar.className = 'avatar-img';
-    const updateAvatarForTheme = (theme) => {
-        const t = theme || document.documentElement.getAttribute('data-theme') || 'dark';
-        avatar.src = t === 'light' ? lightAvatarSrc : darkAvatarSrc;
-    };
-    updateAvatarForTheme();
-    avatar.alt = 'Chatbot';
-    avatar.title = 'Chatbot';
-    avatar.loading = 'lazy';
-    avatar.decoding = 'async';
-    avatar.width = 140;
-    avatar.height = 172;
-    toggle.appendChild(avatar);
-    const panel = makeEl('div', 'chat-panel');
-    const header = makeEl('div', 'chat-header');
-    const title = makeEl('div', 'chat-title');
-    title.textContent = 'GAP Assistant';
-    const closeBtn = makeEl('button', 'chat-close');
-    closeBtn.textContent = '×';
-    header.appendChild(title);
-    header.appendChild(closeBtn);
-    const body = makeEl('div', 'chat-body');
-    const footer = makeEl('div', 'chat-footer');
-    const input = makeEl('input', 'chat-input');
-    input.type = 'text';
-    input.placeholder = 'Type a message...';
-    const send = makeEl('button', 'chat-send');
-    send.textContent = 'Send';
-    input.disabled = true;
-    send.disabled = true;
-    footer.appendChild(input);
-    footer.appendChild(send);
-    panel.appendChild(header);
-    panel.appendChild(body);
-    panel.appendChild(footer);
-    widget.appendChild(toggle);
-    document.body.appendChild(widget);
-    document.body.appendChild(panel);
-    const tip = makeEl('div', 'chat-prompt');
-    const tipLabel = makeEl('span', 'chat-prompt-label');
-    tipLabel.textContent = 'Chat now';
-    const tipDots = makeEl('span', 'chat-prompt-dots');
-    tipDots.innerHTML = '<span></span><span></span><span></span>';
-    tip.appendChild(tipLabel);
-    tip.appendChild(tipDots);
-    widget.appendChild(tip);
-    window.addEventListener('gap-theme-change', (e) => {
-        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
-        updateAvatarForTheme(t);
-    });
-    const chatLog = [];
-    let hasSelectedPrimaryIntent = false;
-    const addMsg = (text, who = 'bot') => {
-        const msg = makeEl('div', `chat-msg ${who}`);
-        msg.textContent = text;
-        body.appendChild(msg);
-        body.scrollTop = body.scrollHeight;
-        chatLog.push({ who, text });
-    };
-    const addSuggestions = (items) => {
-        const wrap = makeEl('div', 'chat-suggestions');
-        items.forEach(t => {
-            const chip = makeEl('button', 'chat-chip');
-            chip.textContent = t;
-            chip.addEventListener('click', () => {
-                if (!hasSelectedPrimaryIntent) {
-                    hasSelectedPrimaryIntent = true;
-                    try {
-                        input.disabled = false;
-                        send.disabled = false;
-                        input.placeholder = 'Type a message...';
-                    } catch (_) { }
-                }
-                onUser(t);
-            });
-            wrap.appendChild(chip);
+// 3rd-Party / Non-Critical Feature Deferral
+// Using requestIdleCallback ensures the Chatbot and other UI helpers don't block the initial render.
+const initNonCriticalUI = () => {
+    (() => {
+        const makeEl = (tag, cls) => {
+            const el = document.createElement(tag);
+            if (cls) el.className = cls;
+            return el;
+        };
+        const darkAvatarSrc = './assets/alien_chatbot_icon.webp';
+        const lightAvatarSrc = './assets/Light_chatbot.webp';
+        const widget = makeEl('div', 'chat-widget');
+        const toggle = makeEl('button', 'chat-toggle');
+        const avatar = document.createElement('img');
+        avatar.className = 'avatar-img';
+        const updateAvatarForTheme = (theme) => {
+            const t = theme || document.documentElement.getAttribute('data-theme') || 'dark';
+            avatar.src = t === 'light' ? lightAvatarSrc : darkAvatarSrc;
+        };
+        updateAvatarForTheme();
+        avatar.alt = 'Chatbot';
+        avatar.title = 'Chatbot';
+        avatar.loading = 'lazy';
+        avatar.decoding = 'async';
+        avatar.width = 140;
+        avatar.height = 172;
+        toggle.appendChild(avatar);
+        const panel = makeEl('div', 'chat-panel');
+        const header = makeEl('div', 'chat-header');
+        const title = makeEl('div', 'chat-title');
+        title.textContent = 'GAP Assistant';
+        const closeBtn = makeEl('button', 'chat-close');
+        closeBtn.textContent = '×';
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+        const body = makeEl('div', 'chat-body');
+        const footer = makeEl('div', 'chat-footer');
+        const input = makeEl('input', 'chat-input');
+        input.type = 'text';
+        input.placeholder = 'Type a message...';
+        const send = makeEl('button', 'chat-send');
+        send.textContent = 'Send';
+        input.disabled = true;
+        send.disabled = true;
+        footer.appendChild(input);
+        footer.appendChild(send);
+        panel.appendChild(header);
+        panel.appendChild(body);
+        panel.appendChild(footer);
+        widget.appendChild(toggle);
+        document.body.appendChild(widget);
+        document.body.appendChild(panel);
+        const tip = makeEl('div', 'chat-prompt');
+        const tipLabel = makeEl('span', 'chat-prompt-label');
+        tipLabel.textContent = 'Chat now';
+        const tipDots = makeEl('span', 'chat-prompt-dots');
+        tipDots.innerHTML = '<span></span><span></span><span></span>';
+        tip.appendChild(tipLabel);
+        tip.appendChild(tipDots);
+        widget.appendChild(tip);
+        window.addEventListener('gap-theme-change', (e) => {
+            const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
+            updateAvatarForTheme(t);
         });
-        body.appendChild(wrap);
-        body.scrollTop = body.scrollHeight;
-    };
-    let expectingName = false;
-    let clientName = '';
-    let expectingPhone = false;
-    let clientPhone = '';
-    let expectingPhoneCountry = false;
-    let countryCode = '';
-    const reply = (text) => {
-        const t = text.toLowerCase();
-        if (/website\s*design/i.test(t)) {
-            return 'We build fast, responsive business, e‑commerce and landing page websites.';
-        }
-        if (/logo\s*design/i.test(t)) {
-            return 'We design modern logos and complete brand identity kits.';
-        }
-        if (/digital\s*marketing/i.test(t)) {
-            return 'Full-stack digital marketing including SEO, social, PPC and content.';
-        }
-        if (/seo|search\s*engine\s*optimi/i.test(t)) {
-            return 'SEO services covering technical, on-page and off-page optimisation.';
-        }
-        if (/google\s*ads|ppc/i.test(t)) {
-            return 'We run high-ROI Google Ads campaigns tailored to your goals and budget.';
-        }
-        if (/social\s*media/i.test(t)) {
-            return 'We manage Instagram, Facebook and LinkedIn social media marketing.';
-        }
-        if (/brochure/i.test(t)) {
-            return 'We design print-ready brochures and flyers for your products and services.';
-        }
-        if (/training/i.test(t)) {
-            return 'We provide marketing training workshops for businesses and teams.';
-        }
-        if (/others?/i.test(t)) {
-            return 'We also handle custom advertising and branding requirements.';
-        }
-        if (/(price|cost|rate|quote)/.test(t)) {
-            return 'We prepare tailored quotes after a quick chat. What service do you need?';
-        }
-        if (/(service|offer|do you)/.test(t)) {
-            return 'We offer branding, websites, SEO, social media, PPC, brochure, newspaper and FM ads.';
-        }
-        if (/(contact|phone|email)/.test(t)) {
-            return 'You can call +91 82206 72333 or email contact@goldenadvertising.in.';
-        }
-        if (/(project|start|begin)/.test(t)) {
-            return 'Great! Share your goal and deadline. We will respond quickly.';
-        }
-        return 'I can help with services, pricing, and contact. What would you like to know?';
-    };
-    const sendChatToFormspree = () => {
-        if (!chatLog.length) return;
-        const fd = new FormData();
-        fd.append('source', 'Chatbot Conversation');
-        if (clientName) fd.append('name', clientName);
-        if (countryCode || clientPhone) {
-            const phoneLabel = `${countryCode} ${clientPhone}`.trim();
-            if (phoneLabel) fd.append('phone', phoneLabel);
-        }
-        fd.append('_subject', 'New chatbot conversation on GAP');
-        fd.append('_to', 'admin@goldenadvertising.in');
-        fetch('https://formspree.io/f/xjgewnpo', {
-            method: 'POST',
-            headers: { Accept: 'application/json' },
-            body: fd
-        }).catch(() => { });
-    };
-    const onUser = (text) => {
-        if (!text || !text.trim()) return;
-        const val = text.trim();
-        addMsg(val, 'user');
-        if (expectingName) {
-            clientName = val;
-            expectingName = false;
-            input.value = '';
-            input.placeholder = 'Type a message...';
-            setTimeout(() => {
-                addMsg(`Nice to meet you, ${clientName}!`, 'bot');
+        const chatLog = [];
+        let hasSelectedPrimaryIntent = false;
+        const addMsg = (text, who = 'bot') => {
+            const msg = makeEl('div', `chat-msg ${who}`);
+            msg.textContent = text;
+            body.appendChild(msg);
+            body.scrollTop = body.scrollHeight;
+            chatLog.push({ who, text });
+        };
+        const addSuggestions = (items) => {
+            const wrap = makeEl('div', 'chat-suggestions');
+            items.forEach(t => {
+                const chip = makeEl('button', 'chat-chip');
+                chip.textContent = t;
+                chip.addEventListener('click', () => {
+                    if (!hasSelectedPrimaryIntent) {
+                        hasSelectedPrimaryIntent = true;
+                        try {
+                            input.disabled = false;
+                            send.disabled = false;
+                            input.placeholder = 'Type a message...';
+                        } catch (_) { }
+                    }
+                    onUser(t);
+                });
+                wrap.appendChild(chip);
+            });
+            body.appendChild(wrap);
+            body.scrollTop = body.scrollHeight;
+        };
+        let expectingName = false;
+        let clientName = '';
+        let expectingPhone = false;
+        let clientPhone = '';
+        let expectingPhoneCountry = false;
+        let countryCode = '';
+        const reply = (text) => {
+            const t = text.toLowerCase();
+            if (/website\s*design/i.test(t)) {
+                return 'We build fast, responsive business, e‑commerce and landing page websites.';
+            }
+            if (/logo\s*design/i.test(t)) {
+                return 'We design modern logos and complete brand identity kits.';
+            }
+            if (/digital\s*marketing/i.test(t)) {
+                return 'Full-stack digital marketing including SEO, social, PPC and content.';
+            }
+            if (/seo|search\s*engine\s*optimi/i.test(t)) {
+                return 'SEO services covering technical, on-page and off-page optimisation.';
+            }
+            if (/google\s*ads|ppc/i.test(t)) {
+                return 'We run high-ROI Google Ads campaigns tailored to your goals and budget.';
+            }
+            if (/social\s*media/i.test(t)) {
+                return 'We manage Instagram, Facebook and LinkedIn social media marketing.';
+            }
+            if (/brochure/i.test(t)) {
+                return 'We design print-ready brochures and flyers for your products and services.';
+            }
+            if (/training/i.test(t)) {
+                return 'We provide marketing training workshops for businesses and teams.';
+            }
+            if (/others?/i.test(t)) {
+                return 'We also handle custom advertising and branding requirements.';
+            }
+            if (/(price|cost|rate|quote)/.test(t)) {
+                return 'We prepare tailored quotes after a quick chat. What service do you need?';
+            }
+            if (/(service|offer|do you)/.test(t)) {
+                return 'We offer branding, websites, SEO, social media, PPC, brochure, newspaper and FM ads.';
+            }
+            if (/(contact|phone|email)/.test(t)) {
+                return 'You can call +91 82206 72333 or email contact@goldenadvertising.in.';
+            }
+            if (/(project|start|begin)/.test(t)) {
+                return 'Great! Share your goal and deadline. We will respond quickly.';
+            }
+            return 'I can help with services, pricing, and contact. What would you like to know?';
+        };
+        const sendChatToFormspree = () => {
+            if (!chatLog.length) return;
+            const fd = new FormData();
+            fd.append('source', 'Chatbot Conversation');
+            if (clientName) fd.append('name', clientName);
+            if (countryCode || clientPhone) {
+                const phoneLabel = `${countryCode} ${clientPhone}`.trim();
+                if (phoneLabel) fd.append('phone', phoneLabel);
+            }
+            fd.append('_subject', 'New chatbot conversation on GAP');
+            fd.append('_to', 'admin@goldenadvertising.in');
+            fetch('https://formspree.io/f/xjgewnpo', {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+                body: fd
+            }).catch(() => { });
+        };
+        const onUser = (text) => {
+            if (!text || !text.trim()) return;
+            const val = text.trim();
+            addMsg(val, 'user');
+            if (expectingName) {
+                clientName = val;
+                expectingName = false;
+                input.value = '';
+                input.placeholder = 'Type a message...';
                 setTimeout(() => {
-                    addMsg('Please share your country code.', 'bot');
-                    expectingPhoneCountry = true;
+                    addMsg(`Nice to meet you, ${clientName}!`, 'bot');
+                    setTimeout(() => {
+                        addMsg('Please share your country code.', 'bot');
+                        expectingPhoneCountry = true;
+                        input.type = 'tel';
+                        input.setAttribute('inputmode', 'numeric');
+                        input.setAttribute('pattern', '^\\+?\\d{1,4}$');
+                        input.placeholder = 'Country code (e.g., +91)';
+                        input.className = 'chat-input tel';
+                        addSuggestions(['+91', '+1', '+44', '+61', '+971', 'Others']);
+                        try { input.focus(); } catch (_) { }
+                    }, 250);
+                }, 200);
+                return;
+            }
+            if (expectingPhoneCountry) {
+                let cc = val.trim();
+                if (/^others?$/i.test(cc)) {
+                    addMsg('Type your country code like +91', 'bot');
+                    input.value = '';
+                    return;
+                }
+                if (!/^\+?\d{1,4}$/.test(cc)) {
+                    setTimeout(() => addMsg('Please enter a valid country code (e.g., +91).', 'bot'), 150);
+                    try { input.focus(); } catch (_) { }
+                    return;
+                }
+                if (!cc.startsWith('+')) cc = '+' + cc;
+                countryCode = cc;
+                expectingPhoneCountry = false;
+                input.value = '';
+                addMsg(`Got it: ${countryCode}`, 'bot');
+                setTimeout(() => {
+                    addMsg('Now enter your phone number.', 'bot');
+                    expectingPhone = true;
                     input.type = 'tel';
                     input.setAttribute('inputmode', 'numeric');
-                    input.setAttribute('pattern', '^\\+?\\d{1,4}$');
-                    input.placeholder = 'Country code (e.g., +91)';
+                    input.setAttribute('pattern', '[0-9]{7,15}');
+                    input.placeholder = 'Your phone number';
                     input.className = 'chat-input tel';
-                    addSuggestions(['+91', '+1', '+44', '+61', '+971', 'Others']);
+                    try { input.focus(); } catch (_) { }
+                }, 200);
+                return;
+            }
+            if (expectingPhone) {
+                const digits = val.replace(/\D+/g, '');
+                if (digits.length < 7 || digits.length > 15) {
+                    setTimeout(() => addMsg('Please enter a valid contact number (digits only).', 'bot'), 150);
+                    try { input.focus(); } catch (_) { }
+                    return;
+                }
+                clientPhone = digits;
+                expectingPhone = false;
+                input.value = '';
+                input.type = 'text';
+                input.removeAttribute('pattern');
+                input.setAttribute('inputmode', 'text');
+                input.className = 'chat-input';
+                input.placeholder = 'Type a message...';
+                setTimeout(() => {
+                    addMsg(`Thanks, we will contact you at ${countryCode} ${clientPhone}.`, 'bot');
+                    setTimeout(() => {
+                        addMsg('Your query was received successfully. Our team will contact you soon.', 'bot');
+                        sendChatToFormspree();
+                        try {
+                            input.disabled = true;
+                            send.disabled = true;
+                            input.blur();
+                        } catch (_) { }
+                        setTimeout(() => {
+                            close();
+                        }, 1200);
+                    }, 250);
+                }, 200);
+                return;
+            }
+            const r = reply(val);
+            setTimeout(() => {
+                addMsg(r, 'bot');
+                setTimeout(() => {
+                    addMsg('May I know your name?', 'bot');
+                    expectingName = true;
+                    input.placeholder = 'Your name';
+                    input.type = 'search';
+                    input.setAttribute('inputmode', 'text');
+                    input.className = 'chat-input search';
+                    input.value = '';
                     try { input.focus(); } catch (_) { }
                 }, 250);
             }, 200);
-            return;
-        }
-        if (expectingPhoneCountry) {
-            let cc = val.trim();
-            if (/^others?$/i.test(cc)) {
-                addMsg('Type your country code like +91', 'bot');
-                input.value = '';
-                return;
-            }
-            if (!/^\+?\d{1,4}$/.test(cc)) {
-                setTimeout(() => addMsg('Please enter a valid country code (e.g., +91).', 'bot'), 150);
-                try { input.focus(); } catch (_) { }
-                return;
-            }
-            if (!cc.startsWith('+')) cc = '+' + cc;
-            countryCode = cc;
-            expectingPhoneCountry = false;
             input.value = '';
-            addMsg(`Got it: ${countryCode}`, 'bot');
-            setTimeout(() => {
-                addMsg('Now enter your phone number.', 'bot');
-                expectingPhone = true;
-                input.type = 'tel';
-                input.setAttribute('inputmode', 'numeric');
-                input.setAttribute('pattern', '[0-9]{7,15}');
-                input.placeholder = 'Your phone number';
-                input.className = 'chat-input tel';
-                try { input.focus(); } catch (_) { }
-            }, 200);
-            return;
-        }
-        if (expectingPhone) {
-            const digits = val.replace(/\D+/g, '');
-            if (digits.length < 7 || digits.length > 15) {
-                setTimeout(() => addMsg('Please enter a valid contact number (digits only).', 'bot'), 150);
-                try { input.focus(); } catch (_) { }
-                return;
+        };
+        const open = () => {
+            panel.classList.add('open');
+            try {
+                input.disabled = !hasSelectedPrimaryIntent;
+                send.disabled = !hasSelectedPrimaryIntent;
+                if (!hasSelectedPrimaryIntent) {
+                    input.placeholder = 'Select what you are looking for above to start...';
+                }
+            } catch (_) { }
+            if (!panel.dataset.init) {
+                addMsg('What are you looking for?', 'bot');
+                addSuggestions([
+                    'Website Designing',
+                    'Logo Designing',
+                    'Digital Marketing Services',
+                    'SEO (search engine optimization)',
+                    'Google Ads',
+                    'Social Media Marketing',
+                    'Brochure Designing',
+                    'Training',
+                    'Others'
+                ]);
+                panel.dataset.init = '1';
             }
-            clientPhone = digits;
-            expectingPhone = false;
-            input.value = '';
-            input.type = 'text';
-            input.removeAttribute('pattern');
-            input.setAttribute('inputmode', 'text');
-            input.className = 'chat-input';
-            input.placeholder = 'Type a message...';
-            setTimeout(() => {
-                addMsg(`Thanks, we will contact you at ${countryCode} ${clientPhone}.`, 'bot');
-                setTimeout(() => {
-                    addMsg('Your query was received successfully. Our team will contact you soon.', 'bot');
-                    sendChatToFormspree();
-                    try {
-                        input.disabled = true;
-                        send.disabled = true;
-                        input.blur();
-                    } catch (_) { }
-                    setTimeout(() => {
-                        close();
-                    }, 1200);
-                }, 250);
-            }, 200);
-            return;
-        }
-        const r = reply(val);
-        setTimeout(() => {
-            addMsg(r, 'bot');
-            setTimeout(() => {
-                addMsg('May I know your name?', 'bot');
-                expectingName = true;
-                input.placeholder = 'Your name';
-                input.type = 'search';
-                input.setAttribute('inputmode', 'text');
-                input.className = 'chat-input search';
-                input.value = '';
-                try { input.focus(); } catch (_) { }
-            }, 250);
-        }, 200);
-        input.value = '';
-    };
-    const open = () => {
-        panel.classList.add('open');
-        try {
-            input.disabled = !hasSelectedPrimaryIntent;
-            send.disabled = !hasSelectedPrimaryIntent;
-            if (!hasSelectedPrimaryIntent) {
-                input.placeholder = 'Select what you are looking for above to start...';
+            try { input.focus(); } catch (_) { }
+        };
+        const close = () => panel.classList.remove('open');
+        let peekTimer = null;
+        const triggerPeek = () => {
+            widget.classList.remove('peek');
+            void widget.offsetWidth;
+            widget.classList.add('peek');
+            tip.classList.add('show');
+            setTimeout(() => tip.classList.remove('show'), 2200);
+        };
+        const startPeek = () => {
+            if (peekTimer) return;
+        };
+        const stopPeek = () => {
+            if (peekTimer) {
+                clearInterval(peekTimer);
+                peekTimer = null;
             }
-        } catch (_) { }
-        if (!panel.dataset.init) {
-            addMsg('What are you looking for?', 'bot');
-            addSuggestions([
-                'Website Designing',
-                'Logo Designing',
-                'Digital Marketing Services',
-                'SEO (search engine optimization)',
-                'Google Ads',
-                'Social Media Marketing',
-                'Brochure Designing',
-                'Training',
-                'Others'
-            ]);
-            panel.dataset.init = '1';
-        }
-        try { input.focus(); } catch (_) { }
-    };
-    const close = () => panel.classList.remove('open');
-    let peekTimer = null;
-    const triggerPeek = () => {
-        widget.classList.remove('peek');
-        void widget.offsetWidth;
-        widget.classList.add('peek');
-        tip.classList.add('show');
-        setTimeout(() => tip.classList.remove('show'), 2200);
-    };
-    const startPeek = () => {
-        if (peekTimer) return;
-    };
-    const stopPeek = () => {
-        if (peekTimer) {
-            clearInterval(peekTimer);
-            peekTimer = null;
-        }
-        tip.classList.remove('show');
-    };
-    toggle.addEventListener('click', () => {
-        if (panel.classList.contains('open')) close(); else open();
-        stopPeek();
-    });
-    tip.addEventListener('click', () => {
-        open();
-        stopPeek();
-    });
-    closeBtn.addEventListener('click', close);
-    send.addEventListener('click', () => onUser(input.value));
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') onUser(input.value);
-    });
-    setTimeout(startPeek, 600);
-})();
+            tip.classList.remove('show');
+        };
+        toggle.addEventListener('click', () => {
+            if (panel.classList.contains('open')) close(); else open();
+            stopPeek();
+        });
+        tip.addEventListener('click', () => {
+            open();
+            stopPeek();
+        });
+        closeBtn.addEventListener('click', close);
+        send.addEventListener('click', () => onUser(input.value));
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') onUser(input.value);
+        });
+        setTimeout(startPeek, 600);
+    })();
+};
+
+// Defer non-critical UI to prioritize the hero reveal
+if (window.requestIdleCallback) {
+    requestIdleCallback(initNonCriticalUI, { timeout: 3000 });
+} else {
+    setTimeout(initNonCriticalUI, 2000);
+}
+
 const exists = (sel) => typeof sel === 'string' ? document.querySelector(sel) : !!sel;
 
 const setupReveal = (selector) => {
@@ -686,54 +698,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Three.js Background Animation
-const initThreeJS = (containerId = 'hero-canvas') => {
-    const container = document.getElementById(containerId);
+// Three.js Background Animation (Optimized with Lazy-Loading)
+const initThreeJS = (container) => {
     if (!container) return;
 
+    // Use IntersectionObserver to only initialize when the section is near the viewport
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startThreeJS(container);
+                observer.unobserve(container); // Only init once
+            }
+        });
+    }, { rootMargin: '100px' }); // Start loading slightly before it enters
+
+    observer.observe(container);
+};
+
+const startThreeJS = (container) => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        1, // Initial aspect, will be updated in requestAnimationFrame
-        0.1,
-        1000
-    );
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+    
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio, 1.5); // Capped for performance
 
-    // Use requestAnimationFrame to batch layout reads (clientWidth, offsetHeight, etc.) 
-    // to avoid layout thrashing / expensive reflows during initialization.
-    requestAnimationFrame(() => {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        const pixelRatio = Math.min(window.devicePixelRatio, 1.75);
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(pixelRatio);
+    container.appendChild(renderer.domElement);
 
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(pixelRatio);
-        container.appendChild(renderer.domElement);
-
-        camera.position.z = 2;
-    });
+    camera.position.z = 2;
 
     // Particles Grid
     const particlesGeometry = new THREE.BufferGeometry();
     const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.innerWidth < 768; // Minor forced reflow risk, but usually safe during init
-    const particlesCount = prefersReduce
-        ? (isMobile ? 120 : 200)
-        : (isMobile ? 400 : 900);
+    const isMobile = window.innerWidth < 768;
+    const particlesCount = prefersReduce ? (isMobile ? 100 : 150) : (isMobile ? 300 : 700);
 
     const posArray = new Float32Array(particlesCount * 3);
-
     for (let i = 0; i < particlesCount * 3; i++) {
         posArray[i] = (Math.random() - 0.5) * 10;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    // Particle Material (theme-aware)
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     const material = new THREE.PointsMaterial({
         size: 0.015,
@@ -745,77 +754,62 @@ const initThreeJS = (containerId = 'hero-canvas') => {
     const particlesMesh = new THREE.Points(particlesGeometry, material);
     scene.add(particlesMesh);
 
-    // Animation Loop
     const clock = new THREE.Clock();
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = 0, mouseY = 0;
 
-    window.addEventListener('mousemove', (event) => {
+    const onMouseMove = (event) => {
         mouseX = event.clientX / window.innerWidth - 0.5;
         mouseY = event.clientY / window.innerHeight - 0.5;
-    });
+    };
+    window.addEventListener('mousemove', onMouseMove);
 
     let running = true;
-    document.addEventListener('visibilitychange', () => {
-        running = !document.hidden;
-    });
+    let inView = true;
+
+    // Additional Observer to pause animation loop when scrolled away
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => inView = e.isIntersecting);
+    }, { threshold: 0 });
+    visibilityObserver.observe(container);
 
     const tick = () => {
+        if (!running) return;
+        requestAnimationFrame(tick);
+        
+        if (!inView || document.hidden) return;
+
         const elapsedTime = clock.getElapsedTime();
-
-        // Wave motion
-        const baseSpeed = prefersReduce ? 0.025 : 0.05;
-        if (running) {
-            particlesMesh.rotation.y = elapsedTime * baseSpeed;
-            particlesMesh.rotation.x = mouseY * 0.08;
-            particlesMesh.rotation.y += mouseX * 0.08;
-            renderer.render(scene, camera);
-        }
-
-        window.requestAnimationFrame(tick);
-    }
+        const baseSpeed = prefersReduce ? 0.02 : 0.04;
+        
+        particlesMesh.rotation.y = elapsedTime * baseSpeed;
+        particlesMesh.rotation.x = mouseY * 0.05;
+        particlesMesh.rotation.y += mouseX * 0.05;
+        
+        renderer.render(scene, camera);
+    };
 
     tick();
 
-    // Resize
-    window.addEventListener('resize', () => {
+    const onResize = () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
-    });
+    };
+    window.addEventListener('resize', onResize);
 
-    // React to theme changes
-    window.addEventListener('gap-theme-change', (e) => {
-        const t = e && e.detail && e.detail.theme ? e.detail.theme : document.documentElement.getAttribute('data-theme');
+    const onThemeChange = (e) => {
+        const t = e?.detail?.theme || document.documentElement.getAttribute('data-theme');
         const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
-        try {
-            material.color.set(nextColor);
-            material.needsUpdate = true;
-        } catch (_) { }
-    });
+        material.color.set(nextColor);
+    };
+    window.addEventListener('gap-theme-change', onThemeChange);
 };
 
-// Defer all Three.js canvas initializations until after the browser
-// has finished its paint cycle to avoid forced synchronous layout (reflow).
-// Reading clientWidth/clientHeight immediately after DOM changes triggers
-// expensive reflows — batching them in rAF eliminates this penalty.
-requestAnimationFrame(() => {
-    initThreeJS('hero-canvas');
-    initThreeJS('about-hero-canvas');
-    initThreeJS('services-hero-canvas');
-    initThreeJS('seo-hero-canvas');
-    initThreeJS('smm-hero-canvas');
-    initThreeJS('ppc-hero-canvas');
-    initThreeJS('webdev-hero-canvas');
-    initThreeJS('web-process-anim');
-    initThreeJS('ecommerce-hero-canvas');
-    initThreeJS('logo-hero-canvas');
-    initThreeJS('brochure-hero-canvas');
-    initThreeJS('newspaper-hero-canvas');
-    initThreeJS('fm-hero-canvas');
-    initThreeJS('case-study-hero-canvas');
-    initThreeJS('contact-hero-canvas');
-});
+// Defer and Lazy-load all Three.js background canvases
+(() => {
+    const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
+    canvases.forEach(c => initThreeJS(c));
+})();
 
 // Scroll Animations
 const splitTypes = document.querySelectorAll('[data-reveal-text]')
@@ -1943,39 +1937,12 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 })();
 
 // Apply 3D effect to all card types across the project
-apply3DScrollEffect('.package-card');
-apply3DScrollEffect('.adv-card');
-apply3DScrollEffect('.service-card');
-apply3DScrollEffect('.case-study-card');
-apply3DScrollEffect('.blog-card');
-apply3DScrollEffect('.feature-card');
-apply3DScrollEffect('.contact-card');
-apply3DScrollEffect('.contact-form-card');
-// apply3DScrollEffect('.workflow-step'); removed for unified entrance animation
-// Disabling hover scale for project marquee images per user request
-apply3DScrollEffect('.projects-marquee .image-card', 0, false);
+// High-Impact 3D Scroll Effects (Optimized Selectors)
+// We only apply this to major UI cards and main headings to minimize ScrollTrigger overhead.
+apply3DScrollEffect('.package-card, .adv-card, .service-card, .case-study-card, .blog-card, .feature-card, .contact-card, .contact-form-card, .stat-item, .anim-card, .testimonial-card');
 apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
-
-apply3DScrollEffect('.stat-item');
-apply3DScrollEffect('.anim-card');
-apply3DScrollEffect('.testimonial-card');
-// Partners and Contact sections
-// Skip 3D effect on partners to keep ticker smooth
-apply3DScrollEffect('#contact p', 0, false);
-
-// Apply 3D effect to text elements across the project (without hover scale)
-apply3DScrollEffect('h1:not(.logo-name)', 0, false);
-apply3DScrollEffect('h2', 0, false);
-apply3DScrollEffect('h3:not(.service-title):not(.package-card h3):not(.team-card h3):not(.case-study-card h3):not(.blog-card h3):not(.feature-card h3)', 0, false);
-apply3DScrollEffect('h4', 0, false);
-apply3DScrollEffect('.section-label', 0, false);
+apply3DScrollEffect('h1:not(.logo-name), h2', 0, false);
 apply3DScrollEffect('.who-text', 0, false);
-apply3DScrollEffect('.footer-desc', 0, false);
-apply3DScrollEffect('.contact-item p', 0, false);
-apply3DScrollEffect('.copyright', 0, false);
-apply3DScrollEffect('.hero-tags span', 0.05, false);
-apply3DScrollEffect('p:not(.logo-tagline):not(.hero-subtitle)', 0, false);
-apply3DScrollEffect('li', 0, false);
 
 safeFrom('.about-hero .hero-tags', {
     scrollTrigger: {
