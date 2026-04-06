@@ -716,93 +716,92 @@ const initThreeJS = (container) => {
 };
 
 const startThreeJS = (container) => {
+    // Stage 1: Core Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
     
     const width = container.clientWidth;
     const height = container.clientHeight;
-    const pixelRatio = Math.min(window.devicePixelRatio, 1.5); // Capped for performance
+    const pixelRatio = Math.min(window.devicePixelRatio, 1.5);
 
     renderer.setSize(width, height);
     renderer.setPixelRatio(pixelRatio);
     container.appendChild(renderer.domElement);
-
     camera.position.z = 2;
 
-    // Particles Grid
-    const particlesGeometry = new THREE.BufferGeometry();
-    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.innerWidth < 768;
-    const particlesCount = prefersReduce ? (isMobile ? 100 : 150) : (isMobile ? 300 : 700);
+    // Yield to let the browser process inputs
+    setTimeout(() => {
+        // Stage 2: Heavy Math (Vertex Arrays)
+        const particlesGeometry = new THREE.BufferGeometry();
+        const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const isMobile = window.innerWidth < 768;
+        const particlesCount = prefersReduce ? (isMobile ? 100 : 150) : (isMobile ? 300 : 700);
 
-    const posArray = new Float32Array(particlesCount * 3);
-    for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
-    }
+        const posArray = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        // Yield again before adding to scene and starting loop
+        setTimeout(() => {
+            // Stage 3: Mesh Creation and Loop
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            const material = new THREE.PointsMaterial({
+                size: 0.015,
+                color: isLight ? 0x0D0D0D : 0xD4AF37,
+                transparent: true,
+                opacity: 0.8,
+            });
 
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const material = new THREE.PointsMaterial({
-        size: 0.015,
-        color: isLight ? 0x0D0D0D : 0xD4AF37,
-        transparent: true,
-        opacity: 0.8,
-    });
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
 
-    const particlesMesh = new THREE.Points(particlesGeometry, material);
-    scene.add(particlesMesh);
+            const clock = new THREE.Clock();
+            let mouseX = 0, mouseY = 0;
 
-    const clock = new THREE.Clock();
-    let mouseX = 0, mouseY = 0;
+            const onMouseMove = (event) => {
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            };
+            window.addEventListener('mousemove', onMouseMove);
 
-    const onMouseMove = (event) => {
-        mouseX = event.clientX / window.innerWidth - 0.5;
-        mouseY = event.clientY / window.innerHeight - 0.5;
-    };
-    window.addEventListener('mousemove', onMouseMove);
+            let running = true;
+            let inView = true;
 
-    let running = true;
-    let inView = true;
+            const visibilityObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => inView = e.isIntersecting);
+            }, { threshold: 0 });
+            visibilityObserver.observe(container);
 
-    // Additional Observer to pause animation loop when scrolled away
-    const visibilityObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => inView = e.isIntersecting);
-    }, { threshold: 0 });
-    visibilityObserver.observe(container);
+            const tick = () => {
+                if (!running) return;
+                requestAnimationFrame(tick);
+                if (!inView || document.hidden) return;
+                const elapsedTime = clock.getElapsedTime();
+                const baseSpeed = prefersReduce ? 0.02 : 0.04;
+                particlesMesh.rotation.y = elapsedTime * baseSpeed;
+                particlesMesh.rotation.x = mouseY * 0.05;
+                particlesMesh.rotation.y += mouseX * 0.05;
+                renderer.render(scene, camera);
+            };
+            tick();
+            const onThemeChange = (e) => {
+                const t = e?.detail?.theme || document.documentElement.getAttribute('data-theme');
+                const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
+                material.color.set(nextColor);
+            };
+            window.addEventListener('gap-theme-change', onThemeChange);
 
-    const tick = () => {
-        if (!running) return;
-        requestAnimationFrame(tick);
-        
-        if (!inView || document.hidden) return;
-
-        const elapsedTime = clock.getElapsedTime();
-        const baseSpeed = prefersReduce ? 0.02 : 0.04;
-        
-        particlesMesh.rotation.y = elapsedTime * baseSpeed;
-        particlesMesh.rotation.x = mouseY * 0.05;
-        particlesMesh.rotation.y += mouseX * 0.05;
-        
-        renderer.render(scene, camera);
-    };
-
-    tick();
-
-    const onResize = () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    };
-    window.addEventListener('resize', onResize);
-
-    const onThemeChange = (e) => {
-        const t = e?.detail?.theme || document.documentElement.getAttribute('data-theme');
-        const nextColor = t === 'light' ? 0x0D0D0D : 0xD4AF37;
-        material.color.set(nextColor);
-    };
-    window.addEventListener('gap-theme-change', onThemeChange);
+            const onResize = () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+            window.addEventListener('resize', onResize);
+        }, 0);
+    }, 0);
 };
 
 // Defer and Lazy-load all Three.js background canvases

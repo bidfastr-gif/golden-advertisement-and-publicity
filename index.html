@@ -201,10 +201,17 @@
       function loadGTM() {
         if (gtmLoaded) return;
         gtmLoaded = true;
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
-        document.head.appendChild(script);
+        var inject = function() {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+          document.head.appendChild(script);
+        };
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(inject);
+        } else {
+          setTimeout(inject, 1);
+        }
       }
       // Load GTM on first interaction or after a 4s fallback
       window.addEventListener('scroll', loadGTM, { once: true, passive: true });
