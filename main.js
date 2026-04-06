@@ -632,16 +632,7 @@ const initTicker = (selector, duration = 40) => {
 document.addEventListener('DOMContentLoaded', () => {
 
 
-    const tl = gsap.timeline({
-        onStart: () => performance.mark('hero-entrance-start'),
-        onComplete: () => {
-            performance.mark('hero-entrance-complete');
-            try {
-                performance.measure('hero-entrance-duration', 'hero-entrance-start', 'hero-entrance-complete');
-                performance.measure('total-app-load-to-interactive', 'app-boot-start', 'hero-entrance-complete');
-            } catch (e) { }
-        }
-    });
+    const tl = gsap.timeline();
     const loaderContent = document.querySelector('.loader-content') || document.querySelector('.loader-text');
     const preloader = document.getElementById('preloader');
     if (loaderContent && preloader) {
@@ -726,7 +717,6 @@ const initThreeJS = (container) => {
 
 const startThreeJS = (container) => {
     // Stage 1: Core Setup
-    performance.mark('threejs-init-start');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
@@ -743,7 +733,6 @@ const startThreeJS = (container) => {
     // Yield to let the browser process inputs
     setTimeout(() => {
         // Stage 2: Heavy Math (Vertex Arrays)
-        performance.mark('threejs-setup-complete');
         const particlesGeometry = new THREE.BufferGeometry();
         const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const isMobile = window.innerWidth < 768;
@@ -758,7 +747,6 @@ const startThreeJS = (container) => {
         // Yield again before adding to scene and starting loop
         setTimeout(() => {
             // Stage 3: Mesh Creation and Loop
-            performance.mark('threejs-math-complete');
             const isLight = document.documentElement.getAttribute('data-theme') === 'light';
             const material = new THREE.PointsMaterial({
                 size: 0.015,
@@ -797,12 +785,6 @@ const startThreeJS = (container) => {
                 particlesMesh.rotation.x = mouseY * 0.05;
                 particlesMesh.rotation.y += mouseX * 0.05;
                 renderer.render(scene, camera);
-                
-                // One-time marker for first render
-                if (running) {
-                  performance.mark('threejs-render-ready');
-                  try { performance.measure('threejs-total-init', 'threejs-init-start', 'threejs-render-ready'); } catch(e) {}
-                }
             };
             tick();
             const onThemeChange = (e) => {
