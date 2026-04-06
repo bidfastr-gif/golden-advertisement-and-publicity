@@ -7,6 +7,51 @@ const yieldTask = (fn) => {
     }
 };
 
+// --- Performance Optimization: Animation Task Queue ---
+// This queue breaks up massive GSAP/ScrollTrigger registrations into smaller, non-blocking tasks.
+// It prioritizes initial interactivity and prevents the 300ms+ "Long Tasks" from freezing the UI.
+const animationQueue = [];
+let isQueueProcessing = false;
+
+const queueAnimation = (fn) => {
+    animationQueue.push(fn);
+    if (!isQueueProcessing) {
+        isQueueProcessing = true;
+        // Start processing after a small initial delay to prioritize Hero reveal
+        if (window.requestIdleCallback) {
+            requestIdleCallback(flushAnimationQueue, { timeout: 1000 });
+        } else {
+            setTimeout(flushAnimationQueue, 150);
+        }
+    }
+};
+
+const flushAnimationQueue = (deadline) => {
+    const startTime = performance.now();
+    
+    // Process items as long as we have time in the current frame (approx 10-15ms)
+    while (animationQueue.length > 0) {
+        // If we have requestIdleCallback deadline, use it. Otherwise 10ms budget.
+        const timeRemaining = deadline ? deadline.timeRemaining() : (15 - (performance.now() - startTime));
+        if (timeRemaining <= 2) break; // Leave some buffer
+
+        const task = animationQueue.shift();
+        if (task) task();
+    }
+
+    if (animationQueue.length > 0) {
+        if (window.requestIdleCallback) {
+            requestIdleCallback(flushAnimationQueue, { timeout: 1000 });
+        } else {
+            setTimeout(flushAnimationQueue, 50);
+        }
+    } else {
+        isQueueProcessing = false;
+        // Final broad refresh to ensure all triggered positions are correct
+        ScrollTrigger.refresh();
+    }
+};
+
 gsap.registerPlugin(ScrollTrigger)
 
 // Performance Optimization: Minimize ScrollTrigger refresh frequency
@@ -75,8 +120,8 @@ gsap.defaults({
     duration: 1.2
 });
 
-// Page Transition Logic
-(() => {
+// Page Transition Logic (Yielded as it is not needed for the initial hero reveal)
+yieldTask(() => {
     // Inject transition element if not present
     let transitionEl = document.querySelector('.page-transition');
     if (!transitionEl) {
@@ -116,17 +161,6 @@ gsap.defaults({
     });
 
     // Handle page load (entrance animation)
-    // Note: The existing preloader handles the initial load reveal.
-    // If navigating from another page, the preloader might not show (if cached),
-    // but the transition overlay will be there.
-    // However, since this is a multi-page site, the new page loads fresh.
-    // We need to ensure the transition overlay is reset or animated out if it's there.
-    // But since the new page HTML is fresh, the overlay starts at translateY(100%) defined in CSS.
-    // So we don't need an entrance animation here unless we want to override the preloader.
-    // The preloader covers the screen initially.
-
-    // BUT: If the user navigates back, the browser might restore state.
-    // To be safe, we can ensure it's hidden on load.
     gsap.set(transitionEl, { y: '100%' });
 
     // Handle BFCache (Back/Forward Cache)
@@ -143,7 +177,7 @@ gsap.defaults({
             }
         }
     });
-})();
+});
 
 (() => {
     const nav = document.querySelector('nav');
@@ -570,55 +604,64 @@ const setupReveal = (selector) => {
     elements.forEach(el => io.observe(el));
 };
 
-const safeFrom = (selector, vars) => {
-    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!els || els.length === 0) return;
-    els.forEach((el) => {
-        const defaults = {
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            force3D: true,
-            scrollTrigger: { 
-                trigger: el, 
-                start: 'top 85%',
-                once: true, // Entrance animations should only run once
-                fastScrollEnd: true // Prevent visual pop-in glitches
+const safeFrom = (selector, vars, immediate = false) => {
+    const run = () => {
+        const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+        if (!els || els.length === 0) return;
+        els.forEach((el) => {
+            const defaults = {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                force3D: true,
+                scrollTrigger: { 
+                    trigger: el, 
+                    start: 'top 85%',
+                    once: true,
+                    fastScrollEnd: true
+                }
+            };
+            const config = Object.assign({}, defaults, vars || {});
+            if (vars && vars.scrollTrigger) {
+                config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
             }
-        };
-        const config = Object.assign({}, defaults, vars || {});
-        // If a custom scrollTrigger is passed, merge defaults into it
-        if (vars && vars.scrollTrigger) {
-            config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
-        }
-        gsap.from(el, config);
-    });
+            gsap.from(el, config);
+        });
+    };
+
+    if (immediate) run();
+    else queueAnimation(run);
 };
 
-const safeTo = (selector, vars) => {
-    const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-    if (!els || els.length === 0) return;
-    els.forEach((el) => {
-        const defaults = {
-            xPercent: -30,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out',
-            force3D: true,
-            scrollTrigger: { 
-                trigger: el, 
-                start: 'top 90%',
-                once: true,
-                fastScrollEnd: true
+const safeTo = (selector, vars, immediate = false) => {
+    const run = () => {
+        const els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
+        if (!els || els.length === 0) return;
+        els.forEach((el) => {
+            const defaults = {
+                xPercent: -30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
+                force3D: true,
+                scrollTrigger: { 
+                    trigger: el, 
+                    start: 'top 90%',
+                    once: true,
+                    fastScrollEnd: true
+                }
+            };
+            const config = Object.assign({}, defaults, vars || {});
+            if (vars && vars.scrollTrigger) {
+                config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
             }
-        };
-        const config = Object.assign({}, defaults, vars || {});
-        if (vars && vars.scrollTrigger) {
-            config.scrollTrigger = Object.assign({}, defaults.scrollTrigger, vars.scrollTrigger);
-        }
-        gsap.to(el, config);
-    });
+            gsap.to(el, config);
+        });
+    };
+
+    if (immediate) run();
+    else queueAnimation(run);
 };
 
 const initTicker = (selector, duration = 40) => {
@@ -637,11 +680,11 @@ const initTicker = (selector, duration = 40) => {
 // dismissing as soon as HTML is parsed — not after all scripts/images
 // finish downloading. This directly reduces LCP element render delay.
 document.addEventListener('DOMContentLoaded', () => {
-
-
+    // Stage 1: Preloader Dismissal (Critical for LCP)
     const tl = gsap.timeline();
     const loaderContent = document.querySelector('.loader-content') || document.querySelector('.loader-text');
     const preloader = document.getElementById('preloader');
+    
     if (loaderContent && preloader) {
         tl.to(loaderContent, {
             y: -30,
@@ -649,59 +692,57 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 0.3,
             ease: 'power2.inOut'
         })
-            .to(preloader, {
-                y: '-100%',
-                duration: 0.4,
-                ease: 'power4.inOut',
-                onComplete: () => {
-                    preloader.classList.add('loaded');
-                    if (typeof lenis !== 'undefined') lenis.resize();
-                }
-            }, "-=0.05");
+        .to(preloader, {
+            y: '-100%',
+            duration: 0.4,
+            ease: 'power4.inOut',
+            onComplete: () => {
+                preloader.classList.add('loaded');
+                if (typeof lenis !== 'undefined') lenis.resize();
+            }
+        }, "-=0.05");
     }
 
-    // Safety fallback: reduce to 2s so preloader never blocks LCP beyond that
+    // Stage 2: Hero Entry (Deferred slightly to let the browser breathe after preloader)
     setTimeout(() => {
+        const heroTl = gsap.timeline();
+        
+        // Safety fallback for preloader
         if (preloader && !preloader.classList.contains('loaded')) {
             gsap.to(preloader, {
                 y: '-100%',
                 duration: 0.4,
                 ease: 'power4.inOut',
-                onComplete: () => {
-                    preloader.classList.add('loaded');
-                    if (typeof lenis !== 'undefined') lenis.resize();
-                }
+                onComplete: () => preloader.classList.add('loaded')
             });
         }
-    }, 2000);
 
-    tl.from('nav', {
-        y: -80,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.out'
-    }, "-=0.6");
-
-    const heroTitleSpans = document.querySelectorAll('.hero-title span');
-    if (heroTitleSpans.length > 0) {
-        // Use fromTo (not from) so GSAP has explicit start AND end states.
-        // Parallelizing this with the preloader dismissal drastically reduces LCP render delay.
-        tl.fromTo(heroTitleSpans,
-            { y: '100%', opacity: 0 },
-            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out', clearProps: "all" },
-            "-=0.7"
-        );
-    }
-
-    const heroSubtitle = document.querySelector('.hero-subtitle');
-    if (heroSubtitle) {
-        tl.to(heroSubtitle, {
-            y: 0,
-            opacity: 0.8,
-            duration: 0.5,
+        heroTl.from('nav', {
+            y: -80,
+            opacity: 0,
+            duration: 0.3,
             ease: 'power2.out'
-        }, "-=0.7");
-    }
+        }, "-=0.2");
+
+        const heroTitleSpans = document.querySelectorAll('.hero-title span');
+        if (heroTitleSpans.length > 0) {
+            heroTl.fromTo(heroTitleSpans,
+                { y: '100%', opacity: 0 },
+                { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out', clearProps: "all" },
+                "-=0.1"
+            );
+        }
+
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        if (heroSubtitle) {
+            heroTl.to(heroSubtitle, {
+                y: 0,
+                opacity: 0.8,
+                duration: 0.5,
+                ease: 'power2.out'
+            }, "-=0.6");
+        }
+    }, 50);
 });
 
 
@@ -812,10 +853,18 @@ const startThreeJS = (container) => {
 };
 
 // Defer and Lazy-load all Three.js background canvases
-(() => {
-    const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
-    canvases.forEach(c => initThreeJS(c));
-})();
+// Using requestIdleCallback ensures this setup doesn't compete with the Hero entrance animation.
+if (window.requestIdleCallback) {
+    requestIdleCallback(() => {
+        const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
+        canvases.forEach(c => initThreeJS(c));
+    }, { timeout: 2000 });
+} else {
+    setTimeout(() => {
+        const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
+        canvases.forEach(c => initThreeJS(c));
+    }, 1000);
+}
 
 // Scroll Animations Optimized with yielding
 yieldTask(() => {
@@ -900,21 +949,24 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
 fetch('what-we-offer.html')
     .then(response => response.text())
     .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const servicesSection = doc.getElementById('services');
-        if (servicesSection) {
-            const container = document.getElementById('services-container');
-            if (container) {
-                container.innerHTML = servicesSection.outerHTML;
+        // Yield to prevent the heavy DOMParser and innerHTML ops from blocking interactions
+        yieldTask(() => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const servicesSection = doc.getElementById('services');
+            if (servicesSection) {
+                const container = document.getElementById('services-container');
+                if (container) {
+                    container.innerHTML = servicesSection.outerHTML;
 
-                // Use CSS ticker instead of Swiper for continuous marquee
-                // Add a small delay to ensure DOM is ready and layout is calculated
-                setTimeout(() => {
-                    initTicker('.services-swiper', 40);
-                }, 300);
+                    // Use CSS ticker instead of Swiper for continuous marquee
+                    // Add a small delay to ensure DOM is ready and layout is calculated
+                    setTimeout(() => {
+                        initTicker('.services-swiper', 40);
+                    }, 300);
+                }
             }
-        }
+        });
     })
     .catch(err => console.error('Failed to load services:', err));
 
@@ -984,7 +1036,7 @@ fetch('what-we-offer.html')
     });
 })();
 
-safeFrom('.hero .hero-subtitle');
+safeFrom('.hero .hero-subtitle', {}, true); // Immediate top-of-page element
 
 
 safeFrom('.about-hero .page-hero-content h1', {
