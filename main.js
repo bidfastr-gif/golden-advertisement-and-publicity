@@ -821,10 +821,19 @@ const startThreeJS = (container) => {
     }, 0);
 };
 
-// Defer and Lazy-load all Three.js background canvases
+// Defer and Lazy-load all Three.js background canvases (interaction-triggered)
 (() => {
-    const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
-    canvases.forEach(c => initThreeJS(c));
+    let threeStarted = false;
+    const startAll = () => {
+        if (threeStarted) return;
+        threeStarted = true;
+        const canvases = document.querySelectorAll('.hero-background, [id$="-canvas"]');
+        canvases.forEach(c => initThreeJS(c));
+    };
+    window.addEventListener('scroll', startAll, { once: true, passive: true });
+    window.addEventListener('mousemove', startAll, { once: true, passive: true });
+    window.addEventListener('touchstart', startAll, { once: true, passive: true });
+    setTimeout(startAll, 8000);
 })();
 
 // Scroll Animations Optimized with yielding
