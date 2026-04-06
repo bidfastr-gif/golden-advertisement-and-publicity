@@ -666,20 +666,33 @@ const initThreeJS = (containerId = 'hero-canvas') => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
         75,
-        container.clientWidth / container.clientHeight,
+        1, // Initial aspect, will be updated in requestAnimationFrame
         0.1,
         1000
     );
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    container.appendChild(renderer.domElement);
+    // Use requestAnimationFrame to batch layout reads (clientWidth, offsetHeight, etc.) 
+    // to avoid layout thrashing / expensive reflows during initialization.
+    requestAnimationFrame(() => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        const pixelRatio = Math.min(window.devicePixelRatio, 1.75);
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(pixelRatio);
+        container.appendChild(renderer.domElement);
+
+        camera.position.z = 2;
+    });
 
     // Particles Grid
     const particlesGeometry = new THREE.BufferGeometry();
     const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 768; // Minor forced reflow risk, but usually safe during init
     const particlesCount = prefersReduce
         ? (isMobile ? 120 : 200)
         : (isMobile ? 400 : 900);
@@ -703,8 +716,6 @@ const initThreeJS = (containerId = 'hero-canvas') => {
 
     const particlesMesh = new THREE.Points(particlesGeometry, material);
     scene.add(particlesMesh);
-
-    camera.position.z = 2;
 
     // Animation Loop
     const clock = new THREE.Clock();
@@ -1960,22 +1971,34 @@ const initTestimonialCarousel = () => {
     const track = carousel.querySelector('.testimonial-track');
     const cards = Array.from(track.querySelectorAll('.testimonial-card'));
     if (cards.length === 0) return;
+    
     let x = 0;
     let running = false;
     const speed = 2;
+    
+    // Performance Optimization: Cache these layout values to avoid layout thrashing (forced reflow)
+    // inside the high-frequency ticker loop.
     const getGap = () => parseFloat(getComputedStyle(track).gap || '0');
     let gap = getGap();
+    let cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
+
     const tick = () => {
         const delta = gsap.ticker.deltaRatio();
         x -= speed * delta;
         track.style.transform = `translateX(${x}px)`;
-        const first = track.firstElementChild;
-        const w = first.getBoundingClientRect().width;
-        if (-x >= w + gap) {
+        
+        // Use cached cardWidth and gap
+        if (-x >= cardWidth + gap) {
+            const first = track.firstElementChild;
             track.appendChild(first);
-            x += w + gap;
+            x += cardWidth + gap;
+            
+            // Re-read cardWidth only when a card is moved (less frequent than every frame)
+            // or just rely on the resize handler if cards are uniform.
+            cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
         }
     };
+
     ScrollTrigger.create({
         trigger: carousel,
         start: 'top 90%',
@@ -1992,8 +2015,10 @@ const initTestimonialCarousel = () => {
             }
         }
     });
+
     window.addEventListener('resize', () => {
         gap = getGap();
+        cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
     });
 };
 
