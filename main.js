@@ -916,24 +916,22 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
     elements.forEach((el, i) => {
         const delay = stagger ? i * stagger : 0;
 
-        gsap.fromTo(el,
-            { y: 22, opacity: 0, scale: 0.985, force3D: true },
-            {
-                y: -8,
-                opacity: 1,
-                scale: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 95%',
-                    end: 'top 40%',
-                    scrub: 0.6,
-                    invalidateOnRefresh: true,
-                    fastScrollEnd: true // Prevent glitches during fast scrolling
-                },
-                delay
-            }
-        );
+        gsap.from(el, {
+            y: 30, // From 30 pixels down
+            opacity: 0,
+            scale: 0.98,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: el,
+                start: 'top 95%',
+                toggleActions: 'play none none none',
+                once: true, // Only reveal once to prevent focus loss or "disappearing" bugs
+                invalidateOnRefresh: true,
+                fastScrollEnd: true
+            },
+            delay: delay
+        });
 
         if (withHover) {
             // Performance Optimization: Use quickSetter for hover animations
