@@ -3,9 +3,11 @@
 
 <head>
   <!-- Preload Critical Assets -->
-  <link rel="preload" href="style.min.css" as="style">
-  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="style.css" as="style">
+  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
@@ -69,7 +71,7 @@
     @keyframes preloaderDismiss {
       to {
         transform: translateY(-100%);
-        }
+      }
     }
 
     #preloader {
@@ -85,7 +87,7 @@
       justify-content: center;
       align-items: center;
       gap: 1.5rem;
-      animation: preloaderDismiss 0.5s ease-in-out  0.1s  forwards;
+      animation: preloaderDismiss 0.5s ease-in-out 0.1s forwards;
     }
 
     #preloader.loaded {
@@ -140,12 +142,13 @@
     .hero-title {
       font-size: clamp(2.5rem, 6vw, 7rem);
       line-height: 1.1;
-      margin-bottom: 2rem;
-      overflow: hidden;
+      margin-bottom: 0.5rem;
+      overflow: visible;
     }
 
     .hero-title span {
       display: block;
+      opacity: 0;
     }
   </style>
 
@@ -189,19 +192,19 @@
     content="Top-tier digital marketing agency in Chennai. Experts in Branding, SEO, Social Media, and 360-degree marketing.">
   <meta name="twitter:image" content="https://goldenadvertising.in/assets/golden_logo.png">
 
-    <!-- Optimized Google Analytics (Interaction-Based Loading) -->
+  <!-- Optimized Google Analytics (Interaction-Based Loading) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-XXXXXXXXXX', { 'reporting_exposure': false });
 
-    (function() {
+    (function () {
       var gtmLoaded = false;
       function loadGTM() {
         if (gtmLoaded) return;
         gtmLoaded = true;
-        var inject = function() {
+        var inject = function () {
           var script = document.createElement('script');
           script.async = true;
           script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
@@ -321,10 +324,280 @@
 
 
 
-  <link rel="stylesheet" href="./style.min.css">
+  <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./assets/vendor/swiper-bundle.min.css">
 
-  <style>/* cyrillic-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');  unicode-range: U+1F00-1FFF; } /* greek */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF; } /* vietnamese */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');  unicode-range: U+1F00-1FFF; } /* greek */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF; } /* vietnamese */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');  unicode-range: U+1F00-1FFF; } /* greek */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF; } /* vietnamese */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Inter';  font-style: normal;  font-weight: 500;  font-display: swap;  src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* latin-ext */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 300;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* latin-ext */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 400;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* latin-ext */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 700;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face {  font-family: 'Outfit';  font-style: normal;  font-weight: 700;  font-display: swap;  src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } </style>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');
+      unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');
+      unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+    }
+
+    /* vietnamese */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');
+      unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');
+      unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+    }
+
+    /* vietnamese */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7SUc.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2) format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7SUc.woff2) format('woff2');
+      unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2) format('woff2');
+      unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+    }
+
+    /* vietnamese */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7SUc.woff2) format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJuktqQ4E.woff2) format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+  </style>
 
 
 
@@ -412,12 +685,12 @@
 
 
 
-  
-  
 
 
 
-  </head>
+
+
+</head>
 
 
 
@@ -479,8 +752,8 @@
 
       <a href="./index.html" class="logo-brand">
 
-        <img decoding="async" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1238"
-          height="675" title="Golden Advertising & Publicity" loading="eager">
+        <img decoding="async" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img"
+          width="1238" height="675" title="Golden Advertising & Publicity" loading="eager">
 
       </a>
 
@@ -617,25 +890,13 @@
 
 
         <h1 class="hero-title">
-
-
-
-          <span class="line">Top Digital Marketing</span>
-
-
-
-          <span class="line text-gold">Agency in Chennai</span>
-
-
-
-
-
-
+          <span class="line">TOP DIGITAL MARKETING</span>
+          <span class="line text-gold">AGENCY IN CHENNAI</span>
         </h1>
 
 
 
-        <p class="hero-subtitle" style="opacity: 1 !important; transform: none !important; margin-bottom: 2rem;">
+        <p class="hero-subtitle">
           A 360&deg; Marketing Solution for all your Business Needs.
         </p>
 
@@ -758,7 +1019,8 @@
             </div>
           </div>
           <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
-            <img decoding="async" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80"
+            <img decoding="async"
+              src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80"
               alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="1200"
               height="800" loading="lazy">
           </div>
@@ -1207,7 +1469,144 @@
 
 
 
-    <div id="services-container"></div>
+    <!-- Services Section -->
+    <section id="services" class="features-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-label">WHAT WE OFFER</span>
+          <h2 style="margin-bottom: 3rem; font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 800;">COMPLETE DIGITAL <span class="highlight-gold">SOLUTIONS</span></h2>
+        </div>
+
+        <div class="swiper services-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <a href="./digital-marketing.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="8" width="56" height="36" rx="2" stroke="currentColor" stroke-width="2" />
+                      <path d="M4 36H60" stroke="currentColor" stroke-width="2" />
+                      <path d="M32 44V56M20 56H44" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <circle cx="16" cy="22" r="4" stroke="currentColor" stroke-width="1.5" />
+                      <path d="M16 20V24M14 22H18" stroke="currentColor" stroke-width="1.5" />
+                      <rect x="26" y="18" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5" />
+                      <path d="M42 22L46 18L50 22" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                      <path d="M46 26V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">Digital Marketing</h3>
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide">
+              <a href="./web-development.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="8" width="56" height="40" rx="2" stroke="currentColor" stroke-width="2" />
+                      <line x1="4" y1="18" x2="60" y2="18" stroke="currentColor" stroke-width="2" />
+                      <circle cx="10" cy="13" r="1.5" fill="currentColor" />
+                      <circle cx="16" cy="13" r="1.5" fill="currentColor" />
+                      <circle cx="22" cy="13" r="1.5" fill="currentColor" />
+                      <path d="M12 28H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <path d="M12 36H52" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <path d="M12 44H30" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <rect x="44" y="24" width="12" height="16" rx="1" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">Web Development</h3>
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide">
+              <a href="./brand-creation.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="12" y="8" width="40" height="48" rx="2" stroke="currentColor" stroke-width="2" />
+                      <path d="M20 18H44" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <path d="M20 26H36" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <path d="M20 34H44" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <rect x="36" y="36" width="20" height="24" rx="2" fill="white" stroke="currentColor"
+                        stroke-width="2" />
+                      <circle cx="46" cy="46" r="4" stroke="currentColor" stroke-width="1.5" />
+                      <path d="M40 54H52" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">Brand Creation</h3>
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide">
+              <a href="./newspaper-advertising.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 8H48V56H8V8Z" stroke="currentColor" stroke-width="2" />
+                      <path d="M48 8H56V48C56 52.4 52.4 56 48 56H8" stroke="currentColor" stroke-width="2"
+                        stroke-linejoin="round" />
+                      <rect x="14" y="14" width="28" height="6" fill="currentColor" opacity="0.8" />
+                      <path d="M14 26H26" stroke="currentColor" stroke-width="2" />
+                      <path d="M14 32H26" stroke="currentColor" stroke-width="2" />
+                      <path d="M14 38H26" stroke="currentColor" stroke-width="2" />
+                      <path d="M30 26H42" stroke="currentColor" stroke-width="2" />
+                      <path d="M30 32H42" stroke="currentColor" stroke-width="2" />
+                      <path d="M30 38H42" stroke="currentColor" stroke-width="2" />
+                      <rect x="14" y="44" width="12" height="8" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">Newspaper Advertising</h3>
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide">
+              <a href="./fm-advertising.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="8" y="16" width="48" height="32" rx="4" stroke="currentColor" stroke-width="2" />
+                      <path d="M16 16L8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <circle cx="20" cy="32" r="8" stroke="currentColor" stroke-width="2" />
+                      <circle cx="20" cy="32" r="2" fill="currentColor" />
+                      <rect x="34" y="22" width="16" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
+                      <line x1="38" y1="22" x2="38" y2="28" stroke="currentColor" stroke-width="1" />
+                      <line x1="42" y1="22" x2="42" y2="28" stroke="currentColor" stroke-width="1" />
+                      <line x1="46" y1="22" x2="46" y2="28" stroke="currentColor" stroke-width="1" />
+                      <circle cx="38" cy="38" r="3" stroke="currentColor" stroke-width="1.5" />
+                      <circle cx="46" cy="38" r="3" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">FM Advertising</h3>
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide">
+              <a href="./content-production.html" class="feature-card-link">
+                <div class="feature-card">
+                  <div class="feature-icon">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 12L56 12L52 20H4L8 12Z" stroke="currentColor" stroke-width="2"
+                        stroke-linejoin="round" />
+                      <line x1="20" y1="12" x2="16" y2="20" stroke="currentColor" stroke-width="2" />
+                      <line x1="32" y1="12" x2="28" y2="20" stroke="currentColor" stroke-width="2" />
+                      <line x1="44" y1="12" x2="40" y2="20" stroke="currentColor" stroke-width="2" />
+                      <rect x="4" y="20" width="56" height="32" rx="2" stroke="currentColor" stroke-width="2" />
+                      <path d="M26 28L40 36L26 44V28Z" stroke="currentColor" stroke-width="2" fill="none" />
+                    </svg>
+                  </div>
+                  <h3 class="feature-title">Content Production</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 
@@ -1269,8 +1668,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c2.png" alt="Partner 2" width="160" height="60"
-                title="Partner 2" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c2.png" alt="Partner 2" width="160"
+                height="60" title="Partner 2" loading="lazy"></div>
 
 
 
@@ -1282,8 +1681,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c3.png" alt="Partner 3" width="160" height="60"
-                title="Partner 3" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c3.png" alt="Partner 3" width="160"
+                height="60" title="Partner 3" loading="lazy"></div>
 
 
 
@@ -1295,8 +1694,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c4.png" alt="Partner 4" width="160" height="60"
-                title="Partner 4" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c4.png" alt="Partner 4" width="160"
+                height="60" title="Partner 4" loading="lazy"></div>
 
 
 
@@ -1308,8 +1707,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c5.png" alt="Partner 5" width="160" height="60"
-                title="Partner 5" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c5.png" alt="Partner 5" width="160"
+                height="60" title="Partner 5" loading="lazy"></div>
 
 
 
@@ -1321,8 +1720,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c6.png" alt="Partner 6" width="160" height="60"
-                title="Partner 6" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c6.png" alt="Partner 6" width="160"
+                height="60" title="Partner 6" loading="lazy"></div>
 
 
 
@@ -1334,8 +1733,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c7.png" alt="Partner 7" width="160" height="60"
-                title="Partner 7" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c7.png" alt="Partner 7" width="160"
+                height="60" title="Partner 7" loading="lazy"></div>
 
 
 
@@ -1347,8 +1746,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c8.png" alt="Partner 8" width="160" height="60"
-                title="Partner 8" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c8.png" alt="Partner 8" width="160"
+                height="60" title="Partner 8" loading="lazy"></div>
 
 
 
@@ -1360,8 +1759,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c9.png" alt="Partner 9" width="160" height="60"
-                title="Partner 9" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c9.png" alt="Partner 9" width="160"
+                height="60" title="Partner 9" loading="lazy"></div>
 
 
 
@@ -1373,8 +1772,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c10.png" alt="Partner 10" width="160" height="60"
-                title="Partner 10" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c10.png" alt="Partner 10" width="160"
+                height="60" title="Partner 10" loading="lazy"></div>
 
 
 
@@ -1386,8 +1785,8 @@
 
 
 
-            <div class="partner-logo"><img decoding="async" src="./assets/partners/c11.png" alt="Partner 11" width="160" height="60"
-                title="Partner 11" loading="lazy"></div>
+            <div class="partner-logo"><img decoding="async" src="./assets/partners/c11.png" alt="Partner 11" width="160"
+                height="60" title="Partner 11" loading="lazy"></div>
 
 
 
@@ -1567,7 +1966,8 @@
 
 
 
-            <img src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1238" height="675" loading="lazy">
+            <img src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1238"
+              height="675" loading="lazy">
 
 
 
@@ -1778,15 +2178,17 @@
 
 
   <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css"></noscript>
+  <noscript>
+    <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
+  </noscript>
 
 
 
-  
 
 
 
-  
+
+
 
 
 
@@ -1799,12 +2201,8 @@
 
 
   <script src="./assets/vendor/swiper-bundle.min.js" defer></script>
-
   <script src="./assets/vendor/lenis.min.js" defer></script>
-
-
-
-<script src="./main.min.js" defer></script>
+  <script src="./main.js" defer></script>
 
 
 

@@ -1,4 +1,20 @@
 // Imports removed in favor of CDN links in index.html for vanilla usage
+// Utilities for continuous scrolling tickers
+const initTicker = (selector, duration = 40) => {
+    const swiper = document.querySelector(selector);
+    if (!swiper) return;
+    const wrapper = swiper.querySelector('.swiper-wrapper');
+    if (!wrapper) return;
+
+    if (!wrapper.dataset.tickerCloned) {
+        const ogContent = wrapper.innerHTML;
+        wrapper.innerHTML = ogContent + ogContent + ogContent + ogContent;
+        wrapper.dataset.tickerCloned = "true";
+    }
+    wrapper.style.setProperty('--ticker-duration', `${duration}s`);
+    wrapper.classList.add('is-ticker');
+};
+
 const yieldTask = (fn) => {
     if (window.requestIdleCallback) {
         requestIdleCallback(() => fn(), { timeout: 2000 });
@@ -676,7 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Parallelizing this with the preloader dismissal drastically reduces LCP render delay.
         tl.fromTo(heroTitleSpans,
             { y: '100%', opacity: 0 },
-            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out', clearProps: "all" },
+            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out' },
             "-=0.7"
         );
     }
@@ -908,37 +924,8 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
     });
 };
 
-// Load Services Section and Initialize Swiper
-fetch('what-we-offer.html')
-    .then(response => response.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const servicesSection = doc.getElementById('services');
-        if (servicesSection) {
-            const container = document.getElementById('services-container');
-            if (container) {
-                container.innerHTML = servicesSection.outerHTML;
-
-                // Initialize Swiper for Services
-                new Swiper('.services-swiper', {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
-                    loop: true,
-                    speed: 1000,
-                    autoplay: {
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    },
-                    breakpoints: {
-                        640: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 }
-                    }
-                });
-            }
-        }
-    })
-    .catch(err => console.error('Failed to load services:', err));
+// Initialize Services Section (Now hardcoded in index.html for better performance and SEO)
+initTicker('.services-swiper', 40);
 
 
 (() => {
@@ -959,20 +946,7 @@ fetch('what-we-offer.html')
 })();
 
 (() => {
-    // Initialize Swiper for Partners
-    new Swiper('.partners-swiper', {
-        slidesPerView: 2,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-            delay: 2000,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            640: { slidesPerView: 3 },
-            1024: { slidesPerView: 5 }
-        }
-    });
+    initTicker('.partners-swiper', 30);
 })();
 
 
@@ -1995,7 +1969,8 @@ safeFrom('.webdev-hero .hero-contacts .cta-button', {
 yieldTask(() => {
     // High-Impact 3D Scroll Effects (Optimized Selectors)
     // We only apply this to major UI cards and main headings to minimize ScrollTrigger overhead.
-    apply3DScrollEffect('.package-card, .adv-card, .service-card, .case-study-card, .blog-card, .feature-card, .contact-card, .contact-form-card, .stat-item, .anim-card, .testimonial-card');
+    // NOTE: We exclude .is-ticker elements as they handle their own visibility and continuous movement.
+    apply3DScrollEffect('.package-card, .adv-card, .service-card, .case-study-card, .blog-card, .feature-card:not(.is-ticker .feature-card), .contact-card, .contact-form-card, .stat-item, .anim-card, .testimonial-card');
     
     yieldTask(() => {
         apply3DScrollEffect('.image-card:not(.projects-marquee .image-card)');
