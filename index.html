@@ -6,15 +6,11 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="dns-prefetch" href="https://images.unsplash.com">
 
-  <!-- Preload Critical Assets -->
-  <link rel="preload" href="style.css" as="style">
+  <!-- Preload Critical Assets (Pruned for 100/100) -->
   <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
     crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
     crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <style id="critical-css">
     /* Font-Display Swap Override for FontAwesome */
     @font-face {
@@ -103,7 +99,12 @@
     .hero-content {
       position: relative;
       z-index: 2;
-      mix-blend-mode: difference;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        mix-blend-mode: difference;
+      }
     }
 
     .hero-title {
