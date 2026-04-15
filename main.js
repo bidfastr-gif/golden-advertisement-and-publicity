@@ -412,12 +412,12 @@ const initNonCriticalUI = () => {
                     setTimeout(() => {
                         addMsg('Please share your country code.', 'bot');
                         expectingPhoneCountry = true;
-                        input.type = 'tel';
-                        input.setAttribute('inputmode', 'numeric');
-                        input.setAttribute('pattern', '^\\+?\\d{1,4}$');
-                        input.placeholder = 'Country code (e.g., +91)';
-                        input.className = 'chat-input tel';
-                        addSuggestions(['+91', '+1', '+44', '+61', '+971', 'Others']);
+                        input.type = "tel";
+                        input.setAttribute("inputmode", "numeric");
+                        input.setAttribute("pattern", "^[+]?[0-9]{1,4}$");
+                        input.placeholder = "Country code (e.g., +91)";
+                        input.className = "chat-input tel";
+                        addSuggestions(["+91", "+1", "+44", "+61", "+971", "Others"]);
                         try { input.focus(); } catch (_) { }
                     }, 250);
                 }, 200);
@@ -441,13 +441,13 @@ const initNonCriticalUI = () => {
                 input.value = '';
                 addMsg(`Got it: ${countryCode}`, 'bot');
                 setTimeout(() => {
-                    addMsg('Now enter your phone number.', 'bot');
+                    addMsg("Now enter your phone number.", "bot");
                     expectingPhone = true;
-                    input.type = 'tel';
-                    input.setAttribute('inputmode', 'numeric');
-                    input.setAttribute('pattern', '[0-9]{7,15}');
-                    input.placeholder = 'Your phone number';
-                    input.className = 'chat-input tel';
+                    input.type = "tel";
+                    input.setAttribute("inputmode", "numeric");
+                    input.setAttribute("pattern", "[0-9]{7,15}");
+                    input.placeholder = "Your phone number";
+                    input.className = "chat-input tel";
                     try { input.focus(); } catch (_) { }
                 }, 200);
                 return;
