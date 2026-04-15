@@ -130,8 +130,9 @@
         display: none !important;
       }
       .hero-title span {
-        animation-delay: 0.1s !important;
-        animation-duration: 0.5s !important;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
       }
     }
   </style>
@@ -189,23 +190,6 @@
   </script>
   <link rel="canonical" href="https://goldenadvertising.in/" />
   <link rel="icon" type="image/png" href="./assets/golden_logo.webp">
-  <script>
-    (function () {
-      var root = document.documentElement;
-      var theme = 'dark';
-      try {
-        var saved = localStorage.getItem('gap-theme-v2');
-        if (saved === 'light' || saved === 'dark') {
-          theme = saved;
-        }
-      } catch (e) { }
-      root.setAttribute('data-theme', theme);
-      var style = document.createElement('style');
-      style.textContent = '*, *::before, *::after { transition: none !important; }';
-      document.head.appendChild(style);
-      window.addEventListener('load', function () { setTimeout(function () { style.remove() }, 100); });
-    })();
-  </script>
   <style>
     html,
     body {
