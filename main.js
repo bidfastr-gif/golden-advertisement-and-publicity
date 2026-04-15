@@ -59,29 +59,20 @@ ScrollTrigger.config({
     })();
 
 // Initialize Smooth Scroll
-const lenis = new Lenis({
+if (window.innerWidth > 768) {
+  const lenis = new Lenis({
     duration: 1.5,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: true,
-    touchMultiplier: 2,
-    infinite: false,
-})
-
-// Sync ScrollTrigger with Lenis
-lenis.on('scroll', ScrollTrigger.update);
-
-// Optimized Frame Synchronization Loop
-// Using a dedicated requestAnimationFrame loop for Lenis ensures 
-// precise sub-pixel smoothing without being throttled by GSAP's internal lag smoothing in heavy scenes.
-function raf(time) {
+    smoothTouch: false, // Ensure touch behavior is native for better responsiveness
+  })
+  lenis.on('scroll', ScrollTrigger.update);
+  function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
 }
-requestAnimationFrame(raf);
 
 gsap.ticker.lagSmoothing(500, 33);
 
@@ -730,6 +721,16 @@ const initThreeJS = (container) => {
 };
 
 const startThreeJS = (container) => {
+    if (typeof THREE === 'undefined') {
+        if (!window.threeLoading) window.threeLoading = new Promise(resolve => {
+            const script = document.createElement('script');
+            script.src = './assets/vendor/three.min.js';
+            script.onload = resolve;
+            document.body.appendChild(script);
+        });
+        window.threeLoading.then(() => startThreeJS(container));
+        return;
+    }
     if (typeof THREE === 'undefined') {
         if (!window.threeLoading) window.threeLoading = new Promise(resolve => {
             const script = document.createElement('script');
