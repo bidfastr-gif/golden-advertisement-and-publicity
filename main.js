@@ -926,21 +926,50 @@ const apply3DScrollEffect = (selector, stagger = 0, withHover = true) => {
 initTicker('.services-swiper', 40);
 
 
+// Lazy-load Swiper for Projects
 (() => {
-    // Initialize Swiper for Projects
-    new Swiper('.projects-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            768: { slidesPerView: 2 },
-            1200: { slidesPerView: 3 }
-        }
-    });
+    const container = document.querySelector('.projects-swiper');
+    if (!container) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Load Swiper JS dynamically
+                if (typeof Swiper === 'undefined') {
+                    if (!window.swiperLoading) {
+                        window.swiperLoading = new Promise((resolve) => {
+                            const script = document.createElement('script');
+                            script.src = './assets/vendor/swiper-bundle.min.js';
+                            script.onload = resolve;
+                            document.body.appendChild(script);
+                        });
+                    }
+                    window.swiperLoading.then(() => {
+                        try {
+                            new Swiper('.projects-swiper', {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                                loop: true,
+                                autoplay: {
+                                    delay: 3000,
+                                    disableOnInteraction: false,
+                                },
+                                breakpoints: {
+                                    768: { slidesPerView: 2 },
+                                    1200: { slidesPerView: 3 }
+                                }
+                            });
+                        } catch (e) {
+                            console.warn('Swiper init failed:', e);
+                        }
+                    });
+                }
+                observer.unobserve(container);
+            }
+        });
+    }, { rootMargin: '200px' });
+
+    observer.observe(container);
 })();
 
 (() => {
