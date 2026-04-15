@@ -5,6 +5,10 @@
 
 <head>
   <script>performance.mark('app-boot-start');</script>
+  <!-- Preconnect to Google Fonts to speed up the 3rd-party font request -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
@@ -161,15 +165,13 @@
 
 
 
-  <link rel="stylesheet" href="./style.min.css">
+  <!-- style.min.css loaded asynchronously to remove render-blocking resource -->
+  <link rel="preload" href="./style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="./style.min.css"></noscript>
 
-
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet">
-
-
+  <!-- Google Fonts loaded async to avoid render-blocking 3rd-party request -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Inter:wght@300;400;500&display=swap"></noscript>
 
   <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css"></noscript>
@@ -274,7 +276,7 @@
 
 
 
-        <img decoding="async" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1208"
+        <img decoding="async" fetchpriority="high" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1208"
           height="705" title="Golden Advertising & Publicity" loading="eager">
 
 

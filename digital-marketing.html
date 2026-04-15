@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 
@@ -164,7 +164,8 @@
 
 
 
-  <link rel="stylesheet" href="./style.min.css">
+  <link rel="preload" href="./style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="./style.min.css"></noscript>
 
 
 
@@ -260,7 +261,7 @@
 
 
 
-        <img decoding="async" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1208"
+        <img decoding="async" fetchpriority="high" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img" width="1208"
           height="705" title="Golden Advertising & Publicity" loading="eager">
 
 
