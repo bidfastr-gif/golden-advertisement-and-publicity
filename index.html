@@ -166,6 +166,14 @@
         opacity: 1;
       }
     }
+
+    .text-gold {
+      background: var(--color-gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
   </style>
 
 
@@ -340,10 +348,10 @@
 
 
 
-  <!-- style.css is render-blocking but preloaded above for early discovery.
-       Critical above-fold styles are already inlined; this ensures .text-gold
-       and all hero styles are available before LCP element paints. -->
-  <link rel="stylesheet" href="./style.css">
+  <!-- style.css made async — critical hero styles are now fully inlined -->
+  <link rel="preload" href="./style.min.css" as="style">
+  <link rel="stylesheet" href="./style.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="./style.min.css"></noscript>
 
   <!-- Swiper CSS only needed for below-fold carousels — load non-blocking -->
   <link rel="stylesheet" href="./assets/vendor/swiper-bundle.min.css" media="print" onload="this.media='all'">
