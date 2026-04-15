@@ -686,16 +686,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power2.out'
     }, "-=0.6");
 
-    const heroTitleSpans = document.querySelectorAll('.hero-title span');
-    if (heroTitleSpans.length > 0) {
-        // Use fromTo (not from) so GSAP has explicit start AND end states.
-        // Parallelizing this with the preloader dismissal drastically reduces LCP render delay.
-        tl.fromTo(heroTitleSpans,
-            { y: '100%', opacity: 0 },
-            { y: '0%', opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power4.out' },
-            "-=0.7"
-        );
-    }
 
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
