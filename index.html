@@ -137,6 +137,23 @@
       color: transparent;
       font-weight: 800;
     }
+
+    /* Mobile Performance Optimization (100/100 Score Target) */
+    @media (max-width: 768px) {
+      .hero-content {
+        mix-blend-mode: normal !important;
+      }
+      .hero {
+        background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+      }
+      #hero-canvas {
+        display: none !important;
+      }
+      .hero-title span {
+        animation-delay: 0.1s !important;
+        animation-duration: 0.5s !important;
+      }
+    }
   </style>
 
 
