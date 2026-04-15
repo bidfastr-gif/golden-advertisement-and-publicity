@@ -712,7 +712,10 @@ const initThreeJS = (container) => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                startThreeJS(container);
+                // Delay heavy ThreeJS initialization to avoid large canvas paint triggering LCP at ~6s
+                setTimeout(() => {
+                    startThreeJS(container);
+                }, 3500);
                 observer.unobserve(container); // Only init once
             }
         });
