@@ -10,6 +10,10 @@
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
+        },
+        {
+          "key": "Link",
+          "value": "<./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2>; rel=preload; as=font; type=font/woff2; crossorigin=anonymous, <./assets/golden_logo.webp>; rel=preload; as=image; fetchpriority=high"
         }
       ]
     },

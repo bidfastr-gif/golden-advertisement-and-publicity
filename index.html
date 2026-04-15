@@ -7,13 +7,9 @@
   <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <!-- Preconnect to key third-party origins for faster resource fetching -->
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high">
+  <!-- Preconnect to key third-party origins (Deferred for speed) -->
   <link rel="dns-prefetch" href="https://images.unsplash.com">
-
-  <!-- Preload Critical Assets (Pruned for 100/100) -->
-  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous">
   <style id="critical-css">
     /* Font-Display Swap Override for FontAwesome */
     @font-face {
@@ -124,8 +120,8 @@
       animation: heroSlideUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     }
 
-    .hero-title span:nth-child(1) { animation-delay: 0.6s; }
-    .hero-title span:nth-child(2) { animation-delay: 0.72s; }
+    .hero-title span:nth-child(1) { animation-delay: 0.05s; }
+    .hero-title span:nth-child(2) { animation-delay: 0.12s; }
 
     @keyframes heroSlideUp {
       to {

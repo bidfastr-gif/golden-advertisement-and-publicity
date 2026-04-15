@@ -770,6 +770,16 @@ const startThreeJS = (container) => {
         window.threeLoading.then(() => startThreeJS(container));
         return;
     }
+    if (typeof THREE === 'undefined') {
+        if (!window.threeLoading) window.threeLoading = new Promise(resolve => {
+            const script = document.createElement('script');
+            script.src = './assets/vendor/three.min.js';
+            script.onload = resolve;
+            document.body.appendChild(script);
+        });
+        window.threeLoading.then(() => startThreeJS(container));
+        return;
+    }
     // Stage 1: Core Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
