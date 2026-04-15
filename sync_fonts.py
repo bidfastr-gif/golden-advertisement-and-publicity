@@ -42,7 +42,7 @@ for root, dirs, files in os.walk('.'):
 
 updated_files_count = 0
 for html_file in html_files:
-    with open(html_file, 'r', encoding='utf-8') as f:
+    with open(html_file, 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
 
     original_content = content
@@ -64,7 +64,7 @@ for html_file in html_files:
         content = content.replace('<head>', '<head>\n' + preload_tags_html)
 
     if content != original_content:
-        with open(html_file, 'w', encoding='utf-8') as f:
+        with open(html_file, 'w', encoding='utf-8', errors='ignore') as f:
             f.write(content)
         updated_files_count += 1
 
