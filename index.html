@@ -15,19 +15,19 @@
       font-family: 'Font Awesome 6 Free';
       font-style: normal;
       font-weight: 400;
-      font-display: swap;
+      font-display: optional;
     }
     @font-face {
       font-family: 'Font Awesome 6 Free';
       font-style: normal;
       font-weight: 900;
-      font-display: swap;
+      font-display: optional;
     }
     @font-face {
       font-family: 'Font Awesome 6 Brands';
       font-style: normal;
       font-weight: 400;
-      font-display: swap;
+      font-display: optional;
     }
     :root {
       --color-gold-primary: #D4AF37;
@@ -96,6 +96,8 @@
       overflow: visible;
     }
     .hero-title span {
+      opacity: 1 !important;
+      transform: none !important;
       opacity: 1 !important;
       transform: none !important;
       display: block;
@@ -182,7 +184,7 @@
       window.addEventListener('scroll', loadGTM, { once: true, passive: true });
       window.addEventListener('mousemove', loadGTM, { once: true, passive: true });
       window.addEventListener('touchstart', loadGTM, { once: true, passive: true });
-      setTimeout(loadGTM, 12000);
+      setTimeout(loadGTM, 15000);
     })();
   </script>
   <link rel="canonical" href="https://goldenadvertising.in/" />
@@ -224,12 +226,12 @@
   <style>
     /* Latin Subset Only (Gold Standard Perf) */
     @font-face {
-      font-family: 'Inter'; font-style: normal; font-weight: 300 500; font-display: swap;
+      font-family: 'Inter'; font-style: normal; font-weight: 300 500; font-display: optional;
       src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153;
     }
     @font-face {
-      font-family: 'Outfit'; font-style: normal; font-weight: 400 700; font-display: swap;
+      font-family: 'Outfit'; font-style: normal; font-weight: 400 700; font-display: optional;
       src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
       unicode-range: U+0000-00FF;
     }
