@@ -8,8 +8,7 @@
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
     crossorigin="anonymous">
 
-  <!-- Preconnect to key third-party origins (Deferred for speed) -->
-  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <!-- No external image origins needed — all assets are local -->
   <style id="critical-style">
     /* Combined Performance-Optimized Design System */
     @font-face {
@@ -83,6 +82,13 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+      contain: layout style;
+    }
+
+    .hero-content {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
     }
 
     .hero-title {
@@ -302,9 +308,9 @@
           </div>
           <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
             <img decoding="async"
-              src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80"
-              alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="1200"
-              height="800" loading="lazy">
+              src="./assets/strategy-planning.webp"
+              alt="Strategic Digital Marketing Planning" style="width: 100%; height: auto; display: block;" width="600"
+              height="400" loading="lazy">
           </div>
         </div>
       </div>
@@ -834,10 +840,12 @@
         window.Lenis = function () {
           return { on: noop, raf: noop, resize: noop };
         };
-        /* ── Only load main.min.js (39 KB) — animations are stubs ── */
-        var s = document.createElement('script');
-        s.src = './main.min.js';
-        document.body.appendChild(s);
+        /* ── Only load main.min.js (39 KB) — animations are stubs, defer to avoid TBT ── */
+        window.addEventListener('load', function () {
+          var s = document.createElement('script');
+          s.src = './main.min.js';
+          document.body.appendChild(s);
+        }, { once: true, passive: true });
       } else {
         /* ── Desktop: full GSAP chain after window.load + idle (avoids TBT window) ── */
         window.addEventListener('load', function () {
