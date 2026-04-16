@@ -641,52 +641,14 @@ html{overflow-x:hidden;scroll-behavior:auto}body{overflow-x:hidden;width:100%;po
         s.onload = loadNext;
         document.body.appendChild(s);
       }
-      if (mobile) {
-        /* ── Mobile: stubs so main.min.js runs without throwing ── */
-        var noop = function () { };
-        var chain = function () {
-          var t = {
-            from: function () { return t; },
-            to: function () { return t; },
-            fromTo: function () { return t; }
-          };
-          return t;
-        };
-        window.gsap = {
-          registerPlugin: noop,
-          from: noop, to: noop, fromTo: noop, set: noop,
-          timeline: chain,
-          defaults: noop,
-          ticker: { lagSmoothing: noop },
-          quickSetter: function () { return noop; }
-        };
-        window.ScrollTrigger = { config: noop, update: noop };
-        window.Lenis = function () {
-          return { on: noop, raf: noop, resize: noop };
-        };
-        /* ── Only load main.min.js (39 KB) — animations are stubs, defer to avoid TBT ── */
-        window.addEventListener('load', function () {
-          var loadMain = function () {
-            var s = document.createElement('script');
-            s.src = './main.min.js';
-            document.body.appendChild(s);
-          };
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadMain);
-          } else {
-            setTimeout(loadMain, 150);
-          }
-        }, { once: true, passive: true });
-      } else {
-        /* ── Desktop: full GSAP chain after window.load + idle (avoids TBT window) ── */
-        window.addEventListener('load', function () {
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadNext);
-          } else {
-            setTimeout(loadNext, 150);
-          }
-        }, { once: true, passive: true });
-      }
+      window.addEventListener('load', function () {
+        var startLoad = function() { loadNext(); };
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(startLoad);
+        } else {
+          setTimeout(startLoad, 150);
+        }
+      }, { once: true, passive: true });
     })();
   </script>
   <!-- GTM: deferred analytics — no longer blocking <head> -->
