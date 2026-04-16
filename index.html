@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high">
-  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./assets/golden_logo1.png" as="image" fetchpriority="high">
+  <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
+  <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous">
 
   <!-- Preconnect to key third-party origins (Deferred for speed) -->
   <link rel="dns-prefetch" href="https://images.unsplash.com">
   <style id="critical-style">
     /* Combined Performance-Optimized Design System */
     @font-face {
-      font-family: 'Outfit'; font-style: normal; font-weight: 400 700; font-display: swap;
-      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2'); unicode-range: U+0000-00FF;
+      font-family: 'Outfit';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+      unicode-range: U+0000-00FF;
     }
+
     @font-face {
-      font-family: 'Inter'; font-style: normal; font-weight: 300 500; font-display: swap;
-      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300 500;
+      font-display: swap;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153;
     }
+
     :root {
       --color-gold-primary: #D4AF37;
       --color-gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 55%, #FBF5B7 85%, #AA771C 100%);
@@ -28,26 +41,122 @@
       --font-heading: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
-    html, body { background-color: #0A0A0A; color: #FFFFFF; margin: 0; padding: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-family: var(--font-body); }
-    [data-theme="light"], [data-theme="light"] body { background-color: #FFFFFF; color: #0D0D0D; }
-    nav { position: fixed; top: 0; width: 100%; padding: 0.45rem 0; z-index: 100; background: #13120F; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-    .hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; overflow: hidden; }
-    .hero-title { font-size: clamp(2.5rem, 6vw, 7rem); line-height: 1.1; margin-bottom: 0.5rem; }
-    .hero-title span { opacity: 1 !important; transform: none !important; display: block; }
-    .hero-subtitle { opacity: 0.8 !important; transform: none !important; }
-    .text-gold { background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
+
+    html,
+    body {
+      background-color: #0A0A0A;
+      color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-family: var(--font-body);
+    }
+
+    [data-theme="light"],
+    [data-theme="light"] body {
+      background-color: #FFFFFF;
+      color: #0D0D0D;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 0.45rem 0;
+      z-index: 100;
+      background: #13120F;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 7rem);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title span {
+      opacity: 1 !important;
+      transform: none !important;
+      display: block;
+    }
+
+    .hero-subtitle {
+      opacity: 0.8 !important;
+      transform: none !important;
+    }
+
+    .text-gold {
+      background: var(--color-gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+
     /* ── Preloader: dismiss instantly so LCP is never blocked ── */
-    #preloader { animation: preloaderDismiss 0.001s ease 0s forwards !important; pointer-events: none !important; }
+    #preloader {
+      animation: preloaderDismiss 0.001s ease 0s forwards !important;
+      pointer-events: none !important;
+    }
+
     /* ── Hero CTA styled before style.min.css loads ── */
-    .hero-ctas { margin-top: 2rem; }
-    .cta-button { display: inline-flex; align-items: center; padding: 1rem 2rem; border: 1px solid #D4AF37; border-radius: 50px; color: #D4AF37; font-family: var(--font-heading,'Outfit',sans-serif); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; text-decoration: none; }
+    .hero-ctas {
+      margin-top: 2rem;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      border: 1px solid #D4AF37;
+      border-radius: 50px;
+      color: #D4AF37;
+      font-family: var(--font-heading, 'Outfit', sans-serif);
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
     @media (max-width: 768px) {
-      .hero-content { mix-blend-mode: normal !important; }
-      .hero { background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); }
-      #hero-canvas { display: none !important; }
-      .hero-title span { animation: none !important; opacity: 1 !important; transform: none !important; }
-      .hero-title { font-size: clamp(2rem, 9vw, 4rem) !important; }
+      .hero-content {
+        mix-blend-mode: normal !important;
+      }
+
+      .hero {
+        background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+      }
+
+      #hero-canvas {
+        display: none !important;
+      }
+
+      .hero-title span {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 9vw, 4rem) !important;
+      }
     }
   </style>
   <meta charset="UTF-8" />
@@ -97,17 +206,20 @@
   <!-- style.min.css made async — critical hero styles are now fully inlined -->
   <link rel="preload" href="./style.min.css" as="style">
   <link rel="stylesheet" href="./style.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="./style.min.css"></noscript>
+  <noscript>
+    <link rel="stylesheet" href="./style.min.css">
+  </noscript>
   <!-- Swiper CSS only needed for carousels — load non-blocking -->
 
 </head>
+
 <body class="home-page">
   <!-- Navigation -->
   <nav>
     <div class="container nav-wrapper">
       <a href="./index.html" class="logo-brand">
-        <img decoding="async" fetchpriority="high" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity" class="logo-img"
-          width="140" height="80" title="Golden Advertising & Publicity" loading="eager">
+        <img decoding="async" fetchpriority="high" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity"
+          class="logo-img" width="140" height="80" title="Golden Advertising & Publicity" loading="eager">
       </a>
       <div class="nav-actions">
         <div class="nav-links">
@@ -362,7 +474,9 @@
       <div class="container">
         <div class="section-header text-center">
           <span class="section-label">WHAT WE OFFER</span>
-          <h2 style="margin-bottom: 3rem; font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 800;">COMPLETE DIGITAL <span class="highlight-gold">SOLUTIONS</span></h2>
+          <h2 style="margin-bottom: 3rem; font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 800;">COMPLETE DIGITAL
+            <span class="highlight-gold">SOLUTIONS</span>
+          </h2>
         </div>
         <div class="swiper services-swiper">
           <div class="swiper-wrapper">
@@ -705,29 +819,61 @@
   <noscript>
     <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
   </noscript>
-  <!-- JS: sequential idle-load — page renders first, scripts run in browser idle time -->
+  <!-- JS: mobile-smart loader — phones skip GSAP/Lenis (saves 124 KB / ~300ms TBT) -->
   <script>
     (function () {
-      var queue = [
-        './assets/vendor/gsap.min.js',
-        './assets/vendor/ScrollTrigger.min.js',
-        './assets/vendor/lenis.min.js',
-        './main.min.js'
-      ];
-      var i = 0;
-      function loadNext() {
-        if (i >= queue.length) return;
+      var mobile = window.innerWidth < 769;
+      if (mobile) {
+        /* ── Lightweight stubs so main.min.js runs without throwing ── */
+        var noop = function () {};
+        var chain = function () {
+          var t = {
+            from: function () { return t; },
+            to: function () { return t; },
+            fromTo: function () { return t; }
+          };
+          return t;
+        };
+        window.gsap = {
+          registerPlugin: noop,
+          from: noop, to: noop, fromTo: noop, set: noop,
+          timeline: chain,
+          defaults: noop,
+          ticker: { lagSmoothing: noop },
+          quickSetter: function () { return noop; }
+        };
+        window.ScrollTrigger = { config: noop, update: noop };
+        window.Lenis = function () {
+          return { on: noop, raf: noop, resize: noop };
+        };
+        /* ── Only load main.min.js (39 KB) — animations are stubs ── */
         var s = document.createElement('script');
-        s.src = queue[i++];
-        s.onload = loadNext;
+        s.src = './main.min.js';
         document.body.appendChild(s);
-      }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadNext, { timeout: 2000 });
       } else {
-        setTimeout(loadNext, 200);
+        /* ── Desktop: full GSAP chain, idle-loaded ── */
+        var queue = [
+          './assets/vendor/gsap.min.js',
+          './assets/vendor/ScrollTrigger.min.js',
+          './assets/vendor/lenis.min.js',
+          './main.min.js'
+        ];
+        var i = 0;
+        function loadNext() {
+          if (i >= queue.length) return;
+          var s = document.createElement('script');
+          s.src = queue[i++];
+          s.onload = loadNext;
+          document.body.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadNext, { timeout: 2000 });
+        } else {
+          setTimeout(loadNext, 200);
+        }
       }
     })();
   </script>
 </body>
+
 </html>
