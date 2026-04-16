@@ -37,11 +37,17 @@
     .hero-title span { opacity: 1 !important; transform: none !important; display: block; }
     .hero-subtitle { opacity: 0.8 !important; transform: none !important; }
     .text-gold { background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
+    /* ── Preloader: dismiss instantly so LCP is never blocked ── */
+    #preloader { animation: preloaderDismiss 0.001s ease 0s forwards !important; pointer-events: none !important; }
+    /* ── Hero CTA styled before style.min.css loads ── */
+    .hero-ctas { margin-top: 2rem; }
+    .cta-button { display: inline-flex; align-items: center; padding: 1rem 2rem; border: 1px solid #D4AF37; border-radius: 50px; color: #D4AF37; font-family: var(--font-heading,'Outfit',sans-serif); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; text-decoration: none; }
     @media (max-width: 768px) {
       .hero-content { mix-blend-mode: normal !important; }
       .hero { background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); }
       #hero-canvas { display: none !important; }
       .hero-title span { animation: none !important; opacity: 1 !important; transform: none !important; }
+      .hero-title { font-size: clamp(2rem, 9vw, 4rem) !important; }
     }
   </style>
   <meta charset="UTF-8" />
@@ -159,7 +165,7 @@
               Today!</span></a>
           <div style="margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 0.05em;">
             <a href="tel:+918220672333" style="display: block; margin-bottom: 0.5rem;">
-              <span class="text-gold" style="margin-right: 10px;"><i class="fa-solid fa-phone"></i></span> +91 82206
+              <span class="text-gold" style="margin-right: 10px;">&#9742;</span> +91 82206
               72333
             </a>
           </div>
@@ -699,11 +705,29 @@
   <noscript>
     <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
   </noscript>
-  <script src="./assets/vendor/gsap.min.js" defer></script>
-  <script src="./assets/vendor/ScrollTrigger.min.js" defer></script>
-  <!-- swiper-bundle.min.js removed: Swiper JS is never instantiated in main.js;
-       only CSS class names are used. Removing 155 KB from the critical JS chain. -->
-  <script src="./assets/vendor/lenis.min.js" defer></script>
-  <script src="./main.min.js" defer></script>
+  <!-- JS: sequential idle-load — page renders first, scripts run in browser idle time -->
+  <script>
+    (function () {
+      var queue = [
+        './assets/vendor/gsap.min.js',
+        './assets/vendor/ScrollTrigger.min.js',
+        './assets/vendor/lenis.min.js',
+        './main.min.js'
+      ];
+      var i = 0;
+      function loadNext() {
+        if (i >= queue.length) return;
+        var s = document.createElement('script');
+        s.src = queue[i++];
+        s.onload = loadNext;
+        document.body.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadNext, { timeout: 2000 });
+      } else {
+        setTimeout(loadNext, 200);
+      }
+    })();
+  </script>
 </body>
 </html>
