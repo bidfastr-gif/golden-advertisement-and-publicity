@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-  <!-- Preloads: desktop-only — on mobile Slow 4G, these 146KB compete for 1.6Mbps and delay FCP -->
+
   <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high" media="(min-width: 769px)">
   <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
     crossorigin="anonymous" media="(min-width: 769px)">
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
     crossorigin="anonymous" media="(min-width: 769px)">
 
-  <style id="critical-style">@font-face{font-family:'Outfit';font-style:normal;font-weight:400 700;font-display:swap;src:url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');unicode-range:U+0000-00FF}@font-face{font-family:'Inter';font-style:normal;font-weight:300 500;font-display:swap;src:url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153}:root{--color-gold-primary:#D4AF37;--color-gold-gradient:linear-gradient(135deg,#BF953F 0%,#FCF6BA 35%,#B38728 55%,#FBF5B7 85%,#AA771C 100%);--color-gold-light:#F4E4BC;--color-gold-dark:#8A6E1F;--color-black-rich:#0A0A0A;--color-black-soft:#141414;--color-white:#FFFFFF;--font-heading:'Outfit',sans-serif;--font-body:'Inter',sans-serif}html,body{background-color:#0A0A0A;color:#FFF;margin:0;padding:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:var(--font-body)}[data-theme="light"],[data-theme="light"] body{background-color:#FFF;color:#0D0D0D}nav{position:fixed;top:0;width:100%;padding:.45rem 0;z-index:100;background:#13120F;border-bottom:1px solid rgba(255,255,255,.05)}.container{width:90%;max-width:1400px;margin:0 auto;padding:0 20px}.hero{height:100vh;width:100%;position:relative;display:flex;align-items:center;overflow:hidden;contain:layout style}.hero-content{opacity:1!important;transform:none!important;visibility:visible!important}.hero-title{font-size:clamp(2.5rem,6vw,7rem);line-height:1.1;margin-bottom:.5rem}.hero-title span{opacity:1!important;transform:none!important;display:block}.hero-subtitle{opacity:.8!important;transform:none!important}.text-gold{background:var(--color-gold-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}@keyframes preloaderDismiss{to{opacity:0;visibility:hidden;display:none}}#preloader{animation:preloaderDismiss .001s ease 0s forwards!important;pointer-events:none!important;display:none!important}.hero-ctas{margin-top:2rem}.cta-button{display:inline-flex;align-items:center;padding:1rem 2rem;border:1px solid #D4AF37;border-radius:50px;color:#D4AF37;font-family:var(--font-heading,'Outfit',sans-serif);text-transform:uppercase;font-size:.9rem;letter-spacing:.05em;text-decoration:none}@media(max-width:768px){.hero-content{mix-blend-mode:normal!important}.hero{background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 100%)}#hero-canvas{display:none!important}.hero-title span{animation:none!important;opacity:1!important;transform:none!important}.hero-title{font-size:clamp(2rem,9vw,4rem)!important}}</style>
+<style id="critical-style">@font-face{font-family:'Outfit';font-style:normal;font-weight:400 700;font-display:optional;src:url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');unicode-range:U+0000-00FF}@font-face{font-family:'Inter';font-style:normal;font-weight:300 500;font-display:optional;src:url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153}:root{--color-gold-primary:#D4AF37;--color-gold-gradient:linear-gradient(135deg,#BF953F 0%,#FCF6BA 35%,#B38728 55%,#FBF5B7 85%,#AA771C 100%);--color-gold-light:#F4E4BC;--color-gold-dark:#8A6E1F;--color-black-rich:#0A0A0A;--color-black-soft:#141414;--color-white:#FFFFFF;--font-heading:'Outfit',sans-serif;--font-body:'Inter',sans-serif}html,body{background-color:#0A0A0A;color:#FFF;margin:0;padding:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:var(--font-body)}[data-theme="light"],[data-theme="light"] body{background-color:#FFF;color:#0D0D0D}nav{position:fixed;top:0;width:100%;padding:.45rem 0;z-index:100;background:#13120F;border-bottom:1px solid rgba(255,255,255,.05)}.container{width:90%;max-width:1400px;margin:0 auto;padding:0 20px}.hero{height:100vh;width:100%;position:relative;display:flex;align-items:center;overflow:hidden;contain:layout style}.hero-content{opacity:1!important;transform:none!important;visibility:visible!important}.hero-title{font-size:clamp(2.5rem,6vw,7rem);line-height:1.1;margin-bottom:.5rem}.hero-title span{opacity:1!important;transform:none!important;display:block}.hero-subtitle{opacity:.8!important;transform:none!important}.text-gold{background:var(--color-gold-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}@keyframes preloaderDismiss{to{opacity:0;visibility:hidden;display:none}}#preloader{animation:preloaderDismiss .001s ease 0s forwards!important;pointer-events:none!important;display:none!important}.hero-ctas{margin-top:2rem}.cta-button{display:inline-flex;align-items:center;padding:1rem 2rem;border:1px solid #D4AF37;border-radius:50px;color:#D4AF37;font-family:var(--font-heading,'Outfit',sans-serif);text-transform:uppercase;font-size:.9rem;letter-spacing:.05em;text-decoration:none}@media(max-width:768px){.hero-content{mix-blend-mode:normal!important}.hero{background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 100%)}#hero-canvas{display:none!important}.hero-title span{animation:none!important;opacity:1!important;transform:none!important}.hero-title{font-size:clamp(2rem,9vw,4rem)!important}}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Golden Advertising & Publicity | Premium Digital Solutions</title>
-  <!-- Favicon: using golden_logo.webp (8.1 KB) — golden_logo1.png was 468 KB, killing mobile FCP -->
+
   <link rel="icon" type="image/webp" href="./assets/golden_logo1.webp">
   <link rel="apple-touch-icon" href="./assets/golden_logo.webp">
   <meta name="description"
@@ -24,22 +24,18 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Best Digital Marketing Agency in Chennai | Golden Advertising & Publicity">
   <meta name="twitter:image" content="https://goldenadvertising.in/assets/golden_logo.png">
-  <!-- GTM moved to body — removes render-blocking inline script from <head> -->
+
   <link rel="canonical" href="https://goldenadvertising.in/" />
 
-
-  <!-- style.min.css: async load only (preload removed — redundant with the stylesheet link below) -->
   <link rel="stylesheet" href="./style.min.css" media="print" onload="this.media='all'">
   <noscript>
     <link rel="stylesheet" href="./style.min.css">
   </noscript>
-  <!-- Swiper CSS only needed for carousels — load non-blocking -->
 
 </head>
 
 <body class="home-page">
-  <!-- Navigation -->
-  <nav>
+<nav>
     <div class="container nav-wrapper">
       <a href="./index.html" class="logo-brand">
         <img decoding="async" fetchpriority="high" src="./assets/golden_logo.webp" alt="Golden Advertising & Publicity"
@@ -85,8 +81,7 @@
     </div>
   </nav>
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
+<section class="hero">
       <div class="hero-background" id="hero-canvas"></div>
       <div class="container hero-content">
         <h1 class="hero-title">
@@ -108,15 +103,13 @@
         </div>
       </div>
     </section>
-    <!-- Infinite Marquee Section -->
-    <section class="marquee-section">
+<section class="marquee-section">
       <div class="marquee-content">
         <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
         <span class="marquee-item">GOLDEN ADVERTISING & PUBLICITY</span>
       </div>
     </section>
-    <!-- Detailed About Section for SEO -->
-    <section class="features-section bg-black" style="padding: 6rem 0;">
+<section class="features-section bg-black" style="padding: 6rem 0;">
       <div class="container">
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
           <div>
@@ -206,8 +199,7 @@
         </div>
       </div>
       <div class="projects-marquee">
-        <!-- Row 1: Scrolling Left -->
-        <div class="marquee-row scroll-left">
+<div class="marquee-row scroll-left">
           <div class="marquee-content">
             <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Professional Brand Identity Design"
                 width="362" height="453" title=" " loading="lazy" decoding="async"></div>
@@ -226,8 +218,7 @@
             <div class="image-card tilt"><img src="./assets/projects/8.webp" alt="Restaurant" width="362" height="453"
                 title=" " loading="lazy" decoding="async"></div>
           </div>
-          <!-- Duplicate for Loop -->
-          <div class="marquee-content" aria-hidden="true">
+<div class="marquee-content" aria-hidden="true">
             <div class="image-card tilt"><img src="./assets/projects/1.webp" alt="Branding" width="362" height="453"
                 title=" " loading="lazy"></div>
             <div class="image-card tilt"><img src="./assets/projects/2.webp" alt="Restaurant" width="362" height="453"
@@ -246,8 +237,7 @@
                 title=" " loading="lazy"></div>
           </div>
         </div>
-        <!-- Row 2: Scrolling Right -->
-        <div class="marquee-row scroll-right">
+<div class="marquee-row scroll-right">
           <div class="marquee-content">
             <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Illuminated LED Signage for Retail"
                 width="362" height="453" title=" " loading="lazy" decoding="async"></div>
@@ -268,8 +258,7 @@
             <div class="image-card tilt"><img src="./assets/projects/16.webp" alt="Product Catalog and Sales Brochure"
                 width="362" height="453" title=" " loading="lazy" decoding="async"></div>
           </div>
-          <!-- Duplicate for Loop -->
-          <div class="marquee-content" aria-hidden="true">
+<div class="marquee-content" aria-hidden="true">
             <div class="image-card tilt"><img src="./assets/projects/9.webp" alt="Signboard" width="362" height="453"
                 title=" " loading="lazy"></div>
             <div class="image-card tilt"><img src="./assets/projects/10.webp" alt="Brochure" width="362" height="453"
@@ -290,9 +279,8 @@
         </div>
       </div>
     </section>
-    <!-- Services Section (Loaded dynamically) -->
-    <!-- Services Section -->
-    <section id="services" class="features-section">
+
+<section id="services" class="features-section">
       <div class="container">
         <div class="section-header text-center">
           <span class="section-label">WHAT WE OFFER</span>
@@ -425,8 +413,7 @@
         </div>
       </div>
     </section>
-    <!-- Our Partners -->
-    <section class="features-section bg-black partners-section" style="padding: 6rem 0;">
+<section class="features-section bg-black partners-section" style="padding: 6rem 0;">
       <div class="container">
         <div style="text-align:center; margin-bottom: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;">Our
           Clients</div>
@@ -482,8 +469,7 @@
         </div>
       </div>
     </section>
-    <!-- FAQ Section for SEO & Text Density -->
-    <section class="features-section bg-black" style="padding: 6rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
+<section class="features-section bg-black" style="padding: 6rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
       <div class="container">
         <div style="text-align: center; margin-bottom: 4rem;">
           <span class="section-label">Common Questions</span>
@@ -551,8 +537,7 @@
         </div>
       </div>
     </section>
-    <!-- Contact Section -->
-    <section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
+<section id="contact" style="padding: 10rem 0; background-color: var(--color-black-rich);">
       <div class="container">
         <div style="text-align: center; max-width: 800px; margin: 0 auto;">
           <span class="section-label">Get In Touch</span>
@@ -565,8 +550,7 @@
         </div>
       </div>
   </main>
-  <!-- Footer -->
-  <footer>
+<footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
@@ -641,8 +625,7 @@
   <noscript>
     <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
   </noscript>
-  <!-- JS: mobile-smart loader — phones skip GSAP/Lenis, desktop loads after window.load + idle -->
-  <script>
+<script>
     (function () {
       var mobile = window.innerWidth < 769;
       var queue = [
@@ -684,9 +667,16 @@
         };
         /* ── Only load main.min.js (39 KB) — animations are stubs, defer to avoid TBT ── */
         window.addEventListener('load', function () {
-          var s = document.createElement('script');
-          s.src = './main.min.js';
-          document.body.appendChild(s);
+          var loadMain = function () {
+            var s = document.createElement('script');
+            s.src = './main.min.js';
+            document.body.appendChild(s);
+          };
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadMain);
+          } else {
+            setTimeout(loadMain, 150);
+          }
         }, { once: true, passive: true });
       } else {
         /* ── Desktop: full GSAP chain after window.load + idle (avoids TBT window) ── */
