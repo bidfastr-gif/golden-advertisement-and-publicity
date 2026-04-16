@@ -173,36 +173,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Best Digital Marketing Agency in Chennai | Golden Advertising & Publicity">
   <meta name="twitter:image" content="https://goldenadvertising.in/assets/golden_logo.png">
-  <!-- Optimized Google Analytics (Interaction-Based Loading) -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX', { 'reporting_exposure': false });
-    (function () {
-      var gtmLoaded = false;
-      function loadGTM() {
-        if (gtmLoaded) return;
-        gtmLoaded = true;
-        var inject = function () {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
-          document.head.appendChild(script);
-        };
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(inject);
-        } else {
-          setTimeout(inject, 1);
-        }
-      }
-      // Load GTM on first interaction or after a 4s fallback
-      window.addEventListener('scroll', loadGTM, { once: true, passive: true });
-      window.addEventListener('mousemove', loadGTM, { once: true, passive: true });
-      window.addEventListener('touchstart', loadGTM, { once: true, passive: true });
-      setTimeout(loadGTM, 15000);
-    })();
-  </script>
+  <!-- GTM moved to body — removes render-blocking inline script from <head> -->
   <link rel="canonical" href="https://goldenadvertising.in/" />
 
 
@@ -822,12 +793,26 @@
   <noscript>
     <link rel="stylesheet" href="./assets/vendor/font-awesome-all.min.css">
   </noscript>
-  <!-- JS: mobile-smart loader — phones skip GSAP/Lenis (saves 124 KB / ~300ms TBT) -->
+  <!-- JS: mobile-smart loader — phones skip GSAP/Lenis, desktop loads after window.load + idle -->
   <script>
     (function () {
       var mobile = window.innerWidth < 769;
+      var queue = [
+        './assets/vendor/gsap.min.js',
+        './assets/vendor/ScrollTrigger.min.js',
+        './assets/vendor/lenis.min.js',
+        './main.min.js'
+      ];
+      var i = 0;
+      function loadNext() {
+        if (i >= queue.length) return;
+        var s = document.createElement('script');
+        s.src = queue[i++];
+        s.onload = loadNext;
+        document.body.appendChild(s);
+      }
       if (mobile) {
-        /* ── Lightweight stubs so main.min.js runs without throwing ── */
+        /* ── Mobile: stubs so main.min.js runs without throwing ── */
         var noop = function () {};
         var chain = function () {
           var t = {
@@ -854,23 +839,41 @@
         s.src = './main.min.js';
         document.body.appendChild(s);
       } else {
-        /* ── Desktop: load GSAP chain immediately (scripts at bottom = no parse blocking) ── */
-        var queue = [
-          './assets/vendor/gsap.min.js',
-          './assets/vendor/ScrollTrigger.min.js',
-          './assets/vendor/lenis.min.js',
-          './main.min.js'
-        ];
-        var i = 0;
-        function loadNext() {
-          if (i >= queue.length) return;
-          var s = document.createElement('script');
-          s.src = queue[i++];
-          s.onload = loadNext;
-          document.body.appendChild(s);
-        }
-        loadNext(); /* start immediately — no idle delay */
+        /* ── Desktop: full GSAP chain after window.load + idle (avoids TBT window) ── */
+        window.addEventListener('load', function () {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadNext);
+          } else {
+            setTimeout(loadNext, 150);
+          }
+        }, { once: true, passive: true });
       }
+    })();
+  </script>
+  <!-- GTM: deferred analytics — no longer blocking <head> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { 'reporting_exposure': false });
+    (function () {
+      var gtmLoaded = false;
+      function loadGTM() {
+        if (gtmLoaded) return;
+        gtmLoaded = true;
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+            document.head.appendChild(s);
+          });
+        }
+      }
+      window.addEventListener('scroll', loadGTM, { once: true, passive: true });
+      window.addEventListener('mousemove', loadGTM, { once: true, passive: true });
+      window.addEventListener('touchstart', loadGTM, { once: true, passive: true });
+      setTimeout(loadGTM, 15000);
     })();
   </script>
 </body>
