@@ -3,31 +3,18 @@
 <head>
   <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="./assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high">
   <!-- Preconnect to key third-party origins (Deferred for speed) -->
   <link rel="dns-prefetch" href="https://images.unsplash.com">
-  <style id="critical-css">
-    /* Font-Display Swap Override for FontAwesome */
+  <style id="critical-style">
+    /* Combined Performance-Optimized Design System */
     @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 400;
-      font-display: optional;
+      font-family: 'Outfit'; font-style: normal; font-weight: 400 700; font-display: optional;
+      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2'); unicode-range: U+0000-00FF;
     }
     @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 900;
-      font-display: optional;
-    }
-    @font-face {
-      font-family: 'Font Awesome 6 Brands';
-      font-style: normal;
-      font-weight: 400;
-      font-display: optional;
+      font-family: 'Inter'; font-style: normal; font-weight: 300 500; font-display: optional;
+      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153;
     }
     :root {
       --color-gold-primary: #D4AF37;
@@ -37,103 +24,22 @@
       --color-black-rich: #0A0A0A;
       --color-black-soft: #141414;
       --color-white: #FFFFFF;
-      --color-glass-surface: rgba(255, 255, 255, 0.05);
-      --color-glass-border: rgba(255, 255, 255, 0.2);
       --font-heading: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
-      --transition-smooth: cubic-bezier(0.65, 0, 0.35, 1);
     }
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: var(--font-body);
-      background-color: var(--color-black-rich);
-      color: var(--color-white);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 0.45rem 0;
-      z-index: 100;
-      background: #13120F;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .container {
-      width: 90%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .hero {
-      height: 100vh;
-      width: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-    @media (min-width: 1024px) {
-      .hero-content {
-        mix-blend-mode: difference;
-      }
-    }
-    .hero-title {
-      font-size: clamp(2.5rem, 6vw, 7rem);
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-      overflow: visible;
-    }
-    .hero-title span {
-      opacity: 1 !important;
-      transform: none !important;
-      opacity: 1 !important;
-      transform: none !important;
-      display: block;
-      animation: heroSlideUp 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-    }
-    .hero-title span:nth-child(1) { animation-delay: 0.01s; }
-    .hero-title span:nth-child(2) { animation-delay: 0.03s; }
-    @keyframes heroSlideUp {
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    .text-gold {
-      background: var(--color-gold-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 800;
-    }
-    /* Mobile Performance Optimization (100/100 Score Target) */
+    html, body { background-color: #0A0A0A; color: #FFFFFF; margin: 0; padding: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-family: var(--font-body); }
+    [data-theme="light"], [data-theme="light"] body { background-color: #FFFFFF; color: #0D0D0D; }
+    nav { position: fixed; top: 0; width: 100%; padding: 0.45rem 0; z-index: 100; background: #13120F; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+    .hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; overflow: hidden; }
+    .hero-title { font-size: clamp(2.5rem, 6vw, 7rem); line-height: 1.1; margin-bottom: 0.5rem; }
+    .hero-title span { opacity: 1 !important; transform: none !important; display: block; }
+    .text-gold { background: var(--color-gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
     @media (max-width: 768px) {
-      .hero-content {
-        mix-blend-mode: normal !important;
-      }
-      .hero {
-        background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
-      }
-      #hero-canvas {
-        display: none !important;
-      }
-      .hero-title span {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
+      .hero-content { mix-blend-mode: normal !important; }
+      .hero { background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); }
+      #hero-canvas { display: none !important; }
+      .hero-title span { animation: none !important; opacity: 1 !important; transform: none !important; }
     }
   </style>
   <meta charset="UTF-8" />
@@ -144,19 +50,8 @@
   <meta property="og:title" content="Best Digital Marketing Agency in Chennai | Golden Advertising & Publicity" />
   <meta name="keywords"
     content="Best Digital Marketing Agency in Chennai, Branding agency Chennai, Web design services, SEO company Chennai, Social media marketing, Advertising agency Tamil Nadu">
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://goldenadvertising.in/">
-  <meta property="og:title" content="Best Digital Marketing Agency in Chennai | Golden Advertising & Publicity">
-  <meta property="og:description"
-    content="Golden Advertising & Publicity is a 360 degree digital marketing agency in chennai offering branding, web design, SEO, social media and advertising.">
-  <meta property="og:image" content="https://goldenadvertising.in/assets/golden_logo.png">
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://goldenadvertising.in/">
   <meta name="twitter:title" content="Best Digital Marketing Agency in Chennai | Golden Advertising & Publicity">
-  <meta name="twitter:description"
-    content="Top-tier digital marketing agency in Chennai. Experts in Branding, SEO, Social Media, and 360-degree marketing.">
   <meta name="twitter:image" content="https://goldenadvertising.in/assets/golden_logo.png">
   <!-- Optimized Google Analytics (Interaction-Based Loading) -->
   <script>
@@ -190,36 +85,13 @@
   </script>
   <link rel="canonical" href="https://goldenadvertising.in/" />
   <link rel="icon" type="image/png" href="./assets/golden_logo.webp">
-  <style>
-    html,
-    body {
-      background-color: #0A0A0A;
-      color: #FFFFFF;
-    }
-    [data-theme="light"],
-    [data-theme="light"] body {
-      background-color: #FFFFFF;
-      color: #0D0D0D;
-    }
-  </style>
+
   <!-- style.min.css made async — critical hero styles are now fully inlined -->
   <link rel="preload" href="./style.min.css" as="style">
   <link rel="stylesheet" href="./style.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="./style.min.css"></noscript>
   <!-- Swiper CSS only needed for carousels — load non-blocking -->
-  <style>
-    /* Latin Subset Only (Gold Standard Perf) */
-    @font-face {
-      font-family: 'Inter'; font-style: normal; font-weight: 300 500; font-display: optional;
-      src: url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153;
-    }
-    @font-face {
-      font-family: 'Outfit'; font-style: normal; font-weight: 400 700; font-display: optional;
-      src: url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
-      unicode-range: U+0000-00FF;
-    }
-  </style>
+
 </head>
 <body class="home-page">
   <!-- Navigation -->
