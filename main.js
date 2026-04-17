@@ -362,21 +362,21 @@ const startThreeJS = (container) => {
 
 // Initializers
 const initAll = () => {
+    // Start All Backgrounds immediately (before dismissal)
+    document.querySelectorAll('.hero-background, [id$="-canvas"]').forEach(c => initThreeJS(c));
+
     const tl = gsap.timeline();
     const preloader = document.getElementById('preloader');
     if (preloader && !preloader.classList.contains('loaded')) {
-        tl.to('.loader-content', { y: -30, opacity: 0, duration: 0.3 })
-          .to(preloader, { y: '-100%', duration: 0.4, ease: 'power4.inOut', onComplete: () => {
+        tl.to('.loader-content', { opacity: 0, duration: 0.15 })
+          .to(preloader, { y: '-100%', duration: 0.3, ease: 'power3.inOut', onComplete: () => {
               preloader.classList.add('loaded');
               if (window.lenis) window.lenis.resize();
           }}, "-=0.05");
     }
-    tl.from('nav', { y: -80, opacity: 0, duration: 0.3 }, "-=0.6");
+    tl.from('nav', { y: -50, opacity: 0, duration: 0.25 }, "-=0.2");
     const heroSubtitle = document.querySelector('.hero-subtitle');
-    if (heroSubtitle) tl.fromTo(heroSubtitle, { y: 20, opacity: 0 }, { y: 0, opacity: 0.8, duration: 0.5 }, "-=0.7");
-
-    // Start All Backgrounds immediately
-    document.querySelectorAll('.hero-background, [id$="-canvas"]').forEach(c => initThreeJS(c));
+    if (heroSubtitle) tl.fromTo(heroSubtitle, { y: 15, opacity: 0 }, { y: 0, opacity: 0.8, duration: 0.4 }, "-=0.3");
 };
 
 if (document.readyState === 'loading') {
