@@ -362,21 +362,16 @@ const startThreeJS = (container) => {
 
 // Initializers
 const initAll = () => {
-    // Start All Backgrounds immediately (before dismissal)
+    // Start All Backgrounds immediately
     document.querySelectorAll('.hero-background, [id$="-canvas"]').forEach(c => initThreeJS(c));
 
     const tl = gsap.timeline();
-    const preloader = document.getElementById('preloader');
-    if (preloader && !preloader.classList.contains('loaded')) {
-        tl.to('.loader-content', { opacity: 0, duration: 0.15 })
-          .to(preloader, { y: '-100%', duration: 0.3, ease: 'power3.inOut', onComplete: () => {
-              preloader.classList.add('loaded');
-              if (window.lenis) window.lenis.resize();
-          }}, "-=0.05");
-    }
-    tl.from('nav', { y: -50, opacity: 0, duration: 0.25 }, "-=0.2");
+    tl.from('nav', { opacity: 0, duration: 0.15 });
+    
     const heroSubtitle = document.querySelector('.hero-subtitle');
-    if (heroSubtitle) tl.fromTo(heroSubtitle, { y: 15, opacity: 0 }, { y: 0, opacity: 0.8, duration: 0.4 }, "-=0.3");
+    if (heroSubtitle) tl.fromTo(heroSubtitle, { opacity: 0 }, { opacity: 0.8, duration: 0.25 }, "-=0.1");
+    
+    if (window.lenis) window.lenis.resize();
 };
 
 if (document.readyState === 'loading') {
