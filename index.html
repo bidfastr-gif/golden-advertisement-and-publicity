@@ -3,13 +3,15 @@
 
 <head>
 
-  <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high" media="(min-width: 769px)">
+  <link rel="preload" href="./assets/golden_logo.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="./assets/strategy-planning.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="./assets/vendor/three.min.js" as="script">
   <link rel="preload" href="./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous" media="(min-width: 769px)">
+    crossorigin="anonymous">
   <link rel="preload" href="./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous" media="(min-width: 769px)">
+    crossorigin="anonymous">
 
-<style id="critical-style">@font-face{font-family:'Outfit';font-style:normal;font-weight:400 700;font-display:optional;src:url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');unicode-range:U+0000-00FF}@font-face{font-family:'Inter';font-style:normal;font-weight:300 500;font-display:optional;src:url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153}:root{--color-gold-primary:#D4AF37;--color-gold-gradient:linear-gradient(135deg,#BF953F 0%,#FCF6BA 35%,#B38728 55%,#FBF5B7 85%,#AA771C 100%);--color-gold-light:#F4E4BC;--color-gold-dark:#8A6E1F;--color-black-rich:#0A0A0A;--color-black-soft:#141414;--color-white:#FFFFFF;--font-heading:'Outfit',sans-serif;--font-body:'Inter',sans-serif}html,body{background-color:#0A0A0A;color:#FFF;margin:0;padding:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:var(--font-body)}[data-theme="light"],[data-theme="light"] body{background-color:#FFF;color:#0D0D0D}nav{position:fixed;top:0;width:100%;padding:.45rem 0;z-index:100;background:#13120F;border-bottom:1px solid rgba(255,255,255,.05)}.container{width:90%;max-width:1400px;margin:0 auto;padding:0 20px}.hero{height:100vh;width:100%;position:relative;display:flex;align-items:center;overflow:hidden;contain:layout style}.hero-content{opacity:1!important;transform:none!important;visibility:visible!important}.hero-title{font-size:clamp(2.5rem,6vw,7rem);line-height:1.1;margin-bottom:.5rem}.hero-title span{opacity:1!important;transform:none!important;display:block}.hero-subtitle{opacity:.8!important;transform:none!important}.text-gold{background:var(--color-gold-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}@keyframes preloaderDismiss{to{opacity:0;visibility:hidden;display:none}}#preloader{animation:preloaderDismiss .001s ease 0s forwards!important;pointer-events:none!important;display:none!important}.hero-ctas{margin-top:2rem}.cta-button{display:inline-flex;align-items:center;padding:1rem 2rem;border:1px solid #D4AF37;border-radius:50px;color:#D4AF37;font-family:var(--font-heading,'Outfit',sans-serif);text-transform:uppercase;font-size::.9rem;letter-spacing:.05em;text-decoration:none}@media(max-width:768px){.hero-content{mix-blend-mode:normal!important}.hero{background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 100%)}.hero-title{font-size:clamp(2rem,9vw,4rem)!important}}</style>
+<style id="critical-style">@font-face{font-family:'Outfit';font-style:normal;font-weight:400 700;font-display:optional;src:url(./assets/webfonts/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');unicode-range:U+0000-00FF}@font-face{font-family:'Inter';font-style:normal;font-weight:300 500;font-display:optional;src:url(./assets/webfonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153}:root{--color-gold-primary:#D4AF37;--color-gold-gradient:linear-gradient(135deg,#BF953F 0%,#FCF6BA 35%,#B38728 55%,#FBF5B7 85%,#AA771C 100%);--color-gold-light:#F4E4BC;--color-gold-dark:#8A6E1F;--color-black-rich:#0A0A0A;--color-black-soft:#141414;--color-white:#FFFFFF;--font-heading:'Outfit',sans-serif;--font-body:'Inter',sans-serif}html,body{background-color:#0A0A0A;color:#FFF;margin:0;padding:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:var(--font-body)}[data-theme="light"],[data-theme="light"] body{background-color:#FFF;color:#0D0D0D}nav{position:fixed;top:0;width:100%;padding:.45rem 0;z-index:100;background:#13120F;border-bottom:1px solid rgba(255,255,255,.05)}.container{width:90%;max-width:1400px;margin:0 auto;padding:0 20px}.hero{height:100vh;width:100%;position:relative;display:flex;align-items:center;overflow:hidden;contain:layout style}.hero-content{opacity:1!important;transform:none!important;visibility:visible!important}.hero-title{font-size:clamp(2.5rem,6vw,7rem);line-height:1.1;margin-bottom:.5rem}.hero-title span{opacity:1!important;transform:none!important;display:block}.hero-subtitle{opacity:.8!important;transform:none!important}.text-gold{background:var(--color-gold-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}@keyframes preloaderDismiss{to{opacity:0;visibility:hidden;display:none}}#preloader{animation:preloaderDismiss .001s ease 0s forwards!important;pointer-events:none!important;display:none!important}.hero-ctas{margin-top:2rem}.cta-button{display:inline-flex;align-items:center;padding:1rem 2rem;border:1px solid #D4AF37;border-radius:50px;color:#D4AF37;font-family:var(--font-heading,'Outfit',sans-serif);text-transform:uppercase;font-size:.9rem;letter-spacing:.05em;text-decoration:none}@media(max-width:768px){.hero-content{mix-blend-mode:normal!important}.hero{background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 100%)}#hero-canvas{display:block!important}.hero-title{font-size:clamp(2rem,9vw,4rem)!important}}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Golden Advertising & Publicity | Premium Digital Solutions</title>
@@ -143,8 +145,8 @@ html{overflow-x:hidden;scroll-behavior:auto}body{overflow-x:hidden;width:100%;po
             </div>
           </div>
           <div class="image-card tilt" style="border-radius: 30px; overflow: hidden;">
-            <img decoding="async" src="./assets/strategy-planning.webp" alt="Strategic Digital Marketing Planning"
-              style="width: 100%; height: auto; display: block;" width="600" height="400" loading="lazy">
+            <img decoding="async" fetchpriority="high" src="./assets/strategy-planning.webp" alt="Strategic Digital Marketing Planning"
+              style="width: 100%; height: auto; display: block;" width="600" height="400" loading="eager">
           </div>
         </div>
       </div>
@@ -631,7 +633,8 @@ html{overflow-x:hidden;scroll-behavior:auto}body{overflow-x:hidden;width:100%;po
         './assets/vendor/gsap.min.js',
         './assets/vendor/ScrollTrigger.min.js',
         './assets/vendor/lenis.min.js',
-        './main.min.js'
+        './assets/vendor/three.min.js',
+        './main.js'
       ];
       var i = 0;
       function loadNext() {
@@ -641,12 +644,12 @@ html{overflow-x:hidden;scroll-behavior:auto}body{overflow-x:hidden;width:100%;po
         s.onload = loadNext;
         document.body.appendChild(s);
       }
-      window.addEventListener('DOMContentLoaded', function () {
+      window.addEventListener('load', function () {
         var startLoad = function() { loadNext(); };
         if ('requestIdleCallback' in window) {
           requestIdleCallback(startLoad);
         } else {
-          setTimeout(startLoad, 10);
+          setTimeout(startLoad, 150);
         }
       }, { once: true, passive: true });
     })();
