@@ -424,7 +424,43 @@ yieldTask(() => {
 
 // Modal & Enquiry Trigger
 (() => {
+    const injectModal = () => {
+        if (document.getElementById('enquiry-modal')) return;
+        const html = `
+        <div id="enquiry-modal" class="enquiry-modal" aria-hidden="true">
+          <div class="enquiry-dialog" role="dialog" aria-modal="true" aria-labelledby="enquiry-title">
+            <button class="enquiry-close" type="button" aria-label="Close">×</button>
+            <h3 id="enquiry-title" class="enquiry-title">Quick Enquiry</h3>
+            <form class="enquiry-form">
+              <div class="enquiry-row">
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="tel" name="phone" placeholder="Phone" required />
+              </div>
+              <div class="enquiry-row">
+                <input type="email" name="email" placeholder="Email" required />
+                <select name="service" class="select-gradient-text" required>
+                  <option value="">Select a Service</option>
+                  <option>Search Engine Optimization (SEO)</option>
+                  <option>Social Media Marketing</option>
+                  <option>Website Development</option>
+                  <option>E‑Commerce Website Development</option>
+                  <option>Logo Designing</option>
+                  <option>Brochure Designing</option>
+                  <option>Newspaper Advertising</option>
+                  <option>FM Advertising</option>
+                </select>
+              </div>
+              <textarea name="message" placeholder="Tell us briefly about your requirement" required></textarea>
+              <div class="enquiry-hint">We will get back to you soon.</div>
+              <button type="submit" class="cta-button cta-button--block"><span class="btn-text">Submit</span></button>
+            </form>
+          </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', html);
+    };
+
     const openModal = () => {
+        injectModal();
         const modal = document.getElementById('enquiry-modal');
         if (modal) {
             modal.classList.add('active');
@@ -443,7 +479,7 @@ yieldTask(() => {
     };
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.cta-button');
+        const btn = e.target.closest('.cta-button, .service-link, .nav-link');
         if (btn) {
             const text = btn.textContent.toLowerCase();
             if (btn.hasAttribute('data-enquiry-trigger') || 
@@ -464,8 +500,10 @@ yieldTask(() => {
         const form = e.target.closest('.enquiry-form');
         if (!form) return;
         e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        if(btn) btn.disabled = true;
         const formData = new FormData(form);
-        formData.append("source", "Quick Enquiry Modal");
+        formData.append("source", "Quick Enquiry Modal - " + window.location.pathname);
         fetch('https://formspree.io/f/xjgewnpo', {
             method: 'POST',
             body: formData,
@@ -475,7 +513,10 @@ yieldTask(() => {
                 form.reset();
                 showSuccessPopup("Your enquiry has been submitted.");
                 closeModal();
+            } else {
+                alert("Submission failed. Please try again.");
             }
-        });
+        }).finally(() => { if(btn) btn.disabled = false; });
     });
+})();
 })();

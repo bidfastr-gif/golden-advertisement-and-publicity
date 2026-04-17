@@ -681,6 +681,37 @@ html{overflow-x:hidden;scroll-behavior:auto}body{overflow-x:hidden;width:100%;po
       setTimeout(loadGTM, 15000);
     })();
   </script>
+
+  <!-- Enquiry Modal -->
+  <div id="enquiry-modal" class="enquiry-modal" aria-hidden="true">
+    <div class="enquiry-dialog" role="dialog" aria-modal="true" aria-labelledby="enquiry-title">
+      <button class="enquiry-close" type="button" aria-label="Close">×</button>
+      <h3 id="enquiry-title" class="enquiry-title">Quick Enquiry</h3>
+      <form class="enquiry-form" method="POST" action="https://formspree.io/f/xjgewnpo">
+        <div class="enquiry-row">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="tel" name="phone" placeholder="Phone" required />
+        </div>
+        <div class="enquiry-row">
+          <input type="email" name="email" placeholder="Email" required />
+          <select name="service" class="select-gradient-text" required>
+            <option value="">Select a Service</option>
+            <option>Search Engine Optimization (SEO)</option>
+            <option>Social Media Marketing</option>
+            <option>Website Development</option>
+            <option>E‑Commerce Website Development</option>
+            <option>Logo Designing</option>
+            <option>Brochure Designing</option>
+            <option>Newspaper Advertising</option>
+            <option>FM Advertising</option>
+          </select>
+        </div>
+        <textarea name="message" placeholder="Tell us briefly about your requirement" required></textarea>
+        <div class="enquiry-hint">We will get back to you soon.</div>
+        <button type="submit" class="cta-button cta-button--block"><span class="btn-text">Submit</span></button>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
