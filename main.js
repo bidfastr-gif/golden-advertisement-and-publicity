@@ -422,13 +422,60 @@ yieldTask(() => {
     initTicker('.partners-swiper', 30);
 });
 
-// Modal
+// Modal & Enquiry Trigger
 (() => {
+    const openModal = () => {
+        const modal = document.getElementById('enquiry-modal');
+        if (modal) {
+            modal.classList.add('active');
+            gsap.fromTo(modal.querySelector('.enquiry-dialog'), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" });
+        }
+    };
+    const closeModal = () => {
+        const modal = document.getElementById('enquiry-modal');
+        if (modal) {
+            gsap.to(modal.querySelector('.enquiry-dialog'), { y: 30, opacity: 0, duration: 0.25, ease: "power2.in" });
+            gsap.to(modal, { opacity: 0, duration: 0.2, onComplete: () => {
+                modal.classList.remove('active');
+                gsap.set(modal, { opacity: 1 });
+            }});
+        }
+    };
+
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.cta-button');
-        if (btn && (btn.hasAttribute('data-enquiry-trigger') || btn.textContent.toLowerCase().includes('enquiry'))) {
-            const modal = document.getElementById('enquiry-modal');
-            if (modal) modal.classList.add('active');
+        if (btn) {
+            const text = btn.textContent.toLowerCase();
+            if (btn.hasAttribute('data-enquiry-trigger') || 
+                text.includes('enquiry') || 
+                text.includes('start your project') || 
+                text.includes('book a call')) {
+                e.preventDefault();
+                openModal();
+            }
         }
+        if (e.target.id === 'enquiry-modal' || e.target.classList.contains('enquiry-close')) {
+            e.preventDefault();
+            closeModal();
+        }
+    });
+
+    document.addEventListener('submit', (e) => {
+        const form = e.target.closest('.enquiry-form');
+        if (!form) return;
+        e.preventDefault();
+        const formData = new FormData(form);
+        formData.append("source", "Quick Enquiry Modal");
+        fetch('https://formspree.io/f/xjgewnpo', {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(res => {
+            if (res.ok) {
+                form.reset();
+                showSuccessPopup("Your enquiry has been submitted.");
+                closeModal();
+            }
+        });
     });
 })();
